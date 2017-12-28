@@ -361,13 +361,16 @@ class DPathElementCompileInfo(
    * Finds a child ERD that matches a StepQName. This is for matching up
    * path steps (for example) to their corresponding ERD.
    */
-  final def findNamedChild(step: StepQName): DPathElementCompileInfo =
-    findNamedMatch(step, elementChildrenCompileInfo)
+  final def findNamedChild(step: StepQName,
+    expr: ImplementsThrowsOrSavesSDE): DPathElementCompileInfo =
+    findNamedMatch(step, elementChildrenCompileInfo, expr)
 
-  final def findRoot(step: StepQName): DPathElementCompileInfo =
-    findNamedMatch(step, Seq(this))
+  final def findRoot(step: StepQName,
+    expr: ImplementsThrowsOrSavesSDE): DPathElementCompileInfo =
+    findNamedMatch(step, Seq(this), expr)
 
-  private def findNamedMatch(step: StepQName, possibles: Seq[DPathElementCompileInfo]): DPathElementCompileInfo = {
+  private def findNamedMatch(step: StepQName, possibles: Seq[DPathElementCompileInfo],
+    expr: ImplementsThrowsOrSavesSDE): DPathElementCompileInfo = {
     val matchesERD: Seq[DPathElementCompileInfo] = step.findMatches(possibles)
 
     val retryMatchesERD =
@@ -386,10 +389,46 @@ class DPathElementCompileInfo(
     retryMatchesERD.length match {
       case 0 => noMatchError(step, possibles)
       case 1 => retryMatchesERD(0)
-      case _ => queryMatchError(step, matchesERD)
+      case _ => {
+        queryMatchWarning(step, retryMatchesERD, expr)
+        retryMatchesERD(0)
+      }
     }
   }
 
+  /**
+   * Returns a subset of the possibles which are truly ambiguous siblings.
+   * Does not find all such, but if any exist, it finds some ambiguous
+   * Siblings. Only returns empty Seq if there are no ambiguous siblings.
+   */
+  //      private def ambiguousModelGroupSiblings(possibles: Seq[DPathElementCompileInfo]) : Seq[DPathElementCompileInfo] = {
+  //        val ambiguityLists: Seq[Seq[DPathElementCompileInfo]] = possibles.tails.toSeq.map{
+  //          possiblesList =>
+  //          if (possiblesList.isEmpty) Nil
+  //          else {
+  //            val one = possiblesList.head
+  //            val rest = possiblesList.tail
+  //            val ambiguousSiblings = modelGroupSiblings(one, rest)
+  //            val allAmbiguous =
+  //                if (ambiguousSiblings.isEmpty) Nil
+  //            else one +: ambiguousSiblings
+  //            allAmbiguous
+  //          }
+  //        }
+  //          val firstAmbiguous = ambiguityLists
+  //          ambiguityLists.head
+  //        }
+
+  /**
+   * Returns others that are direct siblings of a specific one.
+   *
+   * Direct siblings means they have the same parent, but that parent
+   * cannot be a choice.
+   */
+  //  private def modelGroupSiblings(one: DPathElementCompileInfo, rest: Seq[DPathElementCompileInfo]): Seq[DPathElementCompileInfo] = {
+  //    rest.filter(r => one.immediateEnclosingCompileInfo eq r.immediateEnclosingCompileInfo &&
+  //        one.immediateEnclosingCompileInfo
+  //  }
   /**
    * Issues a good diagnostic with suggestions about near-misses on names
    * like missing prefixes.
@@ -444,8 +483,9 @@ class DPathElementCompileInfo(
     }
   }
 
-  final def queryMatchError(step: StepQName, matches: Seq[DPathElementCompileInfo]) = {
-    SDE("Statically ambiguous or query-style paths not supported in step path: '%s'. Matches are at locations:\n%s",
+  private def queryMatchWarning(step: StepQName, matches: Seq[DPathElementCompileInfo],
+    expr: ImplementsThrowsOrSavesSDE) = {
+    expr.SDW("Statically ambiguous or query-style paths not supported in step path: '%s'. Matches are at locations:\n%s",
       step, matches.map(_.schemaFileLocation.locationDescription).mkString("- ", "\n- ", ""))
   }
 }
