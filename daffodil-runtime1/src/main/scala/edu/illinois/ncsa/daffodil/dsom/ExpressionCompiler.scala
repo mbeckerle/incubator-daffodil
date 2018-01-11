@@ -40,11 +40,10 @@ import edu.illinois.ncsa.daffodil.oolag.OOLAG._
 
 trait ExpressionCompilerBase[T <: AnyRef] {
 
-  def compile(qn: NamedQName, nodeInfoKind: NodeInfo.Kind, exprWithBracesMaybe: String, namespaces: NamespaceBinding,
+  def compileExpression(qn: NamedQName, nodeInfoKind: NodeInfo.Kind, exprWithBracesMaybe: String, namespaces: NamespaceBinding,
     compileInfoWherePropertyWasLocated: DPathCompileInfo,
     isEvaluatedAbove: Boolean,
     host: OOLAGHost): CompiledExpression[T]
-
 }
 
 abstract class ExpressionCompilerClass {

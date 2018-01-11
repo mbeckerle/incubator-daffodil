@@ -314,7 +314,7 @@ class InteractiveDebugger(runner: InteractiveDebuggerRunner, eCompilers: Express
       //
       val compiledExpr = try {
         val hostForDiags = new DebuggerHost()
-        val ce = eCompilers.JBoolean.compile(debuggerQName,
+        val ce = eCompilers.JBoolean.compileExpression(debuggerQName,
           NodeInfo.Boolean, expression, processor.context.namespaces, context.dpathCompileInfo, false,
           hostForDiags)
         val warnings = hostForDiags.getDiagnostics.filterNot(_.isError)
@@ -1055,7 +1055,7 @@ class InteractiveDebugger(runner: InteractiveDebuggerRunner, eCompilers: Express
         val isEvaluatedAbove = false
         try {
           val hostForDiags = new DebuggerHost()
-          val compiledExpression = eCompilers.AnyRef.compile(debuggerQName,
+          val compiledExpression = eCompilers.AnyRef.compileExpression(debuggerQName,
             NodeInfo.AnyType, expressionWithBraces, namespaces, context.dpathCompileInfo,
             isEvaluatedAbove, hostForDiags)
           val res = compiledExpression.evaluate(state)
