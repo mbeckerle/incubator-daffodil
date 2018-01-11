@@ -339,6 +339,12 @@ class DPathElementCompileInfo(
    * value is determined during DPath compilation, which requires that the
    * DPathElementCompileInfo already exists. So this must be a mutable value
    * that can be flipped during schema compilation.
+   *
+   * Note that in the case of multiple child element decls with the same name,
+   * we must make sure ALL of them get this var set.
+   *
+   * This is done by findNamedMatch when called by the expression compiler, when compiling
+   * path steps.
    */
   var isReferencedByExpressions = false
 
@@ -386,6 +392,18 @@ class DPathElementCompileInfo(
         matchesERD
       }
 
+    //
+    // We must indicate for all children having this path step as their name
+    // that they are referenced by expression. Expressions that end in such
+    // a path step are considered "query style" expressions as they may
+    // return more than one node, which DFDL v1.0 doesn't allow. (They also may
+    // not return multiple, as the different path step children could be in
+    // different choice branches. Either way, we have to indicate that they are
+    // ALL referenced by this path step.
+    //
+    retryMatchesERD.foreach { info =>
+      info.isReferencedByExpressions = true
+    }
     retryMatchesERD.length match {
       case 0 => noMatchError(step, possibles)
       case 1 => retryMatchesERD(0)
