@@ -120,7 +120,7 @@ trait InfosetException {
 
 /**
  * Indicates that an expression evaluated to a node sequence of more than
- * one value. At runtime this ends up as a Runtime Schema Definition Error.
+ * one value. This results in a schema definition error at runtime.
  */
 case class InfosetAmbiguousNodeException(node: DIComplex, info: DPathElementCompileInfo)
   extends Diagnostic(One(info.schemaFileLocation), Nope, Nope,
