@@ -339,6 +339,12 @@ class DPathElementCompileInfo(
    * value is determined during DPath compilation, which requires that the
    * DPathElementCompileInfo already exists. So this must be a mutable value
    * that can be flipped during schema compilation.
+   *
+   * Note that in the case of multiple child element decls with the same name,
+   * we must make sure ALL of them get this var set.
+   *
+   * This is done by findNamedMatch when called by the expression compiler, when compiling
+   * path steps.
    */
   var isReferencedByExpressions = false
 
@@ -386,6 +392,9 @@ class DPathElementCompileInfo(
         matchesERD
       }
 
+    retryMatchesERD.foreach { info =>
+      info.isReferencedByExpressions = true
+    }
     retryMatchesERD.length match {
       case 0 => noMatchError(step, possibles)
       case 1 => retryMatchesERD(0)

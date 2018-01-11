@@ -118,6 +118,19 @@ trait InfosetException {
   def asDiagnostic = self
 }
 
+/**
+ * Indicates that an expression evaluated to a node sequence of more than
+ * one value. At runtime this ends up as a Runtime Schema Definition Error.
+ */
+case class InfosetAmbiguousNodeException(node: DIComplex, info: DPathElementCompileInfo)
+  extends Diagnostic(One(info.schemaFileLocation), Nope, Nope,
+    One("Path step '%s' ambiguous. More than one infoset node corresponds to this name.\n" +
+      "Query-style expressions are not supported."), info.namedQName.toExtendedSyntax)
+  with InfosetException {
+  def isError = true
+  def modeName = "Schema Definition"
+}
+
 trait InfosetNodeNotFinalException extends InfosetException with RetryableException {
   self: Diagnostic =>
   def node: DINode
@@ -1345,8 +1358,7 @@ sealed class DIComplex(override val erd: ElementRuntimeData, val tunable: Daffod
         }
       }
       if (withoutEmptyArrays.length > 1)
-        info.SDE("Path step '%s' ambiguous. More than one infoset node corresponds to this name.\n" +
-          "Query-style expressions are not supported.", info.namedQName.toExtendedSyntax)
+        info.toss(InfosetAmbiguousNodeException(this, info))
     }
   }
 

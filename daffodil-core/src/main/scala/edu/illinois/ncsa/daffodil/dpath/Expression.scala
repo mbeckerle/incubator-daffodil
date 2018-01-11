@@ -1124,7 +1124,6 @@ case class NamedStep(s: String, predArg: Option[PredicateExpression])
       }.getOrElse(die)
       e
     }
-    stepElem.isReferencedByExpressions = true
     stepElem
   }
 }

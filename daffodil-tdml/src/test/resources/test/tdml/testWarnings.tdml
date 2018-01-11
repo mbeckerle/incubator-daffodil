@@ -24,11 +24,12 @@
   xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" 
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:ex="http://example.com" 
-  xmlns:fn="http://www.w3.org/2005/xpath-functions">
+  xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  defaultRoundTrip="false">
 
 <tdml:defineSchema name="causesWarnings" elementFormDefault="unqualified">
 
-  <dfdl:format ref="ex:daffodilTest1" lengthKind="explicit" />
+  <dfdl:format ref="ex:daffodilTest1" lengthKind="explicit" occursCountKind="implicit"/>
 
   <xs:element name="causesWarnings" dfdl:lengthKind="implicit">
     <xs:complexType>
@@ -36,11 +37,11 @@
         <xs:element name="A" type="xs:string" dfdl:length="1" />
         <xs:element name="AmbigElt" type="xs:string" dfdl:length="1" />
         <xs:element name="B" type="xs:string" dfdl:length="1" />
-        <xs:element name="AmbigElt" type="xs:string" dfdl:length="1" minOccurs="0" />
+        <xs:element name="AmbigElt" type="xs:string" dfdl:length="1" minOccurs="0"/>
         <xs:sequence>
           <xs:annotation>
             <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:discriminator>{ ./AmbigElt eq '2' }</dfdl:discriminator>
+              <dfdl:assert>{ ./AmbigElt eq '2' }</dfdl:assert>
             </xs:appinfo>
           </xs:annotation>
         </xs:sequence>

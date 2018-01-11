@@ -64,5 +64,5 @@ class TestChoice2 {
 
   // DAFFODIL-1773
   @Test def test_queryStyle1(): Unit = { runner1773.runOneTest("queryStyle1") }
-  @Test def test_queryStyle2(): Unit = { runner1773.trace.runOneTest("queryStyle2") }
+  @Test def test_queryStyle2(): Unit = { runner1773.runOneTest("queryStyle2") }
 }
