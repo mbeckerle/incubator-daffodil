@@ -23,7 +23,7 @@
  
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="GeneralFormat" separator="" initiator="" terminator="" leadingSkip='0' textTrimKind="none" initiatedContent="no"
+      <dfdl:format ref="GeneralFormatPortable" separator="" initiator="" terminator="" leadingSkip='0' textTrimKind="none" initiatedContent="no"
         ignoreCase="no" lengthKind="delimited" lengthUnits="characters" representation="text" 
         textNumberRep="standard" encoding="US-ASCII"
         alignment="implicit" alignmentUnits="bytes" trailingSkip="0" escapeSchemeRef=""/>

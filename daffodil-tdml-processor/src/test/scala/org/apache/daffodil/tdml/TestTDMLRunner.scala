@@ -674,7 +674,7 @@ f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff
                         <ts:document>1995-03-24T01:30:00.000000+00:00</ts:document>
                         <ts:infoset>
                           <ts:dfdlInfoset>
-                            <data xmlns={ example }>1995-03-24T01:30:00Z</data>
+                            <data xmlns={ example } xsi:type="xs:dateTime">1995-03-24T01:30:00Z</data>
                           </ts:dfdlInfoset>
                         </ts:infoset>
                       </ts:parserTestCase>

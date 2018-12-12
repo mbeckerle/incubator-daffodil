@@ -35,7 +35,7 @@
 
   <tdml:defineSchema name="embeddedWithInclude">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <xs:element name="basic" type="xs:string"
       dfdl:lengthKind="delimited" />
   </tdml:defineSchema>
@@ -1037,7 +1037,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <baseSeq3>
-          <date3>1988-03-24+00:00</date3>
+          <date3 xsi:type="xs:date">1988-03-24+00:00</date3>
         </baseSeq3>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -1628,9 +1628,9 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <root2>
-          <date3>2013-03-04+00:00</date3>
-          <date3>1997-04-12+00:00</date3>
-          <date3>1980-05-22+00:00</date3>
+          <date3 xsi:type="xs:date">2013-03-04+00:00</date3>
+          <date3 xsi:type="xs:date">1997-04-12+00:00</date3>
+          <date3 xsi:type="xs:date">1980-05-22+00:00</date3>
         </root2>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -2059,19 +2059,19 @@
             <item>jones</item>
             <item>robert</item>
             <item>brandon</item>
-            <item>1988-03-24</item>
+            <item xsi:type="xs:date">1988-03-24</item>
           </record>
           <record>
             <item>johnson</item>
             <item>john</item>
             <item>henry</item>
-            <item>1986-01-23</item>
+            <item xsi:type="xs:date">1986-01-23</item>
           </record>
           <record>
             <item>jonesington</item>
             <item>david</item>
             <item>frederick</item>
-            <item>1986-02-19</item>
+            <item xsi:type="xs:date">1986-02-19</item>
           </record>
         </file>
       </tdml:dfdlInfoset>
@@ -2111,19 +2111,19 @@
             <item>jones</item>
             <item>robert</item>
             <item>brandon</item>
-            <item>1988-03-24</item>
+            <item xsi:type="xs:date">1988-03-24</item>
           </record>
           <record>
             <item>johnson</item>
             <item>john</item>
             <item>henry</item>
-            <item>1986-01-23</item>
+            <item xsi:type="xs:date">1986-01-23</item>
           </record>
           <record>
             <item>jonesington</item>
             <item>david</item>
             <item>frederick</item>
-            <item>1986-02-19</item>
+            <item xsi:type="xs:date">1986-02-19</item>
           </record>
         </file2>
       </tdml:dfdlInfoset>

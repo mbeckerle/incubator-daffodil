@@ -30,7 +30,7 @@
    
    <xs:annotation>
      <xs:appinfo source="http://www.ogf.org/dfdl/">
-        <dfdl:format ref="tns:GeneralFormat" truncateSpecifiedLengthString="yes"/>
+        <dfdl:format ref="tns:GeneralFormatPortable" truncateSpecifiedLengthString="yes"/>
         <dfdl:defineVariable name="mode" type="xs:string" />
       </xs:appinfo>
    </xs:annotation>

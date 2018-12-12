@@ -30,7 +30,7 @@
   
   <tdml:defineSchema name="diagnostics">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"/>
 
     <xs:element name="e1">
       <xs:complexType>
@@ -81,7 +81,7 @@
 
   <tdml:defineSchema name="paths">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"/>
 
     <xs:element name="e1">
       <xs:complexType>
@@ -234,7 +234,7 @@
 
   <tdml:defineSchema name="hiddenElem">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"
       occursCountKind='parsed'/>
     
     <xs:group name="hiddenData">
@@ -283,7 +283,7 @@
 
   <tdml:defineSchema name="asterisk">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"/>
 
     <xs:element name="e1">
       <xs:complexType>
@@ -334,7 +334,7 @@
   
   <tdml:defineSchema name="attributeAxis">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"/>
 
     <xs:element name="e1">
       <xs:complexType>
@@ -367,7 +367,7 @@
 
   <tdml:defineSchema name="comparisonOperators">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"/>
 
     <xs:element name="e1">
       <xs:complexType>
@@ -863,7 +863,7 @@
 
   <tdml:defineSchema name="newRegex">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     
     <xs:simpleType name="st1">
       <xs:restriction base="xs:string">
@@ -925,7 +925,7 @@
 
   <tdml:defineSchema name="lke1_rel">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -962,7 +962,7 @@
 
   <tdml:defineSchema name="lke1_abs">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -1000,7 +1000,7 @@
 
   <tdml:defineSchema name="ocke1">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -1047,7 +1047,7 @@
 
   <tdml:defineSchema name="ocke2">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -1114,7 +1114,7 @@
   <tdml:defineSchema name="ArrayOptionalElem-Embedded.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthUnits="bytes"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthUnits="bytes"
       encoding="UTF-8" separator="" initiator="" terminator=""
       occursCountKind="parsed" ignoreCase="no" textNumberRep="standard"
       representation="text" byteOrder="bigEndian" binaryNumberRep="binary" />
@@ -1188,7 +1188,7 @@
   <tdml:defineSchema name="expressions-Embedded.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"
       lengthUnits="bytes" encoding="US-ASCII" separator="" initiator=""
       terminator="" occursCountKind="parsed" ignoreCase="no"
       textNumberRep="standard" representation="text" />
@@ -1735,7 +1735,7 @@
   <tdml:defineSchema name="expression-type-errors.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"
       lengthUnits="bytes" encoding="UTF-8" separator="" initiator=""
       terminator="" occursCountKind="parsed" ignoreCase="no"
       textNumberRep="standard" representation="text" />
@@ -1918,7 +1918,7 @@
   <tdml:defineSchema name="elementFormWithWhitespace">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"
       lengthUnits="bytes" encoding="US-ASCII" initiator=""
       terminator="" occursCountKind="parsed" ignoreCase="no"
       textNumberRep="standard" representation="text">
@@ -1961,7 +1961,7 @@
 
   <tdml:defineSchema name="unknown-prefix">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <xs:element name="theElementName" type="xs:int"
       dfdl:inputValueCalc="{ theUnknownPrefix:x }" />
   </tdml:defineSchema>
@@ -1981,7 +1981,7 @@
 
   <tdml:defineSchema name="expresion_path_error">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -2029,7 +2029,7 @@
 
   <tdml:defineSchema name="v">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <xs:element name="e">
       <xs:complexType>
         <xs:sequence>
@@ -2308,7 +2308,7 @@
 
   <tdml:defineSchema name="checkConstraints">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <xs:element name="e1">
       <xs:complexType>
         <xs:sequence>
@@ -2475,7 +2475,7 @@
 
   <tdml:defineSchema name="repeatFlags">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <xs:element name="e">
       <xs:complexType>
         <xs:sequence dfdl:separator="">
@@ -2663,7 +2663,7 @@
 
   <tdml:defineSchema name="repeatBitFlags">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthUnits="bits"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthUnits="bits"
       lengthKind="implicit" alignment="1" alignmentUnits="bits"
       representation="binary" byteOrder="bigEndian" />
 
@@ -2992,7 +2992,7 @@
   <tdml:defineSchema name="expressionRules">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"
       lengthUnits="bytes" encoding="US-ASCII" separator="" initiator=""
       terminator="" occursCountKind="parsed" ignoreCase="no"
       textNumberRep="standard" representation="text" />
@@ -3294,7 +3294,7 @@
   <tdml:defineSchema name="trueFalseTypeCorrect">
   
      <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat"/>
+    <dfdl:format ref="ex:GeneralFormatPortable"/>
      
      <xs:element name="e">
      <xs:complexType>
@@ -3936,7 +3936,7 @@
   <tdml:defineSchema name="predicates">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited" />
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -4246,7 +4246,7 @@
   <tdml:defineSchema name="and_or_schema">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited" />
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -5009,7 +5009,7 @@
   <tdml:defineSchema name="axes">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited" />
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -5508,7 +5508,7 @@
   <tdml:defineSchema name="array_index">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited" />
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited" />
 
     <xs:element name="e1">
       <xs:complexType>
@@ -5692,8 +5692,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e37>
-          <dateTime1>1988-03-24T04:55:23</dateTime1>
-          <dateTime2>1988-03-24T04:55:24</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">1988-03-24T04:55:23</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">1988-03-24T04:55:24</dateTime2>
           <lessThanEqualTo>true</lessThanEqualTo>
         </e37>
       </tdml:dfdlInfoset>
@@ -5714,8 +5714,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e38>
-          <dateTime1>1988-03-24T04:55:24</dateTime1>
-          <dateTime2>1988-03-24T04:55:23</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">1988-03-24T04:55:24</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">1988-03-24T04:55:23</dateTime2>
           <greaterThanEqualTo>true</greaterThanEqualTo>
         </e38>
       </tdml:dfdlInfoset>
@@ -5736,8 +5736,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e18>
-          <dateTime1>1988-03-24T04:55:24</dateTime1>
-          <dateTime2>1988-03-24T04:55:23</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">1988-03-24T04:55:24</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">1988-03-24T04:55:23</dateTime2>
           <oneGTtwo>true</oneGTtwo>
         </e18>
       </tdml:dfdlInfoset>
@@ -5758,8 +5758,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e19>
-          <dateTime1>1988-03-24T04:55:23</dateTime1>
-          <dateTime2>1988-03-24T04:55:24</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">1988-03-24T04:55:23</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">1988-03-24T04:55:24</dateTime2>
           <oneLTtwo>true</oneLTtwo>
         </e19>
       </tdml:dfdlInfoset>
@@ -5780,8 +5780,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e20>
-          <dateTime1>1988-03-24T04:55:23</dateTime1>
-          <dateTime2>1988-03-24T04:55:24</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">1988-03-24T04:55:23</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">1988-03-24T04:55:24</dateTime2>
           <notEqual>true</notEqual>
         </e20>
       </tdml:dfdlInfoset>
@@ -5802,8 +5802,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e21>
-          <dateTime1>1988-03-24T04:55:23</dateTime1>
-          <dateTime2>1988-03-24T04:55:23</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">1988-03-24T04:55:23</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">1988-03-24T04:55:23</dateTime2>
           <same>true</same>
         </e21>
       </tdml:dfdlInfoset>
@@ -5824,8 +5824,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e22>
-          <date1>1988-03-23</date1>
-          <date2>1988-03-24</date2>
+          <date1 xsi:type="xs:date">1988-03-23</date1>
+          <date2 xsi:type="xs:date">1988-03-24</date2>
           <lessThanEqualTo>true</lessThanEqualTo>
         </e22>
       </tdml:dfdlInfoset>
@@ -5846,8 +5846,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e23>
-          <date1>1988-03-24</date1>
-          <date2>1988-03-23</date2>
+          <date1 xsi:type="xs:date">1988-03-24</date1>
+          <date2 xsi:type="xs:date">1988-03-23</date2>
           <greaterThanEqualTo>true</greaterThanEqualTo>
         </e23>
       </tdml:dfdlInfoset>
@@ -5868,8 +5868,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e24>
-          <date1>1988-03-24</date1>
-          <date2>1988-03-23</date2>
+          <date1 xsi:type="xs:date">1988-03-24</date1>
+          <date2 xsi:type="xs:date">1988-03-23</date2>
           <oneGTtwo>true</oneGTtwo>
         </e24>
       </tdml:dfdlInfoset>
@@ -5890,8 +5890,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e25>
-          <date1>1988-03-24</date1>
-          <date2>1988-03-25</date2>
+          <date1 xsi:type="xs:date">1988-03-24</date1>
+          <date2 xsi:type="xs:date">1988-03-25</date2>
           <oneLTtwo>true</oneLTtwo>
         </e25>
       </tdml:dfdlInfoset>
@@ -5912,8 +5912,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e26>
-          <date1>1988-03-24</date1>
-          <date2>1988-03-25</date2>
+          <date1 xsi:type="xs:date">1988-03-24</date1>
+          <date2 xsi:type="xs:date">1988-03-25</date2>
           <notEqual>true</notEqual>
         </e26>
       </tdml:dfdlInfoset>
@@ -5934,8 +5934,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e27>
-          <date1>1988-03-24</date1>
-          <date2>1988-03-24</date2>
+          <date1 xsi:type="xs:date">1988-03-24</date1>
+          <date2 xsi:type="xs:date">1988-03-24</date2>
           <same>true</same>
         </e27>
       </tdml:dfdlInfoset>
@@ -5956,8 +5956,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e28>
-          <time1>04:55:23</time1>
-          <time2>04:55:24</time2>
+          <time1 xsi:type="xs:time">04:55:23</time1>
+          <time2 xsi:type="xs:time">04:55:24</time2>
           <lessThanEqualTo>true</lessThanEqualTo>
         </e28>
       </tdml:dfdlInfoset>
@@ -5978,8 +5978,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e29>
-          <time1>04:55:24</time1>
-          <time2>04:55:23</time2>
+          <time1 xsi:type="xs:time">04:55:24</time1>
+          <time2 xsi:type="xs:time">04:55:23</time2>
           <greaterThanEqualTo>true</greaterThanEqualTo>
         </e29>
       </tdml:dfdlInfoset>
@@ -6000,8 +6000,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e30>
-          <time1>04:55:24</time1>
-          <time2>04:55:23</time2>
+          <time1 xsi:type="xs:time">04:55:24</time1>
+          <time2 xsi:type="xs:time">04:55:23</time2>
           <oneGTtwo>true</oneGTtwo>
         </e30>
       </tdml:dfdlInfoset>
@@ -6022,8 +6022,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e31>
-          <time1>04:55:23</time1>
-          <time2>04:55:24</time2>
+          <time1 xsi:type="xs:time">04:55:23</time1>
+          <time2 xsi:type="xs:time">04:55:24</time2>
           <oneLTtwo>true</oneLTtwo>
         </e31>
       </tdml:dfdlInfoset>
@@ -6044,8 +6044,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e32>
-          <time1>04:55:23</time1>
-          <time2>04:55:24</time2>
+          <time1 xsi:type="xs:time">04:55:23</time1>
+          <time2 xsi:type="xs:time">04:55:24</time2>
           <notEqual>true</notEqual>
         </e32>
       </tdml:dfdlInfoset>
@@ -6066,8 +6066,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e33>
-          <time1>04:55:23</time1>
-          <time2>04:55:23</time2>
+          <time1 xsi:type="xs:time">04:55:23</time1>
+          <time2 xsi:type="xs:time">04:55:23</time2>
           <same>true</same>
         </e33>
       </tdml:dfdlInfoset>
@@ -6089,8 +6089,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e34>
-          <dateTime1>2000-01-15T00:00:00</dateTime1>
-          <dateTime2>2000-02-15T00:00:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2000-01-15T00:00:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">2000-02-15T00:00:00</dateTime2>
           <oneLTtwo>true</oneLTtwo>
         </e34>
       </tdml:dfdlInfoset>
@@ -6113,8 +6113,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e35>
-          <dateTime1>2000-01-01T12:00:00+00:00</dateTime1>
-          <dateTime2>1999-12-31T23:00:00+00:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2000-01-01T12:00:00+00:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">1999-12-31T23:00:00+00:00</dateTime2>
           <oneLTtwo>false</oneLTtwo>
         </e35>
       </tdml:dfdlInfoset>
@@ -6129,9 +6129,9 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e35a>
-          <dateTime1>2000-01-01T12:00:00</dateTime1>
-          <dateTime2>1999-12-31T23:00:00+00:00</dateTime2>
-          <oneLTtwo>true</oneLTtwo>
+          <dateTime1 xsi:type="xs:dateTime">2000-01-01T12:00:00Z</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">1999-12-31T23:00:00+00:00</dateTime2>
+          <oneLTtwo>false</oneLTtwo>
         </e35a>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -6153,8 +6153,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e36>
-          <dateTime1>2002-04-02T12:00:00-01:00</dateTime1>
-          <dateTime2>2002-04-02T17:00:00+04:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2002-04-02T12:00:00-01:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">2002-04-02T17:00:00+04:00</dateTime2>
           <same>true</same>
         </e36>
       </tdml:dfdlInfoset>
@@ -6176,8 +6176,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e36>
-          <dateTime1>2002-04-02T12:00:00-05:00</dateTime1>
-          <dateTime2>2002-04-02T23:00:00+06:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2002-04-02T12:00:00-05:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">2002-04-02T23:00:00+06:00</dateTime2>
           <same>true</same>
         </e36>
       </tdml:dfdlInfoset>
@@ -6199,8 +6199,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e36>
-          <dateTime1>2002-04-02T12:00:00-05:00</dateTime1>
-          <dateTime2>2002-04-02T17:00:00-05:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2002-04-02T12:00:00-05:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">2002-04-02T17:00:00-05:00</dateTime2>
           <same>false</same>
         </e36>
       </tdml:dfdlInfoset>
@@ -6222,8 +6222,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e36>
-          <dateTime1>2002-04-02T12:00:00-05:00</dateTime1>
-          <dateTime2>2002-04-02T12:00:00-05:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2002-04-02T12:00:00-05:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">2002-04-02T12:00:00-05:00</dateTime2>
           <same>true</same>
         </e36>
       </tdml:dfdlInfoset>
@@ -6245,8 +6245,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e36>
-          <dateTime1>2002-04-02T23:00:00-04:00</dateTime1>
-          <dateTime2>2002-04-03T02:00:00-01:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2002-04-02T23:00:00-04:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">2002-04-03T02:00:00-01:00</dateTime2>
           <same>true</same>
         </e36>
       </tdml:dfdlInfoset>
@@ -6272,8 +6272,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e36>
-          <dateTime1>2000-01-01T00:00:00-05:00</dateTime1>
-          <dateTime2>2000-01-01T00:00:00-05:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2000-01-01T00:00:00-05:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">2000-01-01T00:00:00-05:00</dateTime2>
           <same>true</same>
         </e36>
       </tdml:dfdlInfoset>
@@ -6296,8 +6296,8 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <e36>
-          <dateTime1>2005-04-05T00:00:00-05:00</dateTime1>
-          <dateTime2>2005-04-04T00:00:00-05:00</dateTime2>
+          <dateTime1 xsi:type="xs:dateTime">2005-04-05T00:00:00-05:00</dateTime1>
+          <dateTime2 xsi:type="xs:dateTime">2005-04-04T00:00:00-05:00</dateTime2>
           <same>false</same>
         </e36>
       </tdml:dfdlInfoset>
@@ -7029,7 +7029,7 @@
 
   <tdml:defineSchema name="XPathMath">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat"/>
+    <dfdl:format ref="ex:GeneralFormatPortable"/>
 
     <xs:element name="div01" type="xs:double" dfdl:inputValueCalc="{ xs:double(5) div xs:double(2) }" />
     <xs:element name="div02" type="xs:float" dfdl:inputValueCalc="{ xs:float(5) div xs:float(2) }" />

@@ -31,7 +31,7 @@
 
 	<tdml:defineSchema name="pattern">
 		<xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
 		<xs:element name="e1" dfdl:lengthKind="delimited">
 			<xs:simpleType>
@@ -255,7 +255,7 @@
 	<tdml:defineSchema name="min2max5">
 
 		<xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
 			terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
 			floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
 			alignmentUnits="bytes" fillByte="f" occursCountKind="parsed"
@@ -368,7 +368,7 @@
   
   <tdml:defineSchema name="inputValueCalc">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
   
     <xs:element name="e1" dfdl:lengthKind="delimited" dfdl:inputValueCalc="{ 5-3 }">
       <xs:simpleType>
@@ -398,7 +398,7 @@
 
   <tdml:defineSchema name="TestFacets">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e2_2" dfdl:lengthKind="delimited">
       <xs:simpleType>
@@ -697,7 +697,7 @@
     <tdml:document><![CDATA[2014-03-24T03:45:30]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeImp>2014-03-24T03:45:30</dateTimeImp>
+        <dateTimeImp xsi:type="xs:dateTime">2014-03-24T03:45:30</dateTimeImp>
       </tdml:dfdlInfoset>
     </tdml:infoset>
     <tdml:validationErrors>
@@ -949,7 +949,7 @@
   
   <tdml:defineSchema name="facetCombos">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" occursCountKind="implicit" />
+    <dfdl:format ref="ex:GeneralFormatPortable" occursCountKind="implicit" />
 
     <xs:element name="intRestrict" dfdl:lengthKind="delimited">
       <xs:simpleType>
@@ -1217,7 +1217,7 @@
   
   <tdml:defineSchema name="assertValidation">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     
     <xs:element name="e1" type="xs:int" dfdl:lengthKind="delimited">
       <xs:annotation>
@@ -1327,7 +1327,7 @@
 
   <tdml:defineSchema name="choiceValidation">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:simpleType name="maxInc3">
      <xs:restriction base="xs:int">

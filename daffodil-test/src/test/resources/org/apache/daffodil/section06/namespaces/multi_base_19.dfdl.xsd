@@ -22,7 +22,7 @@
       
   <ex:annotation>
     <ex:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="xs:GeneralFormat" 
+      <dfdl:format ref="xs:GeneralFormatPortable" 
         separator="'" initiator="" terminator="" leadingSkip='0' textTrimKind="none" initiatedContent="no"
         separatorPosition="infix" alignment="1" alignmentUnits="bytes" trailingSkip="0" ignoreCase="no" separatorSuppressionPolicy="anyEmpty" binaryNumberRep="binary" byteOrder="bigEndian" representation="binary" textNumberRep="standard" lengthKind="delimited" encoding="ASCII" escapeSchemeRef=''/>
     </ex:appinfo>

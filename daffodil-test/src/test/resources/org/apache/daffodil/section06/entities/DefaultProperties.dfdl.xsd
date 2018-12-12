@@ -30,7 +30,7 @@ xmlns:tns="http://example.com">
 				> </dfdl:escapeScheme>
 			</dfdl:defineEscapeScheme>
 			<dfdl:defineFormat name="DefaultPropertiesFormat">
-				<dfdl:format ref="tns:GeneralFormat" alignment="1" alignmentUnits="bytes" binaryBooleanFalseRep="0"
+				<dfdl:format ref="tns:GeneralFormatPortable" alignment="1" alignmentUnits="bytes" binaryBooleanFalseRep="0"
 					binaryBooleanTrueRep="1" binaryCalendarRep="bcd" binaryDecimalVirtualPoint="0"
 					binaryFloatRep="ieee" binaryNumberCheckPolicy="lax" binaryNumberRep="binary"
 					binaryPackedSignCodes="C D F C" byteOrder="bigEndian" calendarCenturyStart="53"

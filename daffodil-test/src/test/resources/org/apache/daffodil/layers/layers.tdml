@@ -400,19 +400,19 @@ We gzip that, and then we must prepend that with the length (as a binary 4-byte 
               <item>smith</item>
               <item>robert</item>
               <item>brandon</item>
-              <item>1988-03-24</item>
+              <item xsi:type="xs:date">1988-03-24</item>
             </record>
             <record>
               <item>johnson</item>
               <item>john</item>
               <item>henry</item>
-              <item>1986-01-23</item>
+              <item xsi:type="xs:date">1986-01-23</item>
             </record>
             <record>
               <item>jones</item>
               <item>arya</item>
               <item>cat</item>
-              <item>1986-02-19</item>
+              <item xsi:type="xs:date">1986-02-19</item>
             </record>
           </data>
         </ex:file>

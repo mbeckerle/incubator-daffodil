@@ -24,13 +24,13 @@
 
   <tdml:defineSchema name="es1">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="tns:GeneralFormat" lengthKind="delimited" />
+    <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="delimited" />
     <dfdl:defineEscapeScheme name="pound"/>
     <xs:element name="elem" type="xs:int"/>
   </tdml:defineSchema>
 
   <defineSchema name="es2">
-    <dfdl:format ref="tns:GeneralFormat" lengthKind="delimited" />
+    <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="delimited" />
     <dfdl:defineEscapeScheme NCName="foo:bar">
       <dfdl:escapeScheme escapeCharacter='#'
         escapeKind="escapeCharacter" escapeEscapeCharacter="" generateEscapeBlock="whenNeeded"/>

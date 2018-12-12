@@ -38,7 +38,7 @@
         nilValueDelimiterPolicy="both" emptyValueDelimiterPolicy="none"
         documentFinalTerminatorCanBeMissing="yes" initiatedContent="no"
         separatorSuppressionPolicy="anyEmpty" separatorPosition="infix"
-        ref="tns:GeneralFormat" />
+        ref="tns:GeneralFormatPortable" />
     </appinfo>
   </annotation>
   <!-- Parsing of CSV -->

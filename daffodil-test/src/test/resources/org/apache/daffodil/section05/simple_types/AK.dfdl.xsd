@@ -26,7 +26,7 @@
 
   <annotation>
     <appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="ex:GeneralFormat" separator="" initiator="" terminator=""
+      <dfdl:format ref="ex:GeneralFormatPortable" separator="" initiator="" terminator=""
         emptyValueDelimiterPolicy="none" lengthKind="implicit"
         textNumberRep="standard" binaryNumberRep="binary" byteOrder="bigEndian"
         representation="text" occursCountKind="expression"

@@ -33,7 +33,7 @@
  >
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
     <dfdl:format
-      ref="ex:GeneralFormat"
+      ref="ex:GeneralFormatPortable"
       lengthKind="explicit" 
       representation="binary" lengthUnits="bits"/>
 
@@ -112,7 +112,7 @@
 <tdml:defineSchema name="s2" elementFormDefault="unqualified">
   
   <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-  <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"/>
+  <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"/>
    
   <!-- This for reproducing the diagnostic about upward paths past root -->
   
@@ -226,7 +226,7 @@
   <tdml:defineSchema name="traceComplex" elementFormDefault="unqualified">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e">
       <xs:complexType>

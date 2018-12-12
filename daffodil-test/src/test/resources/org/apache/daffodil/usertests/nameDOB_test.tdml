@@ -22,6 +22,7 @@
   xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" 
   xmlns:tdml="http://www.ibm.com/xmlns/dfdl/testData"
   xmlns:ex="http://example.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   defaultRoundTrip="onePass">
   
   <tdml:defineSchema name="test2" elementFormDefault="unqualified">
@@ -84,21 +85,21 @@ $,johnson$john$henry$01/23/1986
             <lastName>smith, jr.</lastName>
             <middleName>robert</middleName>
             <firstName>brandon</firstName>
-            <DOB>1988-03-24</DOB>
+            <DOB xsi:type="xs:date">1988-03-24</DOB>
           </record>
           <record>
             <sep>$</sep>
             <lastName>johnson</lastName>
             <middleName>john</middleName>
             <firstName>henry</firstName>
-            <DOB>1986-01-23</DOB>
+            <DOB xsi:type="xs:date">1986-01-23</DOB>
           </record>
           <record>
             <sep>[SEP]</sep>
             <lastName>jones</lastName>
             <middleName>arya</middleName>
             <firstName>cat</firstName>
-            <DOB>1986-02-19</DOB>
+            <DOB xsi:type="xs:date">1986-02-19</DOB>
           </record>
         </ex:file2>
       </tdml:dfdlInfoset>

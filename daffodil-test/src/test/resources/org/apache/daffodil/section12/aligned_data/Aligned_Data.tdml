@@ -25,7 +25,7 @@
   <tdml:defineSchema name="s1">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e" type="xs:string" dfdl:lengthKind="delimited"
       dfdl:leadingSkip="3" />
@@ -57,7 +57,7 @@
   <tdml:defineSchema name="alignmentSchema">
     
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="binary" encoding="utf-8" alignmentUnits="bits" alignment="4" leadingSkip="0"
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="binary" encoding="utf-8" alignmentUnits="bits" alignment="4" leadingSkip="0"
       occursCountKind='parsed'/>
     
     <xs:element name="string32be" type="xs:string" dfdl:encoding="utf-32be" dfdl:lengthKind="explicit" dfdl:length="4" dfdl:lengthUnits="bytes"
@@ -493,7 +493,7 @@
   <tdml:defineSchema name="implicitAlignmentSchema">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="binary" encoding="ascii" 
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="binary" encoding="ascii" 
       lengthUnits="bits" alignmentUnits="bits" binaryNumberRep="binary" textNumberPattern="###0.###;-###0.###"/>
 
     <xs:element name="string" dfdl:lengthKind="implicit" dfdl:encoding="ascii" 
@@ -536,10 +536,10 @@
     <xs:element name="string2" type="xs:string" dfdl:lengthKind="explicit" dfdl:length="3" dfdl:lengthUnits="characters" dfdl:alignment="implicit" dfdl:leadingSkip="16" />
   
     <dfdl:defineFormat name="textImp">
-      <dfdl:format ref="ex:GeneralFormat" textNumberPattern="###0.###;-###0.###" lengthKind="delimited" representation="text" alignment="implicit" alignmentUnits="bytes" />
+      <dfdl:format ref="ex:GeneralFormatPortable" textNumberPattern="###0.###;-###0.###" lengthKind="delimited" representation="text" alignment="implicit" alignmentUnits="bytes" />
     </dfdl:defineFormat>
     <dfdl:defineFormat name="textImpBitAlign">
-      <dfdl:format ref="ex:GeneralFormat" textNumberPattern="###0.###;-###0.###" lengthKind="delimited" representation="text" alignment="implicit" alignmentUnits="bits" />
+      <dfdl:format ref="ex:GeneralFormatPortable" textNumberPattern="###0.###;-###0.###" lengthKind="delimited" representation="text" alignment="implicit" alignmentUnits="bits" />
     </dfdl:defineFormat>
   
     <xs:element name="uIntT" type="xs:unsignedInt" dfdl:ref="ex:textImp" dfdl:leadingSkip="1"/>
@@ -576,7 +576,7 @@
   
   <tdml:defineSchema name="alignmentBitOrder">
       <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" textNumberPattern="###0.###;-###0.###" lengthUnits='bits' representation='binary'
+    <dfdl:format ref="ex:GeneralFormatPortable" textNumberPattern="###0.###;-###0.###" lengthUnits='bits' representation='binary'
       binaryNumberRep='binary' alignmentUnits='bits' lengthKind='explicit'
       byteOrder="littleEndian"/>
 
@@ -1565,7 +1565,7 @@
 
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateT>2013-03-31</dateT>
+        <dateT xsi:type="xs:date">2013-03-31</dateT>
       </tdml:dfdlInfoset>
     </tdml:infoset>
 
@@ -1589,7 +1589,7 @@
 
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateT2>2013-05-06</dateT2>
+        <dateT2 xsi:type="xs:date">2013-05-06</dateT2>
       </tdml:dfdlInfoset>
     </tdml:infoset>
 
@@ -1613,7 +1613,7 @@
 
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <timeT>04:09:23</timeT>
+        <timeT xsi:type="xs:time">04:09:23</timeT>
       </tdml:dfdlInfoset>
     </tdml:infoset>
 
@@ -1637,7 +1637,7 @@
 
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeT>2013-05-03T03:30:30</dateTimeT>
+        <dateTimeT xsi:type="xs:dateTime">2013-05-03T03:30:30</dateTimeT>
       </tdml:dfdlInfoset>
     </tdml:infoset>
 

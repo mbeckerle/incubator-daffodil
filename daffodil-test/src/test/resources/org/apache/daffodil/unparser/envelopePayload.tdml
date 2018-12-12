@@ -36,7 +36,7 @@ looking at DFDL schemas for some complex formats like STANAG 5516 with NACT wrap
   
     <dfdl:format ref="be" />
     <dfdl:defineFormat name="be">
-      <dfdl:format ref="ex:GeneralFormat" representation="binary" 
+      <dfdl:format ref="ex:GeneralFormatPortable" representation="binary" 
         encoding="ascii" lengthUnits="bits" alignmentUnits="bits"
         alignment="1" fillByte="X" binaryNumberRep="binary" lengthKind="explicit" />
     </dfdl:defineFormat>
@@ -189,7 +189,7 @@ looking at DFDL schemas for some complex formats like STANAG 5516 with NACT wrap
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
     <dfdl:format ref="be" />
     <dfdl:defineFormat name="be">
-      <dfdl:format ref="ex:GeneralFormat" representation="binary" 
+      <dfdl:format ref="ex:GeneralFormatPortable" representation="binary" 
         encoding="ascii" lengthUnits="bits" alignmentUnits="bits"
         alignment="1" fillByte="X" binaryNumberRep="binary" lengthKind="explicit" />
     </dfdl:defineFormat>
@@ -347,7 +347,7 @@ looking at DFDL schemas for some complex formats like STANAG 5516 with NACT wrap
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
     <dfdl:format ref="be" />
     <dfdl:defineFormat name="be">
-      <dfdl:format ref="ex:GeneralFormat" representation="binary" 
+      <dfdl:format ref="ex:GeneralFormatPortable" representation="binary" 
         encoding="ascii" lengthUnits="bits" alignmentUnits="bits"
         alignment="1" fillByte="X" binaryNumberRep="binary" lengthKind="explicit" />
     </dfdl:defineFormat>

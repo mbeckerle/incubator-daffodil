@@ -33,7 +33,7 @@
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def3">
-      <dfdl:format ref="tns:GeneralFormat" representation="binary" />
+      <dfdl:format ref="tns:GeneralFormatPortable" representation="binary" />
     </dfdl:defineFormat>
 
     <dfdl:format ref="tns:def1" initiator="" terminator=""
@@ -92,13 +92,13 @@
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
 
     <dfdl:defineFormat name="def">
-      <dfdl:format ref="tns:GeneralFormat" lengthKind="explicit"
+      <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="explicit"
         lengthUnits="characters" length="4" leadingSkip="0" representation="text"
         textNumberRep="standard" />
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def">
-      <dfdl:format ref="tns:GeneralFormat" leadingSkip="0" representation="binary" />
+      <dfdl:format ref="tns:GeneralFormatPortable" leadingSkip="0" representation="binary" />
     </dfdl:defineFormat>
 
     <dfdl:format ref="tns:def" />
@@ -118,7 +118,7 @@
   <tdml:defineSchema name="defineNotUsed">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
     <dfdl:defineFormat name="def">
-      <dfdl:format ref="tns:GeneralFormat" lengthKind="explicit"
+      <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="explicit"
         lengthUnits="characters" length="4" representation="text"
         textNumberRep="standard" textNumberPattern="####" />
     </dfdl:defineFormat>
@@ -126,7 +126,7 @@
     <dfdl:format ref="tns:def" />
 
     <dfdl:defineFormat name="def2">
-      <dfdl:format ref="tns:GeneralFormat" length="1" />
+      <dfdl:format ref="tns:GeneralFormatPortable" length="1" />
     </dfdl:defineFormat>
 
     <xs:element name="root" dfdl:lengthKind="implicit"> <!-- Why did I have to add lengthKind="implicit" here and not receive an error when it wasn't there?!!! -->

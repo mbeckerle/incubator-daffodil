@@ -24,7 +24,7 @@
 
   <tdml:defineSchema name="model1">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited" nilKind="literalValue" nilValue="%ES;" />
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited" nilKind="literalValue" nilValue="%ES;" />
 
     <xs:element name="root1">
       <xs:complexType>

@@ -23,13 +23,13 @@
 
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="tns:GeneralFormat" />
+      <dfdl:format ref="tns:GeneralFormatPortable" />
     </xs:appinfo>
   </xs:annotation>
 
   <xs:element name="seq_01">
     <xs:complexType>
-      <xs:sequence dfdl:ref="tns:GeneralFormat">
+      <xs:sequence dfdl:ref="tns:GeneralFormatPortable">
         <xs:element name="e1" type="xs:int" />
         <xs:element name="e2" type="xs:int" />
         <xs:element name="e3" type="xs:int" />
@@ -39,7 +39,7 @@
 
   <xs:element name="seq_02" dfdl:terminator="">
     <xs:complexType>
-      <xs:sequence dfdl:ref="tns:GeneralFormat" dfdl:separator="%SP;"
+      <xs:sequence dfdl:ref="tns:GeneralFormatPortable" dfdl:separator="%SP;"
         dfdl:separatorPosition="infix" dfdl:terminator="">
         <xs:element name="e1" type="xs:int"
           dfdl:terminator="%%" />

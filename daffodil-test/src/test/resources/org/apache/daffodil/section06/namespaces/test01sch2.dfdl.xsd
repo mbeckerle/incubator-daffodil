@@ -24,7 +24,7 @@
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:defineFormat name="test01fmt1">
-        <dfdl:format ref="GeneralFormat" />
+        <dfdl:format ref="GeneralFormatPortable" />
       </dfdl:defineFormat>
     </xs:appinfo>
   </xs:annotation>

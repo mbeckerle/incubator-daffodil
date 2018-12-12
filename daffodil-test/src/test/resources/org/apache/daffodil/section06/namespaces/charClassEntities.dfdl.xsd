@@ -27,7 +27,7 @@
 
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="GeneralFormat" initiator="" terminator="" leadingSkip="0"
+      <dfdl:format ref="GeneralFormatPortable" initiator="" terminator="" leadingSkip="0"
         trailingSkip="0" textBidi="no" floating="no" encoding="ASCII"
         byteOrder="bigEndian" alignment="implicit" alignmentUnits="bits"
         fillByte="f" occursCountKind="parsed"

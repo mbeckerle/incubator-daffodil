@@ -96,7 +96,7 @@ class TestVariables {
     <tdml:testSuite suiteName="theSuiteName" xmlns:tns={ tns } xmlns:tdml={ tdmlVal } xmlns:dfdl={ dfdl } xmlns:xsd={ xsd } xmlns:xs={ xsd } xmlns:xsi={ xsi }>
       <tdml:defineSchema name="mySchema">
         <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-        <dfdl:format ref="tns:GeneralFormat"/>
+        <dfdl:format ref="tns:GeneralFormatPortable"/>
         <dfdl:defineVariable name="pi" type="xs:double" defaultValue={ Pi.toString }/>
         <xs:element name="data" type="xs:double" dfdl:inputValueCalc="{ $tns:pi }"/>
       </tdml:defineSchema>
@@ -120,7 +120,7 @@ class TestVariables {
     <tdml:testSuite suiteName="theSuiteName" xmlns:tns={ tns } xmlns:tdml={ tdmlVal } xmlns:dfdl={ dfdl } xmlns:xsd={ xsd } xmlns:xs={ xsd } xmlns:xsi={ xsi }>
       <tdml:defineSchema name="mySchema">
         <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-        <dfdl:format ref="tns:GeneralFormat"/>
+        <dfdl:format ref="tns:GeneralFormatPortable"/>
         <dfdl:defineVariable name="x" type="xs:double"/>
         <xs:element name="data">
           <xs:complexType>

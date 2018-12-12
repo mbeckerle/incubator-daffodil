@@ -74,7 +74,7 @@
   <tdml:defineSchema name="facets-min0max0.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="implicit"
@@ -115,7 +115,7 @@
   <tdml:defineSchema name="facets-min1max1-scalar.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="implicit"
@@ -155,7 +155,7 @@
   <tdml:defineSchema name="facets-min2max20-array.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="parsed"
@@ -189,7 +189,7 @@
   <tdml:defineSchema name="arrays-min0max5.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="implicit"
@@ -227,7 +227,7 @@
   <tdml:defineSchema name="arrays-min1max5.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="implicit"
@@ -265,7 +265,7 @@
   <tdml:defineSchema name="arrays-min3max5.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="implicit"
@@ -305,7 +305,7 @@
   <tdml:defineSchema name="facets-min5max10.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="parsed"
@@ -339,7 +339,7 @@
   <tdml:defineSchema name="facets-min5max10-2.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="implicit"
@@ -391,7 +391,7 @@
   <tdml:defineSchema name="facets-min2max3-schemaErr.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="fixed"
@@ -434,7 +434,7 @@
   <tdml:defineSchema name="facets-fixedUnboundedMax-schemaErr.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="fixed"
@@ -480,7 +480,7 @@
 
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="implicit"
@@ -521,7 +521,7 @@
 
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" leadingSkip="0" trailingSkip="0" textBidi="no"
       floating="no" encoding="utf-8" byteOrder="bigEndian" alignment="1"
       alignmentUnits="bytes" fillByte="f" occursCountKind="implicit"
@@ -2779,7 +2779,7 @@
 
   <tdml:defineSchema name="pattern">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:element name="e1" dfdl:lengthKind="delimited">
       <xs:annotation>
@@ -3197,7 +3197,7 @@
 
   <tdml:defineSchema name="lengthFacets">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="text"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="text"/>
     <xs:element name="e1" dfdl:lengthKind="implicit" dfdl:lengthUnits="bytes">
       <xs:annotation>
         <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -3310,7 +3310,7 @@
 
   <tdml:defineSchema name="lengthFacetsIsolate">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="text"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="text"/>
     <xs:element name="e7" dfdl:lengthKind="delimited" dfdl:lengthUnits="bytes">
       <xs:annotation>
         <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -3329,7 +3329,7 @@
   
   <tdml:defineSchema name="lengthFacetsIsolate2">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="text"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="text"/>
     <xs:element name="e8" dfdl:lengthKind="delimited" dfdl:lengthUnits="bytes">
       <xs:annotation>
         <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -3542,7 +3542,7 @@
   
   <tdml:defineSchema name="checkConstraints">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <xs:element name="e1">
       <xs:complexType>
         <xs:sequence>
@@ -3894,7 +3894,7 @@
   
   <tdml:defineSchema name="TestFacets">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <xs:element name="e1" dfdl:lengthKind="delimited">
       <xs:annotation>
         <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -4976,7 +4976,7 @@
     <tdml:document><![CDATA[2013-03-24T03:45:30]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeImp>2013-03-24T03:45:30</dateTimeImp>
+        <dateTimeImp xsi:type="xs:dateTime">2013-03-24T03:45:30</dateTimeImp>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5001,7 +5001,7 @@
   
   <tdml:defineSchema name="enumSchema">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:simpleType name="enum_st1">
       <xs:restriction base="xs:string">
@@ -5381,7 +5381,7 @@
     <tdml:document>Month March, day 24, year 1988</tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <enum_e7>1988-03-24</enum_e7>
+        <enum_e7 xsi:type="xs:date">1988-03-24</enum_e7>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5551,7 +5551,7 @@
   
   <tdml:defineSchema name="minMaxInExSchema">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:simpleType name="mImE_st1">
       <xs:restriction base="xs:int">
@@ -6354,7 +6354,7 @@
     <tdml:document>Today is the 16th day of March, year 2012</tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <mImE_e13>2012-03-16</mImE_e13>
+        <mImE_e13 xsi:type="xs:date">2012-03-16</mImE_e13>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6402,7 +6402,7 @@
     <tdml:document>11:00:00</tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <mImE_e14>11:00:00</mImE_e14>
+        <mImE_e14 xsi:type="xs:time">11:00:00</mImE_e14>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6441,7 +6441,7 @@
 
   <tdml:defineSchema name="totalDigitsSchema">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:simpleType name="tD_st1">
       <xs:restriction base="xs:decimal">
@@ -6518,7 +6518,7 @@
 
   <tdml:defineSchema name="totalDigitsSchemaIsolate">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:simpleType name="tD_st2">
       <xs:restriction>
@@ -6542,7 +6542,7 @@
  
   <tdml:defineSchema name="totalDigitsSchemaIsolate2">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:simpleType name="tD_st3">
       <xs:restriction>
@@ -6566,7 +6566,7 @@
 
   <tdml:defineSchema name="totalDigitsSchemaIsolate3">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:simpleType name="tD_st6">
       <xs:restriction>
@@ -6757,7 +6757,7 @@
 
   <tdml:defineSchema name="fractionDigitsSchema">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
     <xs:simpleType name="fD_st1">
       <xs:restriction base="xs:decimal">

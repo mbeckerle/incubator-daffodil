@@ -24,7 +24,7 @@
 
   <tdml:defineSchema name="XPathFunctions">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat"/>
+    <dfdl:format ref="ex:GeneralFormatPortable"/>
 
     <xs:element name="abs" type="xs:int" dfdl:inputValueCalc="{ fn:abs(-9) }"/>
     <xs:element xmlns:fn="http://www.w3.org/2005/xpath-functions" name="foo" type="xs:int" dfdl:inputValueCalc="{ fn:foo(-9) }"/>

@@ -20,7 +20,7 @@
       
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="ex:GeneralFormat"/>
+      <dfdl:format ref="ex:GeneralFormatPortable"/>
     </xs:appinfo>
   </xs:annotation>
   

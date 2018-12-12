@@ -23,7 +23,7 @@
 
   <tdml:defineSchema name="s1" elementFormDefault="unqualified">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" calendarPatternKind="explicit"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" calendarPatternKind="explicit"/>
 
     <xs:element name="r">
       <xs:complexType>
@@ -54,7 +54,7 @@
         <r>
           <lang>de</lang>
           <variant>1996</variant>
-          <date>2013-03-01</date>
+          <date xsi:type="xs:date">2013-03-01</date>
         </r>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -80,7 +80,7 @@
 
   <tdml:defineSchema name="s2" elementFormDefault="unqualified">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" calendarPatternKind="explicit"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" calendarPatternKind="explicit"/>
 
     <xs:element name="r">
       <xs:complexType>
@@ -114,8 +114,8 @@
         <tns:r>
           <lang>de</lang>
           <variant>1996</variant>
-          <date>2013-03-01</date>
-          <dateString>2013-03-01</dateString>
+          <date xsi:type="xs:date">2013-03-01</date>
+          <dateString xsi:type="xs:date">2013-03-01</dateString>
         </tns:r>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -139,7 +139,7 @@
 
   <tdml:defineSchema name="s3" elementFormDefault="unqualified">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" calendarPatternKind="explicit"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" calendarPatternKind="explicit"/>
 
      <xs:element name="r">
       <xs:complexType>
@@ -179,11 +179,11 @@
         <tns:r>
           <lang>de</lang>
           <variant>1996</variant>
-          <date>2013-03-01</date>
+          <date xsi:type="xs:date">2013-03-01</date>
           <lang2>en</lang2>
           <variant2>us</variant2>
-          <date2>2013-03-01</date2>
-          <dateString>2013-03-01</dateString>
+          <date2 xsi:type="xs:date">2013-03-01</date2>
+          <dateString xsi:type="xs:date">2013-03-01</dateString>
         </tns:r>
       </tdml:dfdlInfoset>
     </tdml:infoset>

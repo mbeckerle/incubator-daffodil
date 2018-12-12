@@ -25,7 +25,7 @@
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:defineFormat name="myFmt" xmlns:d="http://www.ogf.org/dfdl/dfdl-1.0/">
-        <d:format xmlns:ex="http://example.com/3" ref="ex:GeneralFormat" initiator=""
+        <d:format xmlns:ex="http://example.com/3" ref="ex:GeneralFormatPortable" initiator=""
           terminator="" separator="" encoding="utf-8" ignoreCase="no"
           representation="text" lengthUnits="characters" textNumberRep="standard" />
       </dfdl:defineFormat>

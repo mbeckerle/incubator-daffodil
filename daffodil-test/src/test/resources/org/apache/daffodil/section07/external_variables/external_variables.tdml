@@ -33,7 +33,7 @@
 		<dfdl:defineVariable name="myVar1" type="xs:int"
 			defaultValue="6" external="true" />
 		<xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
 		<xs:element name="accessPreDefs">
 			<xs:complexType>
@@ -110,7 +110,7 @@
 		<dfdl:defineVariable name="myVar1" type="xs:int"
 			defaultValue="6" external="true" />
 		<xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
 		<xs:element name="c">
 			<xs:complexType>
@@ -197,7 +197,7 @@
 		<dfdl:defineVariable name="myVar1" type="xs:int"
 			defaultValue="6" />
 		<xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
 		<xs:element name="c">
 			<xs:complexType>
@@ -248,7 +248,7 @@
 		<dfdl:defineVariable name="myVar1" type="xs:int"
 			defaultValue="6" />
 		<xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
 		<xs:element name="c">
 			<xs:complexType>
@@ -299,7 +299,7 @@
 		<dfdl:defineVariable name="v_with_global_default"
 			type="xsd:int" defaultValue="15" external="true" />
 		<xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
 		<xs:element name="c">
 			<xs:complexType>

@@ -22,7 +22,7 @@
 
   <tdml:defineSchema name="text_nil_only1">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator="" terminator="" separator="" separatorSuppressionPolicy="anyEmpty" separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes" encoding="ASCII" representation="text" occursCountKind="parsed" nilValueDelimiterPolicy="none"
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator="" terminator="" separator="" separatorSuppressionPolicy="anyEmpty" separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes" encoding="ASCII" representation="text" occursCountKind="parsed" nilValueDelimiterPolicy="none"
       nilValue="nil %ES;" nilKind="literalValue" textNumberRep="standard" ignoreCase="no"/>
 
     <xs:element name="doc" dfdl:lengthKind="delimited" nillable="true" type="xsd:string"/>
@@ -150,7 +150,7 @@
 
   <tdml:defineSchema name="text_nil_only2">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator="" terminator="" separator="" separatorSuppressionPolicy="anyEmpty" separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes" encoding="ASCII" representation="text" occursCountKind="parsed" nilValueDelimiterPolicy="none"
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator="" terminator="" separator="" separatorSuppressionPolicy="anyEmpty" separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes" encoding="ASCII" representation="text" occursCountKind="parsed" nilValueDelimiterPolicy="none"
       nilValue="%ES; nil" nilKind="literalValue" textNumberRep="standard" ignoreCase="no"/>
 
     <xs:element name="doc" dfdl:lengthKind="delimited" nillable="true" type="xsd:string"/>
@@ -182,7 +182,7 @@
 
   <tdml:defineSchema name="text_nil_only3">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator="" terminator="" separator="" separatorSuppressionPolicy="anyEmpty" separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes" encoding="ASCII" representation="text" occursCountKind="parsed" nilValueDelimiterPolicy="none"
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator="" terminator="" separator="" separatorSuppressionPolicy="anyEmpty" separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes" encoding="ASCII" representation="text" occursCountKind="parsed" nilValueDelimiterPolicy="none"
       nilValue="%ES; nil" nilKind="literalValue" textNumberRep="standard" ignoreCase="no"/>
 
     <xs:element name="doc" dfdl:lengthKind="implicit">
@@ -221,15 +221,15 @@
   
   <tdml:defineSchema name="text_nil_only4">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator="" terminator="" separator="," separatorSuppressionPolicy="anyEmpty" separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes" encoding="ASCII" representation="text" occursCountKind="parsed" nilValueDelimiterPolicy="none"
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator="" terminator="" separator="," separatorSuppressionPolicy="anyEmpty" separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes" encoding="ASCII" representation="text" occursCountKind="parsed" nilValueDelimiterPolicy="none"
       nilValue="nil" nilKind="literalValue" textNumberRep="standard" ignoreCase="no"/>
     
     <dfdl:defineFormat name="nil0">
-      <dfdl:format ref="ex:GeneralFormat" nilValue="0" />
+      <dfdl:format ref="ex:GeneralFormatPortable" nilValue="0" />
     </dfdl:defineFormat>
     
     <dfdl:defineFormat name="nilX">
-      <dfdl:format ref="ex:GeneralFormat" nilValue="X" />
+      <dfdl:format ref="ex:GeneralFormatPortable" nilValue="X" />
     </dfdl:defineFormat>
 
     <xs:element name="doc" dfdl:lengthKind="implicit">
@@ -691,7 +691,7 @@
   
   <tdml:defineSchema name="nillableComplex">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" separator="" separatorSuppressionPolicy="anyEmpty"
       separatorPosition="infix" documentFinalTerminatorCanBeMissing="yes"
       encoding="ASCII" representation="text" occursCountKind="parsed"

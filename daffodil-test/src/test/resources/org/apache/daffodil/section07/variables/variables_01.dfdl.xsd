@@ -39,7 +39,7 @@
   
   <xsd:annotation>
     <xsd:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="tns:GeneralFormat" representation="text" lengthUnits="bytes"
+      <dfdl:format ref="tns:GeneralFormatPortable" representation="text" lengthUnits="bytes"
         encoding="US-ASCII" alignment='1' alignmentUnits='bytes'
         textStandardBase='10' binaryFloatRep='ieee' binaryNumberRep='binary'
         byteOrder='bigEndian' calendarPatternKind='implicit'

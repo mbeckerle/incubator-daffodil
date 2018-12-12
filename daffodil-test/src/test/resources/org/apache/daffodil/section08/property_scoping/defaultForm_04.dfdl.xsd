@@ -22,7 +22,7 @@
 
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="GeneralFormat">
+      <dfdl:format ref="GeneralFormatPortable">
         <dfdl:property name="lengthKind">delimited</dfdl:property>
         <dfdl:property name="separator"></dfdl:property>
         <dfdl:property name="initiator"></dfdl:property>

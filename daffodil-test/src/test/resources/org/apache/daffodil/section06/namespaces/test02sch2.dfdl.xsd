@@ -25,7 +25,7 @@
   <annotation>
     <appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:defineFormat name="test02fmt1">
-        <dfdl:format ref="tns2:GeneralFormat" />
+        <dfdl:format ref="tns2:GeneralFormatPortable" />
       </dfdl:defineFormat>
     </appinfo>
   </annotation>

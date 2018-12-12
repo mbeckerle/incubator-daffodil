@@ -25,7 +25,7 @@
 
   <annotation>
     <appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="tns:GeneralFormat" lengthKind="delimited" separator=""
+      <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="delimited" separator=""
         alignment="1" alignmentUnits="bits" trailingSkip="0"
         lengthUnits="bytes" textTrimKind="none"
         leadingSkip='0' encoding="US-ASCII" ignoreCase='no' initiator=""

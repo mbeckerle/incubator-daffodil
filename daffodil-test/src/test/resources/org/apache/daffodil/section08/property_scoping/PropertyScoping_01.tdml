@@ -38,14 +38,14 @@
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def3">
-      <dfdl:format ref="tns:GeneralFormat" representation="binary" />
+      <dfdl:format ref="tns:GeneralFormatPortable" representation="binary" />
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def1">
       <dfdl:format ref="tns:def2" />
     </dfdl:defineFormat>
 
-    <dfdl:format ref="tns:GeneralFormat" lengthKind="explicit"
+    <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="explicit"
       lengthUnits="characters" length="3" />
 
     <xs:element name="easy" type="xs:int" dfdl:textNumberRep="standard" dfdl:textNumberPattern="#####">
@@ -72,14 +72,14 @@
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def3">
-      <dfdl:format ref="tns:GeneralFormat" representation="binary" />
+      <dfdl:format ref="tns:GeneralFormatPortable" representation="binary" />
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def1">
       <dfdl:format ref="tns:def2" />
     </dfdl:defineFormat>
 
-    <dfdl:format ref="tns:GeneralFormat" lengthKind="explicit"
+    <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="explicit"
       lengthUnits="characters" length="3" />
 
     <xs:element name="easy" type="xs:int" dfdl:textNumberRep="standard">
@@ -107,7 +107,7 @@
       <dfdl:format ref="tns:def2" />
     </dfdl:defineFormat>
 
-    <dfdl:format ref="tns:GeneralFormat" lengthKind="explicit"
+    <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="explicit"
       lengthUnits="characters" length="3" />
 
     <xs:element name="easy" type="xs:string">
@@ -131,7 +131,7 @@
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def3">
-      <dfdl:format ref="tns:GeneralFormat" representation="binary"
+      <dfdl:format ref="tns:GeneralFormatPortable" representation="binary"
         lengthUnits="bytes" />
     </dfdl:defineFormat>
 
@@ -177,7 +177,7 @@
 
   <tdml:defineSchema name="s3">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="tns:GeneralFormat" initiator=""
+    <dfdl:format ref="tns:GeneralFormatPortable" initiator=""
       terminator="" encoding="utf-8" binaryNumberRep="binary"
       initiatedContent="no" />
 
@@ -230,7 +230,7 @@
 
   <tdml:defineSchema name="PropScoping-Embedded.dfdl.xsd">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="tns:GeneralFormat" representation="text"
+    <dfdl:format ref="tns:GeneralFormatPortable" representation="text"
       occursCountKind="parsed" lengthUnits="bytes" encoding="US-ASCII"
       initiator="" terminator="" separator="" ignoreCase="no" />
     <xs:element name="e1" type="xs:string" dfdl:lengthKind="explicit"
@@ -278,14 +278,14 @@
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def3">
-      <dfdl:format ref="tns:GeneralFormat" representation="binary" />
+      <dfdl:format ref="tns:GeneralFormatPortable" representation="binary" />
     </dfdl:defineFormat>
 
     <dfdl:defineFormat name="def1">
       <dfdl:format ref="tns:def2" />
     </dfdl:defineFormat>
 
-    <dfdl:format ref="tns:GeneralFormat" lengthKind="explicit"
+    <dfdl:format ref="tns:GeneralFormatPortable" lengthKind="explicit"
       lengthUnits="characters" length="3" />
 
     <xs:element name="easy" type="xs:int" dfdl:ref="tns:DNE"
@@ -298,11 +298,11 @@
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
 
     <dfdl:defineFormat name="aFormat">
-      <dfdl:format ref="tns:GeneralFormat" representation="text"
+      <dfdl:format ref="tns:GeneralFormatPortable" representation="text"
         lengthKind="delimited" initiator="" terminator="" encoding="utf-8"
         initiatedContent="no" occursCountKind="parsed" />
     </dfdl:defineFormat>
-    <dfdl:format ref="tns:GeneralFormat" initiator=""
+    <dfdl:format ref="tns:GeneralFormatPortable" initiator=""
       terminator="" encoding="utf-8" binaryNumberRep="binary"
       initiatedContent="no" />
 

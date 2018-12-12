@@ -29,7 +29,7 @@
         separatorSuppressionPolicy="anyEmpty" separatorPosition="infix"
         documentFinalTerminatorCanBeMissing="yes" encoding="ASCII"
         representation="text" occursCountKind="parsed" /> -->
-      <dfdl:format ref="tns:GeneralFormat" initiator="" terminator="" leadingSkip="0"
+      <dfdl:format ref="tns:GeneralFormatPortable" initiator="" terminator="" leadingSkip="0"
         trailingSkip="0" textBidi="no" floating="no" encoding="utf-8"
         byteOrder="bigEndian" alignment="1" alignmentUnits="bytes"
         fillByte="f" occursCountKind="implicit"

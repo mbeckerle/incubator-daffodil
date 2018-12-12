@@ -22,7 +22,7 @@
       
   <_-_-_:annotation>
     <_-_-_:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="ex:GeneralFormat" separator="" alignment="1" alignmentUnits="bytes" lengthUnits="bytes"
+      <dfdl:format ref="ex:GeneralFormatPortable" separator="" alignment="1" alignmentUnits="bytes" lengthUnits="bytes"
         trailingSkip="0" initiator="" terminator="" leadingSkip='0' textTrimKind="none" initiatedContent="no"
         ignoreCase="no" representation="text" textNumberRep="standard" encoding="ASCII"/>
     </_-_-_:appinfo>

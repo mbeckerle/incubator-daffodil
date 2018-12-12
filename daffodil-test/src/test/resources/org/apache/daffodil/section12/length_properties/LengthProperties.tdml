@@ -25,7 +25,7 @@
 
   <tdml:defineSchema name="LengthProperties-Embedded.dfdl.xsd">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" separator="" encoding="utf-8" ignoreCase="no"
       representation="text" lengthUnits="characters" textNumberRep="standard" textPadKind="padChar" textTrimKind="padChar" />
 
@@ -532,7 +532,7 @@
 
   <tdml:defineSchema name="LengthProperties-lengthNumeric.dfdl.xsd">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" separator="" encoding="utf-8" ignoreCase="no"
       representation="text" lengthUnits="characters" textNumberRep="standard" textTrimKind="padChar" textPadKind="padChar"/>
 
@@ -744,7 +744,7 @@
 
   <tdml:defineSchema name="LengthProperties-lengthExpression.dfdl.xsd">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" initiator=""
+    <dfdl:format ref="ex:GeneralFormatPortable" initiator=""
       terminator="" separator="" encoding="utf-8" ignoreCase="no"
       representation="text" lengthUnits="characters" textNumberRep="standard" />
 
@@ -784,7 +784,7 @@
   <tdml:defineSchema name="DFDL-307-one-octet.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="binary"
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="binary"
       binaryNumberRep="binary" lengthUnits="bits" byteOrder='bigEndian'
       alignment="1" alignmentUnits="bits" lengthKind='explicit' />
 
@@ -840,7 +840,7 @@
 
   <tdml:defineSchema name="bitSchema">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthUnits="bits"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthUnits="bits"
       lengthKind="implicit" alignment="1" alignmentUnits="bits"
       representation="binary" byteOrder="bigEndian" />
 

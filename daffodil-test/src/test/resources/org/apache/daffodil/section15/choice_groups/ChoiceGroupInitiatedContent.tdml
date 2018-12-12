@@ -27,7 +27,7 @@
 
   <tdml:defineSchema name="s1">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <dfdl:defineFormat name="def">
       <dfdl:format initiatedContent="yes"/>
     </dfdl:defineFormat>
@@ -385,7 +385,7 @@
 
   <tdml:defineSchema name="s2">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited" />
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited" />
     <xs:element name="e" dfdl:lengthKind="implicit">
       <xs:complexType>
         <xs:sequence dfdl:separator="%WSP+;"
@@ -494,7 +494,7 @@
   <tdml:defineSchema name="nestedDiscriminator1">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited" />
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited" />
 
     <xs:element name="e">
       <xs:complexType>
@@ -638,7 +638,7 @@
 
   <tdml:defineSchema name="s3">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     <dfdl:defineFormat name="def">
       <dfdl:format initiatedContent="yes"/>
     </dfdl:defineFormat>

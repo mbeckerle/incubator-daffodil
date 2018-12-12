@@ -38,7 +38,7 @@
 
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="tns:GeneralFormat" />
+      <dfdl:format ref="tns:GeneralFormatPortable" />
     </xs:appinfo>
   </xs:annotation>
 

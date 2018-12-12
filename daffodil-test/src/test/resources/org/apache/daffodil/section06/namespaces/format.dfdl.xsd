@@ -48,7 +48,7 @@
 *
 * <xs:annotation>
 *   <xs:appinfo source="http://www.ogf.org/dfdl/">
-*     <dfdl:format ref="tns:GeneralFormat"
+*     <dfdl:format ref="tns:GeneralFormatPortable"
 *      ... override property values if desired ...
 *     </dfdl:format>
 *   </xs:appinfo>
@@ -66,10 +66,10 @@
 * <xs:import namespace="http://www.ogf.org/dfdl/dfdl-1.0/examples/"
 *            schemaLocation="DFDLGeneralFormatDefinition.xsd"/>
 *
-* <xs:element name="root" dfdl:ref="tns:GeneralFormat"
+* <xs:element name="root" dfdl:ref="tns:GeneralFormatPortable"
 *             dfdl:lengthKind="explicit" dfdl:length="80">
 *   <xs:complexType>
-*     <xs:sequence dfdl:ref="tns:GeneralFormat" dfdl:separator="">
+*     <xs:sequence dfdl:ref="tns:GeneralFormatPortable" dfdl:separator="">
 *     ...
 *     </xs:sequence>
 *   </xs:complexType>
@@ -90,7 +90,7 @@
 A general purpose defineFormat annotation.
 -->
 
-<dfdl:defineFormat name="GeneralFormat">
+<dfdl:defineFormat name="GeneralFormatPortable">
 <dfdl:format 
 
 encoding="UTF-8" utf16Width="fixed" byteOrder="bigEndian"

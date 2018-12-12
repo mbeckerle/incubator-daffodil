@@ -25,7 +25,7 @@
   
   <tdml:defineSchema name="dateTimeSchema">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
 <!--
      xs:date      yyyy-MM-dd
@@ -114,7 +114,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <dtFunctions>
-          <bulkDateTime>1988-03-24T04:55:23</bulkDateTime>
+          <bulkDateTime xsi:type="xs:dateTime">1988-03-24T04:55:23</bulkDateTime>
           <year>1988</year>
           <month>3</month>
           <day>24</day>
@@ -141,7 +141,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <dtFunctions>
-          <bulkDateTime>1988-04-05T04:55:23</bulkDateTime>
+          <bulkDateTime xsi:type="xs:dateTime">1988-04-05T04:55:23</bulkDateTime>
           <year>1988</year>
           <month>4</month>
           <day>5</day>
@@ -167,7 +167,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <dFunctions>
-          <bulkDate>2013-02-24</bulkDate>
+          <bulkDate xsi:type="xs:date">2013-02-24</bulkDate>
           <year>2013</year>
           <month>2</month>
           <day>24</day>
@@ -191,7 +191,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <dFunctions>
-          <bulkDate>2012-03-01</bulkDate>
+          <bulkDate xsi:type="xs:date">2012-03-01</bulkDate>
           <year>2012</year>
           <month>3</month>
           <day>1</day>
@@ -215,7 +215,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <tFunctions>
-          <bulkTime>12:44:56+00:00</bulkTime>
+          <bulkTime xsi:type="xs:time">12:44:56+00:00</bulkTime>
           <hours>12</hours>
           <minutes>44</minutes>
           <seconds>56</seconds>
@@ -239,7 +239,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <tFunctions>
-          <bulkTime>13:02:56+00:00</bulkTime>
+          <bulkTime xsi:type="xs:time">13:02:56+00:00</bulkTime>
           <hours>13</hours>
           <minutes>2</minutes>
           <seconds>56</seconds>
@@ -307,7 +307,7 @@
   
   <tdml:defineSchema name="substringSchema">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     
     <!-- Examples from http://www.w3.org/TR/xpath-functions/#func-substring -->
     <xs:element name="substring01" type="xs:string" dfdl:inputValueCalc="{ fn:substring('motor car', 6) }"/>

@@ -23,7 +23,7 @@
 
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="GeneralFormat" lengthKind="delimited" encoding="UTF-8" representation="text"/>
+      <dfdl:format ref="GeneralFormatPortable" lengthKind="delimited" encoding="UTF-8" representation="text"/>
     </xs:appinfo>
   </xs:annotation>
 

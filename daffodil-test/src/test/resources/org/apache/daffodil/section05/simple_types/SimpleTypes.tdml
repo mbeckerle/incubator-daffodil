@@ -2184,7 +2184,7 @@
     <tdml:document><![CDATA[1996.07.10 AD at 15:08:56 GMT-05:00]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeText>1996-07-10T15:08:56-05:00</dateTimeText>
+        <dateTimeText xsi:type="xs:dateTime">1996-07-10T15:08:56-05:00</dateTimeText>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2199,7 +2199,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin>1977-01-01T00:01:09</dateTimeBin>
+        <dateTimeBin xsi:type="xs:dateTime">1977-01-01T00:01:09</dateTimeBin>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2236,7 +2236,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin4>1869-12-31T00:05:00+00:00</dateTimeBin4>
+        <dateTimeBin4 xsi:type="xs:dateTime">1869-12-31T00:05:00+00:00</dateTimeBin4>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2251,7 +2251,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin5>1985-11-21T10:37:04.001000</dateTimeBin5>
+        <dateTimeBin5 xsi:type="xs:dateTime">1985-11-21T10:37:04.001000</dateTimeBin5>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2266,7 +2266,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin6>2000-08-03T20:28:06.295000</dateTimeBin6>
+        <dateTimeBin6 xsi:type="xs:dateTime">2000-08-03T20:28:06.295000</dateTimeBin6>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2280,7 +2280,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin7>1869-12-31T00:05:00</dateTimeBin7>
+        <dateTimeBin7 xsi:type="xs:dateTime">1869-12-31T00:05:00</dateTimeBin7>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2311,7 +2311,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin6>9999-12-31T23:59:59.999000</dateTimeBin6>
+        <dateTimeBin6 xsi:type="xs:dateTime">9999-12-31T23:59:59.999000</dateTimeBin6>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2326,7 +2326,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin6>9999-12-31T23:47:12</dateTimeBin6>
+        <dateTimeBin6 xsi:type="xs:dateTime">9999-12-31T23:47:12</dateTimeBin6>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2415,7 +2415,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin8>2018-01-01T09:13:43+09:00</dateTimeBin8>
+        <dateTimeBin8 xsi:type="xs:dateTime">2018-01-01T09:13:43+09:00</dateTimeBin8>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2429,7 +2429,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBin9>2000-01-01T00:00:00.001000-04:00</dateTimeBin9>
+        <dateTimeBin9 xsi:type="xs:dateTime">2000-01-01T00:00:00.001000-04:00</dateTimeBin9>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2506,7 +2506,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateBinBCD>2023-12-14</dateBinBCD>
+        <dateBinBCD xsi:type="xs:date">2023-12-14</dateBinBCD>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2520,7 +2520,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateBinBCD2>2023-12-14</dateBinBCD2>
+        <dateBinBCD2 xsi:type="xs:date">2023-12-14</dateBinBCD2>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2570,7 +2570,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateBinBCD>1999-12-27</dateBinBCD>
+        <dateBinBCD xsi:type="xs:date">1999-12-27</dateBinBCD>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2607,7 +2607,7 @@
     </tdml:document>
    <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateBinBCD7>2018-08-07</dateBinBCD7>
+        <dateBinBCD7 xsi:type="xs:date">2018-08-07</dateBinBCD7>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2621,7 +2621,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <timeBinBCD>18:56:03</timeBinBCD>
+        <timeBinBCD xsi:type="xs:time">18:56:03</timeBinBCD>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2635,7 +2635,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <timeBinBCD2>01:45:00.998000</timeBinBCD2>
+        <timeBinBCD2 xsi:type="xs:time">01:45:00.998000</timeBinBCD2>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2673,7 +2673,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <timeBinBCD5>18:56:03</timeBinBCD5>
+        <timeBinBCD5 xsi:type="xs:time">18:56:03</timeBinBCD5>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2689,7 +2689,7 @@
       <tdml:dfdlInfoset>
         <timeBinBCD6>
           <length>3</length>
-          <time>18:56:03</time>
+          <time xsi:type="xs:time">18:56:03</time>
         </timeBinBCD6>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -2704,7 +2704,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBinBCD>2004-06-14T18:56:03</dateTimeBinBCD>
+        <dateTimeBinBCD xsi:type="xs:dateTime">2004-06-14T18:56:03</dateTimeBinBCD>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2730,7 +2730,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBinBCD3>2004-06-14T18:56:03</dateTimeBinBCD3>
+        <dateTimeBinBCD3 xsi:type="xs:dateTime">2004-06-14T18:56:03</dateTimeBinBCD3>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2746,7 +2746,7 @@
       <tdml:dfdlInfoset>
         <dateTimeBinBCD4>
           <num1>3</num1>
-          <datetime>2004-06-14T18:56:03</datetime>
+          <datetime xsi:type="xs:dateTime">2004-06-14T18:56:03</datetime>
           <num2>19</num2>
         </dateTimeBinBCD4>
       </tdml:dfdlInfoset>
@@ -2762,7 +2762,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateBinIBM4690Packed>2023-12-14</dateBinIBM4690Packed>
+        <dateBinIBM4690Packed xsi:type="xs:date">2023-12-14</dateBinIBM4690Packed>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2803,7 +2803,7 @@
       <tdml:dfdlInfoset>
         <dateTimeBinIBM4690Packed>
           <length>6</length>
-          <datetime>2007-11-30T04:15:08</datetime>
+          <datetime xsi:type="xs:dateTime">2007-11-30T04:15:08</datetime>
         </dateTimeBinIBM4690Packed>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -2818,7 +2818,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBinIBM4690Packed2>1856-03-20T09:51:38</dateTimeBinIBM4690Packed2>
+        <dateTimeBinIBM4690Packed2 xsi:type="xs:dateTime">1856-03-20T09:51:38</dateTimeBinIBM4690Packed2>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2846,7 +2846,7 @@
       <tdml:dfdlInfoset>
         <timeBinIBM4690Packed>
           <num1>27</num1>
-          <time>10:32:49</time>
+          <time xsi:type="xs:time">10:32:49</time>
           <num2>19</num2>
         </timeBinIBM4690Packed>
       </tdml:dfdlInfoset>
@@ -2874,7 +2874,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateBinPacked>2023-12-14+00:00</dateBinPacked>
+        <dateBinPacked xsi:type="xs:date">2023-12-14+00:00</dateBinPacked>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2903,7 +2903,7 @@
       <tdml:dfdlInfoset>
         <dateBinPacked4>
           <num1>-14</num1>
-          <date>1978-01-01+00:00</date>
+          <date xsi:type="xs:date">1978-01-01+00:00</date>
           <num2>67</num2>
         </dateBinPacked4>
       </tdml:dfdlInfoset>
@@ -2919,7 +2919,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <timeBinPacked>06:13:27+00:00</timeBinPacked>
+        <timeBinPacked xsi:type="xs:time">06:13:27+00:00</timeBinPacked>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -2935,7 +2935,7 @@
       <tdml:dfdlInfoset>
         <timeBinPacked2>
           <length>4</length>
-          <time>04:15:08+00:00</time>
+          <time xsi:type="xs:time">04:15:08+00:00</time>
         </timeBinPacked2>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -2977,7 +2977,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeBinPacked2>3931-04-15T06:20:45-05:00</dateTimeBinPacked2>
+        <dateTimeBinPacked2 xsi:type="xs:dateTime">3931-04-15T06:20:45-05:00</dateTimeBinPacked2>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -4094,7 +4094,7 @@
 
   <tdml:defineSchema name="SimpleTypes-padding">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="text"
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="text"
       lengthUnits="characters" encoding="utf-8" byteOrder="bigEndian" 
       textStringPadCharacter="X" textStringJustification="left" textTrimKind="padChar" textPadKind="padChar"
       textNumberJustification="left" textNumberPadCharacter="#" />
@@ -4598,7 +4598,7 @@
   
   <tdml:defineSchema name="dateTimeSchemaTNR">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="tns:GeneralFormat" initiator="" terminator="" leadingSkip="0" 
+    <dfdl:format ref="tns:GeneralFormatPortable" initiator="" terminator="" leadingSkip="0" 
                 trailingSkip="0"  textBidi="no" floating="no"   encoding="utf-8" 
                 byteOrder="bigEndian" alignment="1" alignmentUnits="bytes" fillByte="f" 
                 occursCountKind="implicit" 
@@ -4625,7 +4625,7 @@
   <tdml:defineSchema name="dateTimeSchema">
   
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
 
 <!--
      xs:date      yyyy-MM-dd
@@ -4815,7 +4815,7 @@
   <tdml:defineSchema name="tzEmptySchema">
   
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" />
+    <dfdl:format ref="ex:GeneralFormatPortable" />
     
     <xs:element name="date33">
       <xs:complexType>
@@ -4861,7 +4861,7 @@
     <tdml:document><![CDATA[1995-03-24 01:30:00]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime14><dateTime>1995-03-24T01:30:00</dateTime></dateTime14>
+        <dateTime14><dateTime xsi:type="xs:dateTime">1995-03-24T01:30:00</dateTime></dateTime14>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -4882,7 +4882,7 @@
     <tdml:document><![CDATA[1995-03-24 01:30:00]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime15><dateTime>1995-03-24T01:30:00-05:00</dateTime></dateTime15>
+        <dateTime15><dateTime xsi:type="xs:dateTime">1995-03-24T01:30:00-05:00</dateTime></dateTime15>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -4901,7 +4901,7 @@
     <tdml:document><![CDATA[1995-03-24]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateImp>1995-03-24</dateImp>
+        <dateImp xsi:type="xs:date">1995-03-24</dateImp>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -4941,7 +4941,7 @@
     <tdml:document><![CDATA[12:43:20+00:00]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <timeImp>12:43:20+00:00</timeImp>
+        <timeImp xsi:type="xs:time">12:43:20+00:00</timeImp>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -4980,7 +4980,7 @@
     <tdml:document><![CDATA[2013-03-24T03:45:30]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTimeImp>2013-03-24T03:45:30</dateTimeImp>
+        <dateTimeImp xsi:type="xs:dateTime">2013-03-24T03:45:30</dateTimeImp>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5116,7 +5116,7 @@
     <tdml:document><![CDATA[Today is the 25th day of January, year 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date01>2013-01-25</date01>
+        <date01 xsi:type="xs:date">2013-01-25</date01>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5134,7 +5134,7 @@
     <tdml:document><![CDATA[Today is the 25th day of Jan, year 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date01b>2013-01-25</date01b>
+        <date01b xsi:type="xs:date">2013-01-25</date01b>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5255,7 +5255,7 @@
     <tdml:document><![CDATA[100 2012]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date15>2012-04-09</date15>
+        <date15 xsi:type="xs:date">2012-04-09</date15>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5273,7 +5273,7 @@
     <tdml:document><![CDATA[100 2011]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date15>2011-04-10</date15>
+        <date15 xsi:type="xs:date">2011-04-10</date15>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5291,7 +5291,7 @@
     <tdml:document><![CDATA[2 02 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date16>2013-02-10</date16>
+        <date16 xsi:type="xs:date">2013-02-10</date16>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5311,7 +5311,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date30>1998-04-30</date30>
+        <date30 xsi:type="xs:date">1998-04-30</date30>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5331,7 +5331,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date30>1998-04-30</date30>
+        <date30 xsi:type="xs:date">1998-04-30</date30>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5349,7 +5349,7 @@
     <tdml:document><![CDATA[2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date27>2013-01-01</date27>
+        <date27 xsi:type="xs:date">2013-01-01</date27>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5367,7 +5367,7 @@
     <tdml:document><![CDATA[]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date28>1970-01-01</date28>
+        <date28 xsi:type="xs:date">1970-01-01</date28>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5385,7 +5385,7 @@
     <tdml:document><![CDATA[08]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date29>1970-08-01</date29>
+        <date29 xsi:type="xs:date">1970-08-01</date29>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5405,7 +5405,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <date21>
-          <superfull>2013-03-25</superfull>
+          <superfull xsi:type="xs:date">2013-03-25</superfull>
         </date21>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -5426,7 +5426,7 @@
     <tdml:document><![CDATA[03 22 45]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date22>1945-03-22</date22>
+        <date22 xsi:type="xs:date">1945-03-22</date22>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5446,7 +5446,7 @@
     <tdml:document><![CDATA[03 22 45]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date23>2045-03-22</date23>
+        <date23 xsi:type="xs:date">2045-03-22</date23>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5464,7 +5464,7 @@
     <tdml:document><![CDATA[Freitag März 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date24>2013-03-01</date24>
+        <date24 xsi:type="xs:date">2013-03-01</date24>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5483,7 +5483,7 @@
     <tdml:document><![CDATA[Lunes Noviembre 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date25>2013-11-04</date25>
+        <date25 xsi:type="xs:date">2013-11-04</date25>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5502,7 +5502,7 @@
     <tdml:document><![CDATA[Monday November 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date26>2013-11-04</date26>
+        <date26 xsi:type="xs:date">2013-11-04</date26>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5520,7 +5520,7 @@
     <tdml:document><![CDATA[пятница мар. 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date32>2013-03-01</date32>
+        <date32 xsi:type="xs:date">2013-03-01</date32>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5541,7 +5541,7 @@
     <tdml:document><![CDATA[01 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date17>2013-01-06</date17>
+        <date17 xsi:type="xs:date">2013-01-06</date17>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5562,7 +5562,7 @@
     <tdml:document><![CDATA[01 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date18>2012-12-30</date18>
+        <date18 xsi:type="xs:date">2012-12-30</date18>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5581,7 +5581,7 @@
     <tdml:document><![CDATA[01 2012]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date17>2012-01-01+00:00</date17>
+        <date17 xsi:type="xs:date">2012-01-01+00:00</date17>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5602,7 +5602,7 @@
     <tdml:document><![CDATA[01 03 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date19>2013-03-03</date19>
+        <date19 xsi:type="xs:date">2013-03-03</date19>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5622,7 +5622,7 @@
     <tdml:document><![CDATA[01 03 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date20>2013-02-24+00:00</date20>
+        <date20 xsi:type="xs:date">2013-02-24+00:00</date20>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5641,7 +5641,7 @@
     <tdml:document><![CDATA[It is 11:53AM on the 1st of April, year 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime01>2013-04-01T11:53:00</dateTime01>
+        <dateTime01 xsi:type="xs:dateTime">2013-04-01T11:53:00</dateTime01>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5660,7 +5660,7 @@
     <tdml:document><![CDATA[05:62:30+00:00]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time01>06:02:30+00:00</time01>
+        <time01 xsi:type="xs:time">06:02:30+00:00</time01>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5679,7 +5679,7 @@
     <tdml:document><![CDATA[28:62:30-00:00]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time01>05:02:30+00:00</time01>
+        <time01 xsi:type="xs:time">05:02:30+00:00</time01>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5698,7 +5698,7 @@
     <tdml:document><![CDATA[28:62:90+00:00]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time01>05:03:30+00:00</time01>
+        <time01 xsi:type="xs:time">05:03:30+00:00</time01>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5717,7 +5717,7 @@
     <tdml:document><![CDATA[2013-01-31T23:62:30]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime02>2013-02-01T00:02:30</dateTime02>
+        <dateTime02 xsi:type="xs:dateTime">2013-02-01T00:02:30</dateTime02>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5736,7 +5736,7 @@
     <tdml:document><![CDATA[2000-12-45]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date02>2001-01-14</date02>
+        <date02 xsi:type="xs:date">2001-01-14</date02>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5756,7 +5756,7 @@
     <tdml:document><![CDATA[2000-01-366]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date03>2000-12-31</date03>
+        <date03 xsi:type="xs:date">2000-12-31</date03>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5776,7 +5776,7 @@
     <tdml:document><![CDATA[2001-01-366]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date03>2002-01-01</date03>
+        <date03 xsi:type="xs:date">2002-01-01</date03>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5795,7 +5795,7 @@
     <tdml:document><![CDATA[2000-02-29]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date02>2000-02-29</date02>
+        <date02 xsi:type="xs:date">2000-02-29</date02>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5815,7 +5815,7 @@
     <tdml:document><![CDATA[2001-02-29]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date02>2001-03-01</date02>
+        <date02 xsi:type="xs:date">2001-03-01</date02>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5885,7 +5885,7 @@
     <tdml:document><![CDATA[day 1 of the week, month 02 year 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date05>2013-02-04</date05>
+        <date05 xsi:type="xs:date">2013-02-04</date05>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5907,7 +5907,7 @@
     <tdml:document><![CDATA[day 2 of the week, month 02 year 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date05>2013-02-05</date05>
+        <date05 xsi:type="xs:date">2013-02-05</date05>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5928,7 +5928,7 @@
     <tdml:document><![CDATA[day 1 of the week, month 02 year 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date06>2013-02-03+00:00</date06>
+        <date06 xsi:type="xs:date">2013-02-03+00:00</date06>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5949,7 +5949,7 @@
     <tdml:document><![CDATA[day 2 of the week, month 02 year 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date06>2013-02-04+00:00</date06>
+        <date06 xsi:type="xs:date">2013-02-04+00:00</date06>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5968,7 +5968,7 @@
     <tdml:document><![CDATA[08:43.EST]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time04>08:43:00-05:00</time04>
+        <time04 xsi:type="xs:time">08:43:00-05:00</time04>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -5987,7 +5987,7 @@
     <tdml:document><![CDATA[08:43.Eastern Standard Time]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time04b>08:43:00-05:00</time04b>
+        <time04b xsi:type="xs:time">08:43:00-05:00</time04b>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6006,7 +6006,7 @@
     <tdml:document><![CDATA[08:43.PT]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time05>08:43:00-08:00</time05>
+        <time05 xsi:type="xs:time">08:43:00-08:00</time05>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6024,7 +6024,7 @@
     <tdml:document><![CDATA[22:43]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time16>22:43:00</time16>
+        <time16 xsi:type="xs:time">22:43:00</time16>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6044,7 +6044,7 @@
     <tdml:document><![CDATA[03:43PM]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time17>12:43:00</time17>
+        <time17 xsi:type="xs:time">12:43:00</time17>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6064,7 +6064,7 @@
     <tdml:document><![CDATA[23:43AM]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time17>00:43:00</time17>
+        <time17 xsi:type="xs:time">00:43:00</time17>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6082,7 +6082,7 @@
     <tdml:document><![CDATA[03:43AM]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time17b>03:43:00</time17b>
+        <time17b xsi:type="xs:time">03:43:00</time17b>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6100,7 +6100,7 @@
     <tdml:document><![CDATA[03:43PM]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time17b>15:43:00</time17b>
+        <time17b xsi:type="xs:time">15:43:00</time17b>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6118,7 +6118,7 @@
     <tdml:document><![CDATA[00:43PM]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time18>12:43:00</time18>
+        <time18 xsi:type="xs:time">12:43:00</time18>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6175,7 +6175,7 @@
     <tdml:document><![CDATA[00:43]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time19>00:43:00</time19>
+        <time19 xsi:type="xs:time">00:43:00</time19>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6194,7 +6194,7 @@
     <tdml:document><![CDATA[08:43.Pacific Standard Time]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time05b>08:43:00-08:00</time05b>
+        <time05b xsi:type="xs:time">08:43:00-08:00</time05b>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6213,7 +6213,7 @@
     <tdml:document><![CDATA[08:43.Los Angeles Time]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time06>08:43:00-08:00</time06>
+        <time06 xsi:type="xs:time">08:43:00-08:00</time06>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6232,7 +6232,7 @@
     <tdml:document><![CDATA[08:43.uslax]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time07>08:43:00-08:00</time07>
+        <time07 xsi:type="xs:time">08:43:00-08:00</time07>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6251,7 +6251,7 @@
     <tdml:document><![CDATA[08:43.Eastern Standard Time]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time05b>08:43:00-05:00</time05b>
+        <time05b xsi:type="xs:time">08:43:00-05:00</time05b>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6270,7 +6270,7 @@
     <tdml:document><![CDATA[08:43.-0800]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time27>08:43:00-08:00</time27>
+        <time27 xsi:type="xs:time">08:43:00-08:00</time27>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6289,7 +6289,7 @@
     <tdml:document><![CDATA[08:43.GMT+00:00]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time27>08:43:00+00:00</time27>
+        <time27 xsi:type="xs:time">08:43:00+00:00</time27>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6307,7 +6307,7 @@
     <tdml:document><![CDATA[08:43:40]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time08>08:43:40+01:00</time08>
+        <time08 xsi:type="xs:time">08:43:40+01:00</time08>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6325,7 +6325,7 @@
     <tdml:document><![CDATA[08:43:40]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time09>08:43:40+01:30</time09>
+        <time09 xsi:type="xs:time">08:43:40+01:30</time09>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6344,7 +6344,7 @@
     <tdml:document><![CDATA[08:43.EST]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time28>08:43:00-05:00</time28>
+        <time28 xsi:type="xs:time">08:43:00-05:00</time28>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6363,7 +6363,7 @@
     <tdml:document><![CDATA[08:43:30.9678]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time03>08:43:30.967000</time03>
+        <time03 xsi:type="xs:time">08:43:30.967000</time03>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6381,7 +6381,7 @@
     <tdml:document><![CDATA[Mon, 01 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date07>2013-01-07</date07>
+        <date07 xsi:type="xs:date">2013-01-07</date07>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6399,7 +6399,7 @@
     <tdml:document><![CDATA[...03...24...1988]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date08>1988-03-24</date08>
+        <date08 xsi:type="xs:date">1988-03-24</date08>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6418,7 +6418,7 @@
     <tdml:document><![CDATA[....2013-03-24....]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date09>2013-03-24</date09>
+        <date09 xsi:type="xs:date">2013-03-24</date09>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6437,7 +6437,7 @@
     <tdml:document><![CDATA[2013-03-24xxxx]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date10>2013-03-24</date10>
+        <date10 xsi:type="xs:date">2013-03-24</date10>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6456,7 +6456,7 @@
     <tdml:document><![CDATA[dddddddddddddddddddddddddddddd2013-03-24]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date11>2013-03-24</date11>
+        <date11 xsi:type="xs:date">2013-03-24</date11>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6477,7 +6477,7 @@
     <tdml:document><![CDATA[....12:30:30....]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time10>12:30:30</time10>
+        <time10 xsi:type="xs:time">12:30:30</time10>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6496,7 +6496,7 @@
     <tdml:document><![CDATA[::::::12:30:30]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time11>12:30:30</time11>
+        <time11 xsi:type="xs:time">12:30:30</time11>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6515,7 +6515,7 @@
     <tdml:document><![CDATA[3:30:38.001]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time12>03:30:38.001000</time12>
+        <time12 xsi:type="xs:time">03:30:38.001000</time12>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6534,7 +6534,7 @@
     <tdml:document><![CDATA[3:30:38.001435]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time13>03:30:38.001000</time13>
+        <time13 xsi:type="xs:time">03:30:38.001000</time13>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6585,7 +6585,7 @@
     <tdml:document><![CDATA[3:30:38.002345276]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time29>03:30:38.002000</time29>
+        <time29 xsi:type="xs:time">03:30:38.002000</time29>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6627,7 +6627,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <time31>
-          <time>12:49:00</time>
+          <time xsi:type="xs:time">12:49:00</time>
         </time31>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -6652,7 +6652,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <time32>
-          <time>12:49:00-05:00</time>
+          <time xsi:type="xs:time">12:49:00-05:00</time>
         </time32>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -6678,7 +6678,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <date33>
-          <date>1991-03-04</date>
+          <date xsi:type="xs:date">1991-03-04</date>
         </date33>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -6703,7 +6703,7 @@
     <tdml:infoset>
       <tdml:dfdlInfoset>
         <date34>
-          <date>1991-03-04-05:00</date>
+          <date xsi:type="xs:date">1991-03-04-05:00</date>
         </date34>
       </tdml:dfdlInfoset>
     </tdml:infoset>
@@ -6739,7 +6739,7 @@
     <tdml:document><![CDATA[03@54$%^&*()5]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time20>03:54:05</time20>
+        <time20 xsi:type="xs:time">03:54:05</time20>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6758,7 +6758,7 @@
     <tdml:document><![CDATA[03@54$%^!@#.,/.'}{}{*()5]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time21>03:54:05</time21>
+        <time21 xsi:type="xs:time">03:54:05</time21>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6777,7 +6777,7 @@
     <tdml:document><![CDATA[28]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time22>00:28:00</time22>
+        <time22 xsi:type="xs:time">00:28:00</time22>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6796,7 +6796,7 @@
     <tdml:document><![CDATA[]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time23>00:00:00</time23>
+        <time23 xsi:type="xs:time">00:00:00</time23>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6815,7 +6815,7 @@
     <tdml:document><![CDATA[.]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <time24>00:00:00</time24>
+        <time24 xsi:type="xs:time">00:00:00</time24>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6836,7 +6836,7 @@
     <tdml:document><![CDATA[Twas a sunny Wednesday at 11 O'clock. The year was 2008, and it was the hottest December we had ever experienced.]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime03>2008-12-03T11:00:00+00:00</dateTime03>
+        <dateTime03 xsi:type="xs:dateTime">2008-12-03T11:00:00+00:00</dateTime03>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6857,7 +6857,7 @@
     <tdml:document><![CDATA[27:30:30 February-29-2012]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime04>2012-03-01T03:30:30</dateTime04>
+        <dateTime04 xsi:type="xs:dateTime">2012-03-01T03:30:30</dateTime04>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6878,7 +6878,7 @@
     <tdml:document><![CDATA[01 02 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime05>2013-02-05T00:00:00</dateTime05>
+        <dateTime05 xsi:type="xs:dateTime">2013-02-05T00:00:00</dateTime05>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6899,7 +6899,7 @@
     <tdml:document><![CDATA[01 02 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime06>2013-02-07T00:00:00</dateTime06>
+        <dateTime06 xsi:type="xs:dateTime">2013-02-07T00:00:00</dateTime06>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6920,7 +6920,7 @@
     <tdml:document><![CDATA[01 02 2013]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime07>2013-01-31T00:00:00</dateTime07>
+        <dateTime07 xsi:type="xs:dateTime">2013-01-31T00:00:00</dateTime07>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6941,7 +6941,7 @@
     <tdml:document><![CDATA[01 02 2013 12:43:30PM]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime08>2013-02-03T12:43:30</dateTime08>
+        <dateTime08 xsi:type="xs:dateTime">2013-02-03T12:43:30</dateTime08>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6962,7 +6962,7 @@
     <tdml:document><![CDATA[01 01 2013 12:43:30PM]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime08>2013-01-06T12:43:30</dateTime08>
+        <dateTime08 xsi:type="xs:dateTime">2013-01-06T12:43:30</dateTime08>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -6983,7 +6983,7 @@
     <tdml:document><![CDATA[02 01 2013 12:43:30PM]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime08>2013-01-13T12:43:30</dateTime08>
+        <dateTime08 xsi:type="xs:dateTime">2013-01-13T12:43:30</dateTime08>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -7002,7 +7002,7 @@
     <tdml:document><![CDATA[.....03.04.1999 04:31:44PM.....]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime09>1999-03-04T16:31:44</dateTime09>
+        <dateTime09 xsi:type="xs:dateTime">1999-03-04T16:31:44</dateTime09>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -7021,7 +7021,7 @@
     <tdml:document><![CDATA[03.04.1999 04:31:44PM:::::::::::::::::::::::::::::::::::::::::]]></tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime10>1999-03-04T16:31:44</dateTime10>
+        <dateTime10 xsi:type="xs:dateTime">1999-03-04T16:31:44</dateTime10>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -7044,7 +7044,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime11>1999-03-04T16:31:44</dateTime11>
+        <dateTime11 xsi:type="xs:dateTime">1999-03-04T16:31:44</dateTime11>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -7067,7 +7067,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <dateTime12>1999-03-04T17:01:44</dateTime12>
+        <dateTime12 xsi:type="xs:dateTime">1999-03-04T17:01:44</dateTime12>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -7088,7 +7088,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <date>1987-04-30+00:00</date>
+        <date xsi:type="xs:date">1987-04-30+00:00</date>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -7097,7 +7097,7 @@
   
   <tdml:defineSchema name="HexBinary">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"
       lengthUnits="bytes" encoding="UTF-8" separator="" initiator=""
       terminator="" occursCountKind="parsed" ignoreCase="no"
       textNumberRep="standard" representation="binary" initiatedContent="no"  />
@@ -7791,7 +7791,7 @@
   <tdml:defineSchema name="DFDL-307-one-octet.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="binary"
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="binary"
             binaryNumberRep="binary" lengthUnits="bits" byteOrder='bigEndian'
             alignment="1" alignmentUnits="bits" lengthKind='explicit' />
 

@@ -22,7 +22,7 @@
 
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="GeneralFormat" lengthUnits="bytes" terminator="" encoding="UTF-8" initiator="">
+      <dfdl:format ref="GeneralFormatPortable" lengthUnits="bytes" terminator="" encoding="UTF-8" initiator="">
         <dfdl:property name="lengthKind">delimited</dfdl:property>
         <dfdl:property name="separator">.</dfdl:property>
         <dfdl:property name="occursCountKind">parsed</dfdl:property>

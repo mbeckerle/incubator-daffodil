@@ -21,7 +21,7 @@
 
   <tdml:defineSchema name="ovc1" elementFormDefault="unqualified">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="binary"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="binary"/>
 
     <xs:group name="IPSrcGrp">
       <xs:sequence>
@@ -214,7 +214,7 @@
 
   <tdml:defineSchema name="ovc2" elementFormDefault="unqualified">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="binary"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="binary"/>
 
     <xs:group name="IPSrcGrp">
       <xs:sequence>
@@ -262,7 +262,7 @@
 
   <tdml:defineSchema name="ovc3" elementFormDefault="unqualified">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="binary"  lengthUnits="bytes"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="binary"  lengthUnits="bytes"/>
 
     <xs:element name="root">
       <xs:complexType>
@@ -306,7 +306,7 @@
 
   <tdml:defineSchema name="ovc4" elementFormDefault="unqualified">
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" representation="binary"/>
+    <dfdl:format ref="ex:GeneralFormatPortable" representation="binary"/>
 
     <xs:element name="e1">
       <xs:complexType>
@@ -505,7 +505,7 @@
           <xi>en-GB</xi>
           <yi>es-MX</yi>
           <zi>ru-RU</zi>
-          <z>2013-03-01+00:00</z>
+          <z xsi:type="xs:date">2013-03-01+00:00</z>
         </ex:e5>
       </tdml:dfdlInfoset>
     </tdml:infoset>

@@ -30,7 +30,7 @@
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd" />
 
-    <dfdl:format ref="ex:GeneralFormat"
+    <dfdl:format ref="ex:GeneralFormatPortable"
       representation="text"
       encoding="UTF-8"
       binaryDecimalVirtualPoint="2"
@@ -261,7 +261,7 @@
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd" />
 
-    <dfdl:format ref="ex:GeneralFormat"
+    <dfdl:format ref="ex:GeneralFormatPortable"
       representation="binary"
       encoding="UTF-8"
       binaryDecimalVirtualPoint="2"
@@ -426,7 +426,7 @@
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd" />
 
-    <dfdl:format ref="ex:GeneralFormat"
+    <dfdl:format ref="ex:GeneralFormatPortable"
       prefixIncludesPrefixLength="no" />
 
     <xs:complexType name="prefixComplex">
@@ -1180,7 +1180,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_text_date_txt_bytes>2017-08-28T18:29:00</pl_text_date_txt_bytes>
+        <pl_text_date_txt_bytes xsi:type="xs:dateTime">2017-08-28T18:29:00</pl_text_date_txt_bytes>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1194,7 +1194,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_text_date_txt_bits>2017-08-28T18:29:00</pl_text_date_txt_bits>
+        <pl_text_date_txt_bits xsi:type="xs:dateTime">2017-08-28T18:29:00</pl_text_date_txt_bits>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1212,7 +1212,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_text_date_txt_chars>2017-08-28T18:29:00</pl_text_date_txt_chars>
+        <pl_text_date_txt_chars xsi:type="xs:dateTime">2017-08-28T18:29:00</pl_text_date_txt_chars>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1226,7 +1226,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_text_date_bin_bytes>2017-08-28T18:29:00</pl_text_date_bin_bytes>
+        <pl_text_date_bin_bytes xsi:type="xs:dateTime">2017-08-28T18:29:00</pl_text_date_bin_bytes>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1240,7 +1240,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_text_date_bin_bits>2017-08-28T18:29:00</pl_text_date_bin_bits>
+        <pl_text_date_bin_bits xsi:type="xs:dateTime">2017-08-28T18:29:00</pl_text_date_bin_bits>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1777,7 +1777,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_bin_date_bin_bytes_packed>1645-12-25T19:36:50</pl_bin_date_bin_bytes_packed>
+        <pl_bin_date_bin_bytes_packed xsi:type="xs:dateTime">1645-12-25T19:36:50</pl_bin_date_bin_bytes_packed>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1791,7 +1791,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_bin_date_bin_bits_packed>1645-12-25T19:36:50</pl_bin_date_bin_bits_packed>
+        <pl_bin_date_bin_bits_packed xsi:type="xs:dateTime">1645-12-25T19:36:50</pl_bin_date_bin_bits_packed>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1805,7 +1805,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_bin_date_bin_bytes_bcd>2004-06-14T18:56:03</pl_bin_date_bin_bytes_bcd>
+        <pl_bin_date_bin_bytes_bcd xsi:type="xs:dateTime">2004-06-14T18:56:03</pl_bin_date_bin_bytes_bcd>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1819,7 +1819,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_bin_date_bin_bits_bcd>2004-06-14T18:56:03</pl_bin_date_bin_bits_bcd>
+        <pl_bin_date_bin_bits_bcd xsi:type="xs:dateTime">2004-06-14T18:56:03</pl_bin_date_bin_bits_bcd>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1833,7 +1833,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_bin_date_bin_bytes_ibm4690>2007-11-30T04:15:08</pl_bin_date_bin_bytes_ibm4690>
+        <pl_bin_date_bin_bytes_ibm4690 xsi:type="xs:dateTime">2007-11-30T04:15:08</pl_bin_date_bin_bytes_ibm4690>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -1847,7 +1847,7 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <pl_bin_date_bin_bits_ibm4690>2007-11-30T04:15:08</pl_bin_date_bin_bits_ibm4690>
+        <pl_bin_date_bin_bits_ibm4690 xsi:type="xs:dateTime">2007-11-30T04:15:08</pl_bin_date_bin_bits_ibm4690>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>

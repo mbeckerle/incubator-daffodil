@@ -24,7 +24,7 @@
 
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"
       lengthUnits="bytes" encoding="UTF-8" separator="" initiator=""
       terminator="" occursCountKind="parsed" ignoreCase="no"
       textNumberRep="standard" representation="text" />
@@ -630,7 +630,7 @@
   <tdml:defineSchema name="inputValueCalc-invalid.dfdl.xsd">
 
     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
-    <dfdl:format ref="ex:GeneralFormat" lengthKind="delimited"
+    <dfdl:format ref="ex:GeneralFormatPortable" lengthKind="delimited"
       lengthUnits="bytes" encoding="UTF-8" separator="" initiator=""
       occursCountKind="parsed" ignoreCase="no" inputValueCalc="{ 5 }"
       textNumberRep="standard" representation="text" />

@@ -27,7 +27,7 @@
 
   <annotation>
     <appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="tns:GeneralFormat"/>
+      <dfdl:format ref="tns:GeneralFormatPortable"/>
     </appinfo>
   </annotation>
     
