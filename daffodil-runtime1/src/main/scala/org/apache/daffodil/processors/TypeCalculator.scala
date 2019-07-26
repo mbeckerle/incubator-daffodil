@@ -33,14 +33,43 @@ import org.apache.daffodil.util.PreSerialization
 import org.apache.daffodil.util.RangeBound
 import org.apache.daffodil.util.TransientParam
 import org.apache.daffodil.xml.QNameBase
+import java.lang.{ Long => JLong }
+import java.math.{ BigInteger => JBigInt }
+import scala.math.BigInt
 
-abstract class TypeCalculator[A <: AnyRef, B <: AnyRef](val srcType: NodeInfo.Kind, val dstType: NodeInfo.Kind)
+abstract class TypeCalculator[A <: AnyRef, B <: AnyRef](valueMap: HashMap[A, B], val srcType: NodeInfo.Kind, val dstType: NodeInfo.Kind)
   extends PreSerialization {
   type Error = String
 
   override def preSerialization: Any = {
     super.preSerialization
   }
+
+  final def get(x: A): Option[B] =
+    valueMap.get(x).orElse {
+      //
+      // This is a complete hack because of the AnyRef types we're using everywhere in the
+      // runtime.
+      // But hack ok for now, because a better fix is planned for this.
+      //
+      val optRepresentativeKey = valueMap.keys.headOption
+      if (optRepresentativeKey.isEmpty)
+        None
+      else
+        (optRepresentativeKey.get, x) match {
+          case (_: BigInt, l: JLong) => valueMap.get(BigInt(l).asInstanceOf[A])
+          case (_: BigInt, jbi: JBigInt) => valueMap.get(BigInt(jbi).asInstanceOf[A])
+          case (_: BigInt, bi: BigInt) => None
+          case (_: JBigInt, l: JLong) => valueMap.get(new JBigInt(l.toString).asInstanceOf[A])
+          case (_: JBigInt, jbi: JBigInt) => None
+          case (_: JBigInt, bi: BigInt) => valueMap.get(new JBigInt(bi.toString).asInstanceOf[A])
+          case (_: JLong, l: JLong) => None
+          case (_: JLong, jbi: JBigInt) => valueMap.get(new JLong(jbi.longValue()).asInstanceOf[A])
+          case (_: JLong, bi: BigInt) => valueMap.get(new JLong(bi.toLong).asInstanceOf[A])
+          case (_: String, _) => None
+          case (_, _) => Assert.invariantFailed("Wrong types.")
+        }
+    }
 
   /*
    * We can be used from both a parser directly, and as part of a DPath expression.
@@ -123,11 +152,12 @@ abstract class TypeCalculator[A <: AnyRef, B <: AnyRef](val srcType: NodeInfo.Ki
 
 class KeysetValueTypeCalculatorOrdered[A <: AnyRef, B <: AnyRef](valueMap: HashMap[A, B], rangeTable: Seq[(RangeBound[A], RangeBound[A], B)], unparseMap: HashMap[B, A],
   srcType: NodeInfo.Kind, dstType: NodeInfo.Kind)
-  extends TypeCalculator[A, B](srcType, dstType) {
+  extends TypeCalculator[A, B](valueMap, srcType, dstType) {
 
   override def inputTypeCalc(x: A, xType: NodeInfo.Kind): (Maybe[B], Maybe[Error]) = {
-    if (valueMap.contains(x)) {
-      (One(valueMap.get(x).get), Maybe.Nope)
+    val optValue = get(x)
+    if (optValue.isDefined) {
+      (One(optValue.get), Maybe.Nope)
     } else {
       val ans1: Option[(RangeBound[A], RangeBound[A], B)] = rangeTable.find({
         case (min, max, _) => {
@@ -153,19 +183,16 @@ class KeysetValueTypeCalculatorOrdered[A <: AnyRef, B <: AnyRef](valueMap: HashM
 }
 
 class KeysetValueTypeCalculatorUnordered[A <: AnyRef, B <: AnyRef](valueMap: HashMap[A, B], unparseMap: HashMap[B, A], srcType: NodeInfo.Kind, dstType: NodeInfo.Kind)
-  extends TypeCalculator[A, B](srcType, dstType) {
+  extends TypeCalculator[A, B](valueMap, srcType, dstType) {
 
   override def inputTypeCalc(x: A, xType: NodeInfo.Kind): (Maybe[B], Maybe[Error]) = {
-    if (valueMap.contains(x)) {
-      valueMap.get(x) match {
-        case Some(a) => (Maybe(a), Maybe.Nope)
-        case None => (Maybe.Nope, One(s"Value ${x} not found in keyset-value mapping"))
-      }
-    } else {
-      (Maybe.Nope, One(s"Key ${x} not found in keyset-value mapping"))
-
+    val optValue = get(x)
+    optValue match {
+      case Some(a) => (Maybe(a), Maybe.Nope)
+      case None => (Maybe.Nope, One(s"Value ${x} not found in keyset-value mapping"))
     }
   }
+
   override def outputTypeCalc(x: B, xType: NodeInfo.Kind): (Maybe[A], Maybe[Error]) = {
     unparseMap.get(x) match {
       case Some(v) => (Maybe(v), Maybe.Nope)
@@ -176,10 +203,10 @@ class KeysetValueTypeCalculatorUnordered[A <: AnyRef, B <: AnyRef](valueMap: Has
 }
 
 class ExpressionTypeCalculator[A <: AnyRef, B <: AnyRef](
-  @TransientParam maybeInputTypeCalcArg: => Maybe[ CompiledExpression[B]],
+  @TransientParam maybeInputTypeCalcArg: => Maybe[CompiledExpression[B]],
   @TransientParam maybeOutputTypeCalcArg: => Maybe[CompiledExpression[A]],
   srcType: NodeInfo.Kind, dstType: NodeInfo.Kind)
-  extends TypeCalculator[A, B](srcType, dstType) {
+  extends TypeCalculator[A, B](null, srcType, dstType) {
 
   override def supportsParse = maybeInputTypeCalcArg.isDefined
   override def supportsUnparse = maybeOutputTypeCalcArg.isDefined
@@ -262,13 +289,13 @@ class ExpressionTypeCalculator[A <: AnyRef, B <: AnyRef](
   }
 }
 
-class IdentifyTypeCalculator[A <: AnyRef](srcType: NodeInfo.Kind) extends TypeCalculator[A, A](srcType, srcType) {
+class IdentifyTypeCalculator[A <: AnyRef](srcType: NodeInfo.Kind) extends TypeCalculator[A, A](null, srcType, srcType) {
   override def inputTypeCalc(x: A, xType: NodeInfo.Kind): (Maybe[A], Maybe[Error]) = (Maybe(x), Maybe.Nope)
   override def outputTypeCalc(x: A, xType: NodeInfo.Kind): (Maybe[A], Maybe[Error]) = (Maybe(x), Maybe.Nope)
 }
 
 class UnionTypeCalculator[A <: AnyRef, B <: AnyRef](subCalculators: Seq[(RepValueSet[A], RepValueSet[B], TypeCalculator[A, B])], srcType: NodeInfo.Kind, dstType: NodeInfo.Kind)
-  extends TypeCalculator[A, B](srcType, dstType) {
+  extends TypeCalculator[A, B](null, srcType, dstType) {
   //TODO, it may be worth it to pre-compute a hash table for direct dispatch,
   //Similar to how keyset-value works
   override def inputTypeCalc(x: A, xType: NodeInfo.Kind): (Maybe[B], Maybe[Error]) = {
