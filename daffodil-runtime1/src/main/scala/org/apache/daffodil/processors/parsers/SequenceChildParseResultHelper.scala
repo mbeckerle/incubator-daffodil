@@ -293,7 +293,21 @@ trait ElementSequenceChildParseResultHelper
           } // end if not defaultable
         } // end case Required
         case _: RequiredOptionalStatus.Optional => {
-          ParseAttemptStatus.AbsentRep // callers will backtrack any elements created but retain bit position.
+          emptyElementParsePolicy match {
+            case EmptyElementParsePolicy.TreatAsMissing => {
+              ParseAttemptStatus.AbsentRep // callers will backtrack any elements created but retain bit position.
+            }
+            case EmptyElementParsePolicy.TreatAsEmpty => {
+              elem.dataValue match {
+                case string: String if string.length == 0 => ParseAttemptStatus.NormalRep
+                case byteArray: Array[Byte] if byteArray.length == 0 => ParseAttemptStatus.NormalRep
+                case _ => {
+                  Assert.invariant(!isZL) // must be nonZL empty rep.
+                  ParseAttemptStatus.EmptyRep
+                }
+              }
+            }
+          } // end match
         }
       } // end match requiredOptional
     } else {
