@@ -44,6 +44,8 @@ import org.apache.daffodil.infoset.InfosetInputter
 import org.apache.daffodil.io.InputSourceDataInputStream
 import java.nio.channels.WritableByteChannel
 import scala.util.Try
+import org.apache.daffodil.infoset.JsonInfosetOutputter
+import org.apache.daffodil.compiler.ProcessorFactory
 
 /*
  * This is not a file of tests.
@@ -82,6 +84,29 @@ object TestUtils {
     runSchemaOnData(testSchema, Misc.stringToReadableByteChannel(data), areTracing)
   }
 
+  def testStringToJSON(testSchema: Node, data: String, areTracing: Boolean = false) = {
+    val os = new java.io.ByteArrayOutputStream()
+    runSchemaOnData(testSchema, Misc.stringToReadableByteChannel(data), areTracing,
+      outputterArg = new JsonInfosetOutputter(os, true))
+    val str = os.toString("utf-8")
+    str
+  }
+
+  def testPFToJSONParse(pf: ProcessorFactory, data: String, areTracing: Boolean) = {
+    val os = new java.io.ByteArrayOutputStream()
+    runSchemaOnData(pf, Misc.stringToReadableByteChannel(data), areTracing,
+      outputterArg = new JsonInfosetOutputter(os, true))
+    val str = os.toString("utf-8")
+    str
+  }
+
+  def testPFUnparse(pf: ProcessorFactory, infosetXML: Node, data: String, areTracing: Boolean) = {
+    val os = new java.io.ByteArrayOutputStream()
+    testPFUnparsing(pf, data, areTracing, new ScalaXMLInfosetInputter(infosetXML))
+    val str = os.toString("utf-8")
+    str
+  }
+
   def testBinary(testSchema: Node, hexData: String, areTracing: Boolean = false): (DFDL.ParseResult, Node) = {
     val b = Misc.hex2Bytes(hexData)
     testBinary(testSchema, b, areTracing)
@@ -101,6 +126,12 @@ object TestUtils {
   def testUnparsing(testSchema: scala.xml.Elem, infosetXML: Node, unparseTo: String, areTracing: Boolean = false): Seq[Diagnostic] = {
     val compiler = Compiler().withTunable("allowExternalPathExpressions", "true")
     val pf = compiler.compileNode(testSchema)
+    testPFUnparsing(pf, unparseTo, areTracing,
+      new ScalaXMLInfosetInputter(infosetXML))
+  }
+
+  def testPFUnparsing(pf: ProcessorFactory, unparseTo: String, areTracing: Boolean = false,
+    inputter: InfosetInputter): Seq[Diagnostic] = {
     if (pf.isError) {
       val msgs = pf.getDiagnostics.map(_.getMessage()).mkString("\n")
       throw new Exception(msgs)
@@ -115,7 +146,6 @@ object TestUtils {
     u = if (areTracing) {
       u.withDebugger(builtInTracer).withDebugging(true)
     } else u
-    val inputter = new ScalaXMLInfosetInputter(infosetXML)
     val actual = u.unparse(inputter, out)
     if (actual.isProcessingError) {
       val msgs = actual.getDiagnostics.map(_.getMessage()).mkString("\n")
@@ -179,9 +209,15 @@ object TestUtils {
     } else p
   }
 
-  def runSchemaOnData(testSchema: Node, data: ReadableByteChannel, areTracing: Boolean = false) = {
+  def runSchemaOnData(testSchema: Node, data: ReadableByteChannel, areTracing: Boolean = false,
+    outputterArg: InfosetOutputter = new ScalaXMLInfosetOutputter()): (DFDL.ParseResult, Node) = {
     val compiler = Compiler()
     val pf = compiler.compileNode(testSchema)
+    runSchemaOnData(pf, data, areTracing, outputterArg)
+  }
+
+  def runSchemaOnData(pf: ProcessorFactory, data: ReadableByteChannel, areTracing: Boolean,
+    outputterArg: InfosetOutputter) = {
     val isError = pf.isError
     val msgs = pf.getDiagnostics.map(_.getMessage()).mkString("\n")
 
@@ -199,7 +235,7 @@ object TestUtils {
     } else p
     p = p.withValidationMode(ValidationMode.Limited)
 
-    val outputter = new ScalaXMLInfosetOutputter()
+    val outputter = outputterArg
     val input = InputSourceDataInputStream(Channels.newInputStream(data))
     val actual = p.parse(input, outputter)
     if (actual.isProcessingError) {
@@ -208,7 +244,33 @@ object TestUtils {
       val msgs = diags.map(_.getMessage()).mkString("\n")
       throw new Exception(msgs)
     }
-    (actual, outputter.getResult)
+    val result = outputter match {
+      case s: ScalaXMLInfosetOutputter => s.getResult
+      case _ => null
+    }
+    (actual, result)
+  }
+
+  private val defaultIncludeImports =
+    <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
+  private val defaultTopLevels =
+    <dfdl:format ref="tns:GeneralFormat" lengthKind="delimited" encoding="US-ASCII"/>
+
+  /**
+   * For convenient unit testing of schema compiler attributes defined on Term types.
+   */
+  def getRoot(
+    contentElements: Seq[Node],
+    elementFormDefault: String = "unqualified",
+    includeImports: Seq[Node] = defaultIncludeImports,
+    topLevels: Seq[Node] = defaultTopLevels): Root = {
+    val testSchema = SchemaUtils.dfdlTestSchema(
+      includeImports,
+      topLevels,
+      contentElements,
+      elementFormDefault = elementFormDefault)
+    val sset = new SchemaSet(testSchema)
+    sset.root
   }
 
   private val defaultIncludeImports =
