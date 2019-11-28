@@ -44,34 +44,34 @@ trait BitOrderMixin extends GrammarMixin with ByteOrderAnalysisMixin { self: Ter
    *
    * If uncertain, returns false.
    */
-  final protected lazy val isKnownSameBitOrder: Boolean = {
-    val res =
-      if (enclosingTerm.isEmpty) false // root needs bit order
-      else {
-        val optPrior = this.nearestPriorPhysicalTermSatisfying(_.optDefaultBitOrder.isDefined)
-        optPrior match {
-          case None => false // no prior that has a bit order we could be the same as
-          case Some(prior) => {
-            if (prior.defaultBitOrder =:= this.defaultBitOrder) true
-            else false
-          }
-        }
-      }
-    res
-  }
+  //  final protected lazy val isKnownSameBitOrder: Boolean = {
+  //    val res =
+  //      if (enclosingTerm.isEmpty) false // root needs bit order
+  //      else {
+  //        val optPrior = this.nearestPriorPhysicalTermSatisfying(_.optDefaultBitOrder.isDefined)
+  //        optPrior match {
+  //          case None => false // no prior that has a bit order we could be the same as
+  //          case Some(prior) => {
+  //            if (prior.defaultBitOrder =:= this.defaultBitOrder) true
+  //            else false
+  //          }
+  //        }
+  //      }
+  //    res
+  //  }
 
-  protected lazy val hasUniformBitOrderThroughout: Boolean = {
-    val res = termChildren.map { t => t.isKnownSameBitOrder && t.hasUniformBitOrderThroughout }.forall(x => x)
-    res
-  }
-
-  protected final lazy val needsBitOrderChange = {
-    enclosingTerm.isEmpty || (
-      optionBitOrder.isDefined &&
-      thereIsAByteOrderDefined && // if there is no byte order, then there's no need for bit order. The two go together. An all-textual format doesn't need either one.
-      (!isKnownSameBitOrder ||
-        (isArray && !hasUniformBitOrderThroughout)))
-  }
+  //  protected lazy val hasUniformBitOrderThroughout: Boolean = {
+  //    val res = termChildren.map { t => t.isKnownSameBitOrder && t.hasUniformBitOrderThroughout }.forall(x => x)
+  //    res
+  //  }
+  //
+  //  protected final lazy val needsBitOrderChange = {
+  //    enclosingTerm.isEmpty || (
+  //      optionBitOrder.isDefined &&
+  //      thereIsAByteOrderDefined && // if there is no byte order, then there's no need for bit order. The two go together. An all-textual format doesn't need either one.
+  //      (!isKnownSameBitOrder ||
+  //        (isArray && !hasUniformBitOrderThroughout)))
+  //  }
 
   lazy val maybeCheckByteAndBitOrderEv = {
     //

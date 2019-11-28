@@ -86,8 +86,7 @@ object ModelGroupFactory {
           case mg: ModelGroup => position
           case gd: GlobalGroupDef => position
         }
-        val isH = isHidden || lexicalParent.isHidden
-        val groupRefFactory = new GroupRefFactory(child, lexicalParent, pos, isH)
+        val groupRefFactory = new GroupRefFactory(child, lexicalParent, pos, isHidden)
         val groupRefInstance = groupRefFactory.groupRef
         groupRefInstance.asModelGroup
       }
@@ -145,6 +144,7 @@ abstract class ModelGroup(index: Int)
   requiredEvaluations(groupMembers)
   requiredEvaluations(initiatedContentCheck)
 
+  def isHiddenGroupRef: Boolean = false
   /**
    * FIXME: DAFFODIL-2132. This tells us if framing is expressed on the schema.
    * It does NOT tell us if that framing occupies bits in the data stream or not.
@@ -211,71 +211,68 @@ abstract class ModelGroup(index: Int)
    * second is a boolean if all children could be optional, and thus this could
    * be last
    */
-  lazy val potentialLastChildren: (Seq[Term], Boolean) = {
-    val (potentialLast, allOptional) = this match {
-      case ch: ChoiceTermBase => (ch.groupMembers, false)
-      case sq: SequenceTermBase if !sq.isOrdered => (sq.groupMembers, true) // TBD: is true correct? Are all children optional in unordered sequence?
-      case sq: SequenceTermBase => {
-        val maybeLast = sq.groupMembers.lastOption
-        if (maybeLast.isDefined) {
-          val last = maybeLast.get
-          val lastIsOptional = last match {
-            case mg: ModelGroup => false // model group is mandatory
-            case eb: ElementBase => !eb.isRequiredStreamingUnparserEvent || !eb.isRepresented
-          }
-          if (lastIsOptional) {
-            val (priorSibs, optPriorElementsIncludesThisParent) = last.potentialPriorTerms
-            (last +: priorSibs, optPriorElementsIncludesThisParent.isDefined)
-          } else {
-            (Seq(last), false)
-          }
-        } else {
-          (Seq(), true)
-        }
-      }
-    }
-    val potentialLastRepresented = potentialLast.filter { term =>
-      term match {
-        case eb: ElementBase => eb.isRepresented
-        case _ => true
-      }
-    }
-    if (potentialLastRepresented.isEmpty) {
-      //If there are no children, by definition, all children are optional.
-      (Seq(), true)
-    } else {
-      (potentialLastRepresented, allOptional)
-    }
-  }
+  //  lazy val potentialLastChildren: (Seq[Term], Boolean) = {
+  //    val (potentialLast, allOptional) = this match {
+  //      case ch: ChoiceTermBase => (ch.groupMembers, false)
+  //      case sq: SequenceTermBase if !sq.isOrdered => (sq.groupMembers, true) // TBD: is true correct? Are all children optional in unordered sequence?
+  //      case sq: SequenceTermBase => {
+  //        val maybeLast = sq.groupMembers.lastOption
+  //        if (maybeLast.isDefined) {
+  //          val last = maybeLast.get
+  //          val lastIsOptional = last match {
+  //            case mg: ModelGroup => false // model group is mandatory
+  //            case eb: ElementBase => !eb.isRequiredStreamingUnparserEvent || !eb.isRepresented
+  //          }
+  //          if (lastIsOptional) {
+  //            val (priorSibs, optPriorElementsIncludesThisParent) = last.potentialPriorTerms
+  //            (last +: priorSibs, optPriorElementsIncludesThisParent.isDefined)
+  //          } else {
+  //            (Seq(last), false)
+  //          }
+  //        } else {
+  //          (Seq(), true)
+  //        }
+  //      }
+  //    }
+  //    val potentialLastRepresented = potentialLast.filter { term =>
+  //      term match {
+  //        case eb: ElementBase => eb.isRepresented
+  //        case _ => true
+  //      }
+  //    }
+  //    if (potentialLastRepresented.isEmpty) {
+  //      //If there are no children, by definition, all children are optional.
+  //      (Seq(), true)
+  //    } else {
+  //      (potentialLastRepresented, allOptional)
+  //    }
+  //  }
 
   /**
    * Package private as this is for testing only.
    */
-  private[dsom] final def allSelfContainedTermsTerminatedByRequiredElement: Seq[Term] =
-    LV('allSelfContainedTermsTerminatedByRequiredElement) {
-      val listOfTerms = groupMembers.map(m => {
-        m match {
-          case e: ElementBase if !e.isRequiredStreamingUnparserEvent => (Seq(e) ++ e.possibleNextTerms) // A LocalElement or ElementRef
-          case e: ElementBase => Seq(e)
-          case mg: ModelGroup => Seq(mg)
-        }
-      }).flatten
-      listOfTerms
-    }.value
+  //  private[dsom] final def allSelfContainedTermsTerminatedByRequiredElement: Seq[Term] =
+  //    LV('allSelfContainedTermsTerminatedByRequiredElement) {
+  //      val listOfTerms = groupMembers.map(m => {
+  //        m match {
+  //          case e: ElementBase if !e.isRequiredStreamingUnparserEvent => (Seq(e) ++ e.possibleNextTerms) // A LocalElement or ElementRef
+  //          case e: ElementBase => Seq(e)
+  //          case mg: ModelGroup => Seq(mg)
+  //        }
+  //      }).flatten
+  //      listOfTerms
+  //    }.value
 
   final def identifyingEventsForChoiceBranch: Seq[ChoiceBranchEvent] = LV('identifyingEventsForChoiceBranch) {
-    Assert.usage(enclosingTerm.isDefined && enclosingTerm.get.isInstanceOf[ChoiceTermBase], "identifyingElementsForChoiceBranch must only be called on children of choices")
+    Assert.usage(
+      immediatelyEnclosingGroupDef.isDefined &&
+        immediatelyEnclosingGroupDef.get.isInstanceOf[ChoiceTermBase],
+      "identifyingElementsForChoiceBranch must only be called on children of choices")
 
-    val childrenIdentifiers = possibleFirstChildElementsInInfoset
-    val parentNextIdentifiers =
-      if (!mustHaveRequiredElement) {
-        enclosingTerm.get.asInstanceOf[ModelGroup].possibleNextChildElementsInInfoset
-      } else {
-        Nil
-      }
-    val startEvents = (childrenIdentifiers ++ parentNextIdentifiers).map { e =>
-      ChoiceBranchStartEvent(e.namedQName)
-    }
+    ??? // Copy pattern from calculations for element resolver.
+
+    //    val startEvents = (childrenIdentifiers ++ parentNextIdentifiers).map { e =>
+    //      ChoiceBranchStartEvent(e.namedQName)
 
     // Look at the enclosing terms, and find either the first model group that
     // has required next sibling elements, or find an element. If we find an
@@ -287,24 +284,24 @@ abstract class ModelGroup(index: Int)
     // must have a required element (i.e. it must contribute to the infost)
     // then none of this matters, and it will not have an identifying end
     // event, since one of the child elements must appear in the infoset.
-    val endEvent =
-      if (mustHaveRequiredElement) {
-        Nil
-      } else {
-        var ec = enclosingTerm.get
-        while (!ec.isInstanceOf[ElementBase] &&
-          !ec.asInstanceOf[ModelGroup].hasRequiredNextSiblingElement) {
-          ec = ec.enclosingTerm.get
-        }
-        val ee = ec match {
-          case e: ElementBase => Seq(ChoiceBranchEndEvent(e.namedQName))
-          case mg: ModelGroup => Nil
-        }
-        ee
-      }
-
-    val idEvents = startEvents ++ endEvent
-    idEvents
+    //    val endEvent =
+    //      if (mustHaveRequiredElement) {
+    //        Nil
+    //      } else {
+    //        var ec = enclosingTerm.get
+    //        while (!ec.isInstanceOf[ElementBase] &&
+    //          !ec.asInstanceOf[ModelGroup].hasRequiredNextSiblingElement) {
+    //          ec = ec.enclosingTerm.get
+    //        }
+    //        val ee = ec match {
+    //          case e: ElementBase => Seq(ChoiceBranchEndEvent(e.namedQName))
+    //          case mg: ModelGroup => Nil
+    //        }
+    //        ee
+    //      }
+    //
+    //    val idEvents = startEvents ++ endEvent
+    //    idEvents
   }.value
 
   /*
@@ -324,7 +321,7 @@ abstract class ModelGroup(index: Int)
             // follow it
             Seq(e) ++ e.possibleNextSiblingTerms
           }
-          case Some(s: SequenceTermBase) if s.isHidden => s.possibleNextSiblingTerms
+          case Some(s: SequenceTermBase) if s.isHiddenGroupRef => s.possibleNextSiblingTerms
           case Some(mg: ModelGroup) if !mg.mustHaveRequiredElement => Seq(mg) ++ mg.possibleNextSiblingTerms
           case Some(e: ElementBase) => Seq(e)
           case Some(mg: ModelGroup) => Seq(mg)
@@ -334,20 +331,20 @@ abstract class ModelGroup(index: Int)
     firstTerms
   }.value
 
-  final override lazy val nextParentElements: Seq[ElementBase] = {
-    Assert.invariant(enclosingTerm.isDefined)
-    val et = enclosingTerm.get
-    et match {
-      case mg: ModelGroup if (!this.hasRequiredNextSiblingElement) =>
-        mg.possibleNextChildElementsInInfoset
-      case e: ElementBase =>
-        // This changes the contract. It doesn't stop at an enclosing element boundary.
-        // e.possibleNextChildElementsInInfoset
-        Nil
-      case mg: ModelGroup =>
-        Nil
-    }
-  }
+  //  final override lazy val nextParentElements: Seq[ElementBase] = {
+  //    Assert.invariant(enclosingTerm.isDefined)
+  //    val et = enclosingTerm.get
+  //    et match {
+  //      case mg: ModelGroup if (!this.hasRequiredNextSiblingElement) =>
+  //        mg.possibleNextChildElementsInInfoset
+  //      case e: ElementBase =>
+  //        // This changes the contract. It doesn't stop at an enclosing element boundary.
+  //        // e.possibleNextChildElementsInInfoset
+  //        Nil
+  //      case mg: ModelGroup =>
+  //        Nil
+  //    }
+  //  }
 
   /** Always false as model groups can't be elements.*/
   protected final def couldBeLastElementInModelGroup: Boolean = false
@@ -357,24 +354,24 @@ abstract class ModelGroup(index: Int)
    * required elements. This essentially determines if this could contain
    * the last element in the model group.
    */
-  private def hasRequiredNextSiblingElement: Boolean = LV('hasRequiredNextSiblingElement) {
-    val hasRequired = enclosingTerm match {
-      case None => false
-      case Some(s: SequenceTermBase) if s.isOrdered => {
-        // possibleNextSiblingTerms is either all optional/does not have a
-        // required element, or the last one is required. Thus, this has a
-        // required next sibling if the last sibling element is required
-        possibleNextSiblingTerms.lastOption match {
-          case None => false
-          case Some(e: ElementBase) => e.isRequiredStreamingUnparserEvent
-          case Some(mg: ModelGroup) => mg.mustHaveRequiredElement
-          case Some(_) => Assert.invariantFailed()
-        }
-      }
-      case _ => false
-    }
-    hasRequired
-  }.value
+  //  private def hasRequiredNextSiblingElement: Boolean = LV('hasRequiredNextSiblingElement) {
+  //    val hasRequired = enclosingTerm match {
+  //      case None => false
+  //      case Some(s: SequenceTermBase) if s.isOrdered => {
+  //        // possibleNextSiblingTerms is either all optional/does not have a
+  //        // required element, or the last one is required. Thus, this has a
+  //        // required next sibling if the last sibling element is required
+  //        possibleNextSiblingTerms.lastOption match {
+  //          case None => false
+  //          case Some(e: ElementBase) => e.isRequiredStreamingUnparserEvent
+  //          case Some(mg: ModelGroup) => mg.mustHaveRequiredElement
+  //          case Some(_) => Assert.invariantFailed()
+  //        }
+  //      }
+  //      case _ => false
+  //    }
+  //    hasRequired
+  //  }.value
 
   /*
    * Determines if this model group must have at least one required element, or
@@ -384,7 +381,7 @@ abstract class ModelGroup(index: Int)
    */
   final def mustHaveRequiredElement: Boolean = LV('mustHaveRequiredElement) {
     this match {
-      case s: SequenceTermBase if s.isHidden => false
+      case s: SequenceTermBase if s.isHiddenGroupRef => false
       case s: SequenceTermBase if s.isOrdered =>
         groupMembers.exists {
           case e: ElementBase => !e.canBeAbsentFromUnparseInfoset
@@ -401,7 +398,9 @@ abstract class ModelGroup(index: Int)
   lazy val initiatedContentCheck: Unit = {
     if (initiatedContent eq YesNo.Yes) {
       groupMembers.foreach { term =>
-        term.schemaDefinitionUnless(term.hasInitiator, "Enclosing group has initiatedContent='yes', but initiator is not defined.")
+        term.schemaDefinitionUnless(
+          term.hasInitiator,
+          "Enclosing group has initiatedContent='yes', but initiator is not defined.")
       }
     }
   }

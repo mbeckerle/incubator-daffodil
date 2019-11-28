@@ -58,19 +58,21 @@ trait GroupRef { self: ModelGroup =>
  * This factory exists in order to make error messages refer to the
  * right part of the schema.
  */
-final class GroupRefFactory(refXMLArg: Node, val refLexicalParent: SchemaComponent, position: Int, isHidden: Boolean)
-  extends SchemaComponentFactory(refXMLArg, Some(refLexicalParent.schemaDocument))
-  with HasRefMixin {
+final class GroupRefFactory(refXML: Node, val refLexicalParent: SchemaComponent, position: Int, isHidden: Boolean)
+  extends HasRefMixin {
 
   final def qname = this.refQName
 
-  lazy val groupRef = LV('groupRef) {
-    val gdefFactory = schemaSet.getGlobalGroupDef(qname).getOrElse {
+  lazy val groupRef = {
+    val gdef = refLexicalParent.schemaSet.getGlobalGroupDef(qname).getOrElse {
       SDE("Referenced group definition not found: %s", this.ref)
     }
-    val (gref, _) = gdefFactory.forGroupRef(refXMLArg, refLexicalParent, position, isHidden)
+    val gref = gdef match {
+      case gd: GlobalSequenceGroupDef => new SequenceGroupRef(gd, refXML, refLexicalParent, position, isHidden)
+      case gd: GlobalChoiceGroupDef => new ChoiceGroupRef(gd, refXML, refLexicalParent, position, isHidden)
+    }
     gref
-  }.value
+  }
 
 }
 
@@ -85,7 +87,7 @@ final class SequenceGroupRef(
 
   private lazy val globalGroupDef = globalGroupDefArg // once only
 
-  override def isHidden = isHiddenArg
+  override def isHiddenGroupRef = isHiddenArg
 
   private lazy val sgd = groupDef.asInstanceOf[GlobalSequenceGroupDef]
 
@@ -102,7 +104,7 @@ final class SequenceGroupRef(
 }
 
 final class ChoiceGroupRef(
-  globalGroupDefArg: => GlobalChoiceGroupDef,
+  globalGroupDefArg: GlobalChoiceGroupDef,
   refXML: Node,
   refLexicalParent: SchemaComponent,
   positionArg: Int,
@@ -114,7 +116,7 @@ final class ChoiceGroupRef(
 
   private lazy val globalGroupDef = globalGroupDefArg // once only
 
-  override def isHidden = isHiddenArg
+  override def isHiddenGroupRef = isHiddenArg
 
   override lazy val groupDef = globalGroupDef
 

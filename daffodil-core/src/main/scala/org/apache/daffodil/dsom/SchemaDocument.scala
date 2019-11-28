@@ -194,7 +194,7 @@ final class SchemaDocument(xmlSDoc: XMLSchemaDocument)
    */
   requiredEvaluations(defaultFormat)
   if (schemaSet.checkAllTopLevel) {
-    requiredEvaluations(globalElementDecls.map { _.forRoot() })
+    requiredEvaluations(globalElementDecls)
     requiredEvaluations(defineEscapeSchemes)
     requiredEvaluations(defineFormats)
     requiredEvaluations(defineVariables)
@@ -284,12 +284,12 @@ final class SchemaDocument(xmlSDoc: XMLSchemaDocument)
    */
   lazy val globalElementDecls = {
     val xmlelts = (xml \ "element")
-    val factories = xmlelts.map { new GlobalElementDeclFactory(_, this) }
-    factories
+    val decls = xmlelts.map { new GlobalElementDecl(_, this) }
+    decls
   }
   lazy val globalSimpleTypeDefs = (xml \ "simpleType").map { new GlobalSimpleTypeDef(_, this) }
-  lazy val globalComplexTypeDefs = (xml \ "complexType").map { new GlobalComplexTypeDefFactory(_, this) }
-  lazy val globalGroupDefs = (xml \ "group").map { new GlobalGroupDefFactory(_, this) }
+  lazy val globalComplexTypeDefs = (xml \ "complexType").map { new GlobalComplexTypeDef(_, this) }
+  lazy val globalGroupDefs = (xml \ "group").map { GlobalGroupDef(_, this) }
 
   lazy val defaultFormat = formatAnnotation.asInstanceOf[DFDLFormat]
 

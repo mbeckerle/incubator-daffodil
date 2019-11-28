@@ -29,15 +29,15 @@ import scala.xml.Node
  * Anything that can be computed without reference to the point of use
  * or point of reference can be computed here on these factory objects.
  */
-abstract class SchemaComponentFactory(
-  final override val xml: Node,
-  final override val optLexicalParent: Option[SchemaComponent])
-  extends SchemaComponent
-  with NestingLexicalMixin {
-
-  def this(xml: Node, lexicalParent: SchemaComponent) =
-    this(xml, Option(lexicalParent))
-}
+//abstract class SchemaComponentFactory(
+//  final override val xml: Node,
+//  final override val optLexicalParent: Option[SchemaComponent])
+//  extends SchemaComponent
+//  with NestingLexicalMixin {
+//
+//  def this(xml: Node, lexicalParent: SchemaComponent) =
+//    this(xml, Option(lexicalParent))
+//}
 
 trait SchemaFileLocatableImpl
   extends SchemaFileLocatable {

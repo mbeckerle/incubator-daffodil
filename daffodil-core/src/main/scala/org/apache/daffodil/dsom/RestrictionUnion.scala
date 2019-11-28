@@ -172,7 +172,7 @@ final class Restriction(xmlArg: Node, val simpleTypeDef: SimpleTypeDefBase)
     }
   }.value
 
-  lazy val enumerations: Seq[EnumerationDefFactory] = (xml \ "enumeration").map(new EnumerationDefFactory(_, simpleTypeDef))
+  lazy val enumerations: Seq[EnumerationDef] = (xml \ "enumeration").map(new EnumerationDef(_, simpleTypeDef))
 
   lazy val facetValueSet: RepValueSet[AnyRef] = {
     val initAns: (RangeBound[BigInt], RangeBound[BigInt]) = (new RangeBound(Maybe.Nope, false), new RangeBound(Maybe.Nope, false))

@@ -66,9 +66,8 @@ trait SchemaComponent
   lazy val tunable: DaffodilTunables = optLexicalParent.get.tunable
 
   lazy val dpathCompileInfo: DPathCompileInfo = {
-    lazy val parents = enclosingComponent.map { _.dpathCompileInfo }.toSeq
     new DPathCompileInfo(
-      parents,
+      enclosingTerms.map { _.dpathCompileInfo },
       variableMap,
       namespaces,
       path,
@@ -105,21 +104,21 @@ trait SchemaComponent
     schemaSet.variableMap
   }.value
 
-  /**
-   * Whether the component is hidden.
-   *
-   * Override this in the components that can hide - SequenceGroupRef
-   * and ChoiceGroupRef
-   */
-  def isHidden: Boolean = isHiddenLV
-
-  private lazy val isHiddenLV = {
-    val optEC = enclosingComponent
-    optEC match {
-      case None => false
-      case Some(ec) => ec.isHidden
-    }
-  }
+  //  /**
+  //   * Whether the component is hidden.
+  //   *
+  //   * Override this in the components that can hide - SequenceGroupRef
+  //   * and ChoiceGroupRef
+  //   */
+  //  def isHidden: Boolean = isHiddenLV
+  //
+  //  private lazy val isHiddenLV = {
+  //    val optEC = enclosingComponent
+  //    optEC match {
+  //      case None => false
+  //      case Some(ec) => ec.isHidden
+  //    }
+  //  }
 
   lazy val schemaComponent: LookupLocation = this
 
@@ -127,18 +126,18 @@ trait SchemaComponent
    * All schema components except the root have an enclosing element.
    */
   // @deprecated("2019-06-03", "Use enclosingElements and deal with shared object with multiple referencers/enclosers.")
-  final lazy val enclosingElement: Option[ElementBase] = {
-    val et = enclosingTerm
-    val ee: Option[ElementBase] = et match {
-      case None => None
-      case Some(eb: ElementBase) => Some(eb)
-      case Some(sc: SchemaComponent) => {
-        val scee = sc.enclosingElement
-        scee
-      }
-    }
-    ee
-  }
+  //  final lazy val enclosingElement: Option[ElementBase] = {
+  //    val et = enclosingTerm
+  //    val ee: Option[ElementBase] = et match {
+  //      case None => None
+  //      case Some(eb: ElementBase) => Some(eb)
+  //      case Some(sc: SchemaComponent) => {
+  //        val scee = sc.enclosingElement
+  //        scee
+  //      }
+  //    }
+  //    ee
+  //  }
 
   /**
    * Elements that enclose this.
@@ -167,15 +166,15 @@ trait SchemaComponent
   // Uncomment this to chase down these usages and revise them.
   //
   //@deprecated("2019-06-03", "Use enclosingTerms and deal with shared object with multiple referencers/enclosers.")
-  final lazy val enclosingTerm: Option[Term] = {
-    val ec = enclosingComponent
-    val et = ec match {
-      case None => None
-      case Some(t: Term) => Some(t)
-      case _ => ec.get.enclosingTerm
-    }
-    et
-  }
+  //  final lazy val enclosingTerm: Option[Term] = {
+  //    val ec = enclosingComponent
+  //    val et = ec match {
+  //      case None => None
+  //      case Some(t: Term) => Some(t)
+  //      case _ => ec.get.enclosingTerm
+  //    }
+  //    et
+  //  }
 
   /**
    * The terms that can enclose this.
@@ -230,18 +229,17 @@ trait SchemaComponent
         case er: AbstractElementRef => "er" + (if (er.position > 1) er.position else "") + "=" + er.namedQName.toQNameString
         case e: ElementBase => "e" + (if (e.position > 1) e.position else "") + "=" +
           e.namedQName.toQNameString
-        case ed: GlobalElementDecl => ed.factory.shortSchemaComponentDesignator
-        case ef: GlobalElementDeclFactory => "e=" + ef.namedQName.toQNameString
+        case ed: GlobalElementDecl => ed.shortSchemaComponentDesignator
         case ct: GlobalComplexTypeDef => "ct=" + ct.namedQName.toQNameString
         case ct: ComplexTypeBase => "ct"
         case st: SimpleTypeDefBase => "st=" + st.namedQName.toQNameString
         case st: SimpleTypeBase => "st=" + st.primType.globalQName.toQNameString
         case cgr: ChoiceGroupRef => "cgr" + (if (cgr.position > 1) cgr.position else "") + "=" + cgr.groupDef.namedQName.toQNameString
         case cgd: GlobalChoiceGroupDef => "cgd=" + cgd.namedQName.toQNameString
-        case sgr: SequenceGroupRef => "sgr" + (if (sgr.isHidden) "h" else "") + (if (sgr.position > 1) sgr.position else "") + "=" + sgr.groupDef.namedQName
+        case sgr: SequenceGroupRef => "sgr" + (if (sgr.isHiddenGroupRef) "h" else "") + (if (sgr.position > 1) sgr.position else "") + "=" + sgr.groupDef.namedQName
         case sgd: GlobalSequenceGroupDef => "sgd=" + sgd.namedQName.toQNameString
         case cg: Choice => "c" + (if (cg.position > 1) cg.position else "")
-        case sg: Sequence => "s" + (if (sg.isHidden) "h" else "") + (if (sg.position > 1) sg.position else "")
+        case sg: Sequence => "s" + (if (sg.position > 1) sg.position else "")
         case unknown => Assert.invariantFailed("No SSCD syntax for component: " + Misc.getNameFromClass(unknown)) // "unk=" + unknown.toString()
       }
     }

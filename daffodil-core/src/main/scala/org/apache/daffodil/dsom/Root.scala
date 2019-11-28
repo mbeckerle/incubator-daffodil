@@ -32,7 +32,7 @@ import org.apache.daffodil.xml.XMLUtils
  */
 final class Root(defXML: Node, parentArg: SchemaDocument,
   namedQNameArg: NamedQName,
-  globalElementDecl: => GlobalElementDecl)
+  globalElementDecl: GlobalElementDecl)
   extends AbstractElementRef(null, parentArg, 1)
   with RootGrammarMixin {
 
@@ -57,16 +57,16 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
    * the context where an object is referenced. This allows the various referencing contexts
    * to be known, without making copies of schema components for each such context.
    */
-  lazy val refMap: Map[SchemaComponentFactory, Seq[(String, Seq[RefSpec])]] = {
-    val refEntries: Seq[(SchemaComponentFactory, Seq[RefSpec])] =
+  lazy val refMap: Map[GlobalComponent, Seq[(String, Seq[RefSpec])]] = {
+    val refEntries: Seq[(GlobalComponent, Seq[RefSpec])] =
       refTargets.groupBy { _.to }.toSeq
-    val m: Seq[(SchemaComponentFactory, Seq[(String, Seq[RefSpec])])] = refEntries.map {
+    val m: Seq[(GlobalComponent, Seq[(String, Seq[RefSpec])])] = refEntries.map {
       case (to, seq) => (to, seq.groupBy { _.from.shortSchemaComponentDesignator }.toSeq)
     }
     m.toMap
   }
 
-  lazy val refPairsMap: Map[SchemaComponentFactory, Seq[String]] = {
+  lazy val refPairsMap: Map[GlobalComponent, Seq[String]] = {
     refMap.toSeq.map {
       case (to, seq: Seq[(String, _)]) => (to, seq.map { case (sscd, _) => sscd }.toSeq)
     }.toMap
@@ -111,13 +111,13 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
     allComponents.collect {
       case er: AbstractElementRef => {
         val ed = er.referencedElement
-        RefSpec(er, ed.factory, er.position) +:
-          ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd.factory, 1) }.toSeq
+        RefSpec(er, ed, er.position) +:
+          ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd, 1) }.toSeq
       }
       case ed: LocalElementDecl => {
-        ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd.factory, 1) }.toSeq
+        ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd, 1) }.toSeq
       }
-      case gr: GroupRef => Seq(RefSpec(gr, gr.groupDef.factory, gr.asModelGroup.position))
+      case gr: GroupRef => Seq(RefSpec(gr, gr.groupDef, gr.asModelGroup.position))
     }.flatten
   }
 
@@ -140,7 +140,7 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
   }
 }
 
-case class RefSpec(from: SchemaComponent, to: SchemaComponentFactory, index: Int) {
+case class RefSpec(from: SchemaComponent, to: GlobalComponent, index: Int) {
 
   override def toString = "RefSpec(from=" +
     from.shortSchemaComponentDesignator + ", to=" +

@@ -252,141 +252,144 @@ trait Term
    * This is why we have to have the GlobalXYZDefFactory stuff. Because this kind of back
    * pointer (contextual sensitivity) prevents sharing.
    */
-  final lazy val nearestEnclosingSequence: Option[SequenceTermBase] = enclosingTerm match {
-    case None => None
-    //
-    // We want to recurse outward, and don't care about these implied sequence terms
-    // that choices wrap around branch elements.
-    //
-    case Some(cs: ChoiceBranchImpliedSequence) => enclosingTerm.get.nearestEnclosingSequence
-    case Some(s: SequenceTermBase) => Some(s)
-    case Some(_) => enclosingTerm.get.nearestEnclosingSequence
-  }
+  //  final lazy val nearestEnclosingSequence: Option[SequenceTermBase] = enclosingTerm match {
+  //    case None => None
+  //    //
+  //    // We want to recurse outward, and don't care about these implied sequence terms
+  //    // that choices wrap around branch elements.
+  //    //
+  //    case Some(cs: ChoiceBranchImpliedSequence) => enclosingTerm.get.nearestEnclosingSequence
+  //    case Some(s: SequenceTermBase) => Some(s)
+  //    case Some(_) => enclosingTerm.get.nearestEnclosingSequence
+  //  }
+  //
+  //  final lazy val nearestEnclosingChoiceBeforeSequence: Option[ChoiceTermBase] = enclosingTerm match {
+  //    case None => None
+  //    //
+  //    // We want to recurse outward, and don't care about these implied sequence terms
+  //    // that choices wrap around branch elements.
+  //    //
+  //    case Some(cs: ChoiceBranchImpliedSequence) => enclosingTerm.get.nearestEnclosingChoiceBeforeSequence
+  //    case Some(s: SequenceTermBase) => None
+  //    case Some(c: ChoiceTermBase) => Some(c)
+  //    case Some(_) => enclosingTerm.get.nearestEnclosingChoiceBeforeSequence
+  //  }
+  //
+  //  final lazy val nearestEnclosingUnorderedSequence: Option[SequenceTermBase] = enclosingTerm match {
+  //    case None => None
+  //    case Some(s: SequenceTermBase) if !s.isOrdered => Some(s)
+  //    case Some(_) => enclosingTerm.get.nearestEnclosingUnorderedSequence
+  //  }
+  //
+  //  final lazy val isInUnorderedSequence: Boolean = !nearestEnclosingUnorderedSequence.isEmpty
+  //
+  //  final lazy val nearestEnclosingUnorderedSequenceBeforeSequence: Option[SequenceTermBase] = enclosingTerm match {
+  //    case None => None
+  //    case Some(s: SequenceTermBase) if !s.isOrdered => Some(s)
+  //    case Some(s: SequenceTermBase) => None
+  //    case Some(_) => enclosingTerm.get.nearestEnclosingUnorderedSequence
+  //  }
+  //
+  //  final lazy val inChoiceBeforeNearestEnclosingSequence: Boolean = enclosingTerm match {
+  //    case None => false
+  //    case Some(s: SequenceTermBase) => false
+  //    case Some(c: ChoiceTermBase) => true
+  //    case Some(_) => enclosingTerm.get.inChoiceBeforeNearestEnclosingSequence
+  //  }
+  //
+  //  final lazy val nearestEnclosingElement: Option[ElementBase] = enclosingTerm match {
+  //    case None => None
+  //    case Some(eb: ElementBase) => Some(eb)
+  //    case Some(_) => enclosingTerm.get.nearestEnclosingElement
+  //  }
 
-  final lazy val nearestEnclosingChoiceBeforeSequence: Option[ChoiceTermBase] = enclosingTerm match {
-    case None => None
-    //
-    // We want to recurse outward, and don't care about these implied sequence terms
-    // that choices wrap around branch elements.
-    //
-    case Some(cs: ChoiceBranchImpliedSequence) => enclosingTerm.get.nearestEnclosingChoiceBeforeSequence
-    case Some(s: SequenceTermBase) => None
-    case Some(c: ChoiceTermBase) => Some(c)
-    case Some(_) => enclosingTerm.get.nearestEnclosingChoiceBeforeSequence
-  }
-
-  final lazy val nearestEnclosingUnorderedSequence: Option[SequenceTermBase] = enclosingTerm match {
-    case None => None
-    case Some(s: SequenceTermBase) if !s.isOrdered => Some(s)
-    case Some(_) => enclosingTerm.get.nearestEnclosingUnorderedSequence
-  }
-
-  final lazy val isInUnorderedSequence: Boolean = !nearestEnclosingUnorderedSequence.isEmpty
-
-  final lazy val nearestEnclosingUnorderedSequenceBeforeSequence: Option[SequenceTermBase] = enclosingTerm match {
-    case None => None
-    case Some(s: SequenceTermBase) if !s.isOrdered => Some(s)
-    case Some(s: SequenceTermBase) => None
-    case Some(_) => enclosingTerm.get.nearestEnclosingUnorderedSequence
-  }
-
-  final lazy val inChoiceBeforeNearestEnclosingSequence: Boolean = enclosingTerm match {
-    case None => false
-    case Some(s: SequenceTermBase) => false
-    case Some(c: ChoiceTermBase) => true
-    case Some(_) => enclosingTerm.get.inChoiceBeforeNearestEnclosingSequence
-  }
-
-  final lazy val nearestEnclosingElement: Option[ElementBase] = enclosingTerm match {
-    case None => None
-    case Some(eb: ElementBase) => Some(eb)
-    case Some(_) => enclosingTerm.get.nearestEnclosingElement
-  }
-
-  final lazy val immediatelyEnclosingModelGroup: Option[ModelGroup] = {
+  final lazy val immediatelyEnclosingGroupDef: Option[GroupDefLike] = {
     optLexicalParent.flatMap { lexicalParent =>
-      val res = lexicalParent match {
-        case c: ChoiceTermBase => Some(c)
+      val res: Option[GroupDefLike] = lexicalParent match {
+        case c: Choice => Some(c)
         //
         // skip past the implied sequence that is wrapped around choice branches
         // to the actual choice
         //
-        case c: ChoiceBranchImpliedSequence => c.immediatelyEnclosingModelGroup
-        case s: SequenceTermBase => Some(s)
+        case c: ChoiceBranchImpliedSequence => c.immediatelyEnclosingGroupDef
+        case s: Sequence => Some(s)
         case d: SchemaDocument => {
           // we must be the Root elementRef or a quasi node
           Assert.invariant(this.isInstanceOf[Root] || this.isInstanceOf[QuasiElementDeclBase])
           None
         }
-        case gr: GroupRef => gr.asModelGroup.immediatelyEnclosingModelGroup
-        case gdd: GlobalGroupDef => Some(gdd.groupRef.asModelGroup)
-        case ged: GlobalElementDecl => ged.elementRef.immediatelyEnclosingModelGroup
-        case ct: ComplexTypeBase => {
-          None
-          // The above formerly was ct.element.immediatelyEnclosingModelGroup,
-          // but if we have a CT as our parent, the group around the element whose type
-          // that is, isn't "immediately enclosing".
-        }
-        case qe: QuasiElementDeclBase => {
-          //
-          // If your lexical parent is a Quasi-element, then your model group is
-          // the one surrounding the quasi-element.
-          //
-          qe.immediatelyEnclosingModelGroup
-        }
+        case gdd: GlobalGroupDef => Some(gdd)
+
         case _ => Assert.invariantFailed("immediatelyEnclosingModelGroup called on " + this + " with lexical parent " + lexicalParent)
       }
       res
     }
   }
 
+  lazy val immediatelyEnclosingModelGroup: Option[ModelGroup] =
+    immediatelyEnclosingGroupDef.flatMap {
+      _ match {
+        case mg: ModelGroup => Some(mg)
+        case _ => None
+      }
+    }
+
   /**
    * One-based position in the nearest enclosing sequence.
    * Follows backpointers from group defs to group refs until it
    * finds a sequence.
    */
-  final lazy val positionInNearestEnclosingSequence: Int = {
-    // FIXME:Classic example of a method that creates a pointless
-    // need for the backpointers to parent that make structure
-    // sharing of the DSOM objects impossible. This should be a value
-    // passed down to a SequenceChild constructor, and the algorithms
-    // that use this should be on SequenceTermBase or child classes thereof.
-    val optET = enclosingTerm
-    val optNES = nearestEnclosingSequence
-    val res =
-      (optET, optNES) match {
-        case (Some(et), Some(nes)) if (et == nes) =>
-          position
-        case _ => {
-          if (this.isInstanceOf[Root]) 1
-          else {
-            optET match {
-              case Some(term: Term) => term.positionInNearestEnclosingSequence
-              case x => Assert.invariantFailed("For " + this + " unable to compute position in nearest enclosing sequence. The enclosingComponent was " + x)
-            }
-          }
-        }
-      }
-    res
-  }
-
-  final lazy val allSiblings: Seq[Term] = {
-    val res = nearestEnclosingSequence.map { enc =>
-      val allSiblings = enc.groupMembers
-      allSiblings
+  //  final lazy val positionInNearestEnclosingSequence: Int = {
+  //    // FIXME:Classic example of a method that creates a pointless
+  //    // need for the backpointers to parent that make structure
+  //    // sharing of the DSOM objects impossible. This should be a value
+  //    // passed down to a SequenceChild constructor, and the algorithms
+  //    // that use this should be on SequenceTermBase or child classes thereof.
+  //    val optET = enclosingTerm
+  //    val optNES = nearestEnclosingSequence
+  //    val res =
+  //      (optET, optNES) match {
+  //        case (Some(et), Some(nes)) if (et == nes) =>
+  //          position
+  //        case _ => {
+  //          if (this.isInstanceOf[Root]) 1
+  //          else {
+  //            optET match {
+  //              case Some(term: Term) => term.positionInNearestEnclosingSequence
+  //              case x => Assert.invariantFailed("For " + this + " unable to compute position in nearest enclosing sequence. The enclosingComponent was " + x)
+  //            }
+  //          }
+  //        }
+  //      }
+  //    res
+  //  }
+  //
+  //  final lazy val allSiblings: Seq[Term] = {
+  //    val res = nearestEnclosingSequence.map { enc =>
+  //      val allSiblings = enc.groupMembers
+  //      allSiblings
+  //    }
+  //    res.getOrElse(Nil)
+  //  }
+  //
+  //  final lazy val priorSiblings = ListUtils.preceding(allSiblings, this)
+  /**
+   * Siblings in the lexically enclosing group.
+   */
+  final lazy val laterSiblings = {
+    optLexicalParent match {
+      case Some(stb: SequenceTermBase) => stb.groupMembers.drop(position)
+      case Some(gsgd: GlobalSequenceGroupDef) => gsgd.groupMembers.drop(position)
+      case _ => Nil
     }
-    res.getOrElse(Nil)
   }
-
-  final lazy val priorSiblings = ListUtils.preceding(allSiblings, this)
-  final lazy val laterSiblings = ListUtils.tailAfter(allSiblings, this)
-  final lazy val laterElementSiblings = laterSiblings.collect { case elt: ElementBase => elt }
-
-  final lazy val priorSibling = priorSiblings.lastOption
-  final lazy val nextSibling = laterSiblings.headOption
-
-  final lazy val priorPhysicalSiblings = priorSiblings.filter { _.isRepresented }
-  final lazy val priorPhysicalSibling = priorPhysicalSiblings.lastOption
+  //  final lazy val laterElementSiblings = laterSiblings.collect { case elt: ElementBase => elt }
+  //
+  //  final lazy val priorSibling = priorSiblings.lastOption
+  //  final lazy val nextSibling = laterSiblings.headOption
+  //
+  //  final lazy val priorPhysicalSiblings = priorSiblings.filter { _.isRepresented }
+  //  final lazy val priorPhysicalSibling = priorPhysicalSiblings.lastOption
 
   //
   // FIXME: incomplete analysis. This needs to walk outward to parent, then down into
@@ -426,22 +429,22 @@ trait Term
   // between the sibling children. Hence, even if it has an encoding property in scope, and even
   // uses it for a terminator, it doesn't re-establish that encoding prior to children, so
   // the analysis can't stop on the sequence.
-  final def nearestPriorPhysicalTermSatisfying(pred: Term => Boolean): Option[Term] = {
-    priorPhysicalSiblings.filter { pred(_) }.lastOption match {
-      case x @ Some(sib) => x
-      case None => {
-        // must try enclosing terms outward
-        enclosingTerm match {
-          case None => None
-          case x @ Some(t) if pred(t) => x
-          case Some(t) => t.nearestPriorPhysicalTermSatisfying(pred)
-        }
-      }
-    }
-  }
-
-  final lazy val hasLaterRequiredSiblings = laterSiblings.exists(_.hasStaticallyRequiredOccurrencesInDataRepresentation)
-  final lazy val hasPriorRequiredSiblings = priorSiblings.exists(_.hasStaticallyRequiredOccurrencesInDataRepresentation)
+  //  final def nearestPriorPhysicalTermSatisfying(pred: Term => Boolean): Option[Term] = {
+  //    priorPhysicalSiblings.filter { pred(_) }.lastOption match {
+  //      case x @ Some(sib) => x
+  //      case None => {
+  //        // must try enclosing terms outward
+  //        enclosingTerm match {
+  //          case None => None
+  //          case x @ Some(t) if pred(t) => x
+  //          case Some(t) => t.nearestPriorPhysicalTermSatisfying(pred)
+  //        }
+  //      }
+  //    }
+  //  }
+  //
+  //  final lazy val hasLaterRequiredSiblings = laterSiblings.exists(_.hasStaticallyRequiredOccurrencesInDataRepresentation)
+  //  final lazy val hasPriorRequiredSiblings = priorSiblings.exists(_.hasStaticallyRequiredOccurrencesInDataRepresentation)
 
   /**
    * Does this term have always have statically required instances in the data stream.
@@ -473,7 +476,7 @@ trait Term
    * True when a term's immediately enclosing model group is a Sequence.
    */
   final lazy val isSequenceChild: Boolean =
-    immediatelyEnclosingModelGroup.map { _.isInstanceOf[SequenceTermBase] }.getOrElse(false)
+    immediatelyEnclosingGroupDef.map { _.isInstanceOf[SequenceDefMixin] }.getOrElse(false)
 
   /**
    * The concept of potentially trailing is defined in the DFDL specification.
@@ -565,45 +568,45 @@ trait Term
    * terms that could appear before this. The second item in the tuple is a
    * One(enclosingParent) if all prior siblings are optional or this element has no prior siblings
    */
-  lazy val potentialPriorTerms: (Seq[Term], Option[Term]) = LV('potentialPriorTerms) {
-    val et = enclosingTerm
-    val (potentialPrior, optEnclosingParent) = et match {
-      case None => (Seq(), None)
-      case Some(eb: ElementBase) => (Seq(), Some(eb))
-      case Some(ch: ChoiceTermBase) => (Seq(), Some(ch))
-      case Some(sq: SequenceTermBase) if !sq.isOrdered => {
-        (sq.groupMembers, Some(sq))
-      }
-      case Some(sq: SequenceTermBase) if sq.isOrdered => {
-        val previousTerms = sq.groupMembers.takeWhile { _ != this }
-        if (previousTerms.isEmpty) {
-          // first child of seq, the seq is the only previous term
-          (Seq(), Some(sq))
-        } else {
-          val firstNonOptional = previousTerms.reverse.find {
-            _ match {
-              case eb: ElementBase if !eb.isRequiredStreamingUnparserEvent || !eb.isRepresented => false
-              case _ => true
-            }
-          }
-          if (firstNonOptional.isEmpty) {
-            // all previous siblings are optional, all or the seq could be previous
-            (previousTerms, Some(sq))
-          } else {
-            // drop all siblings up until the first non optional
-            (previousTerms.dropWhile { _ != firstNonOptional.get }, None)
-          }
-        }
-      }
-    }
-    val potentialPriorRepresented = potentialPrior.filter { term =>
-      term match {
-        case eb: ElementBase => eb.isRepresented
-        case _ => true
-      }
-    }
-    (potentialPriorRepresented, optEnclosingParent)
-  }.value
+  //  lazy val potentialPriorTerms: (Seq[Term], Option[Term]) = LV('potentialPriorTerms) {
+  //    val et = enclosingTerm
+  //    val (potentialPrior, optEnclosingParent) = et match {
+  //      case None => (Seq(), None)
+  //      case Some(eb: ElementBase) => (Seq(), Some(eb))
+  //      case Some(ch: ChoiceTermBase) => (Seq(), Some(ch))
+  //      case Some(sq: SequenceTermBase) if !sq.isOrdered => {
+  //        (sq.groupMembers, Some(sq))
+  //      }
+  //      case Some(sq: SequenceTermBase) if sq.isOrdered => {
+  //        val previousTerms = sq.groupMembers.takeWhile { _ != this }
+  //        if (previousTerms.isEmpty) {
+  //          // first child of seq, the seq is the only previous term
+  //          (Seq(), Some(sq))
+  //        } else {
+  //          val firstNonOptional = previousTerms.reverse.find {
+  //            _ match {
+  //              case eb: ElementBase if !eb.isRequiredStreamingUnparserEvent || !eb.isRepresented => false
+  //              case _ => true
+  //            }
+  //          }
+  //          if (firstNonOptional.isEmpty) {
+  //            // all previous siblings are optional, all or the seq could be previous
+  //            (previousTerms, Some(sq))
+  //          } else {
+  //            // drop all siblings up until the first non optional
+  //            (previousTerms.dropWhile { _ != firstNonOptional.get }, None)
+  //          }
+  //        }
+  //      }
+  //    }
+  //    val potentialPriorRepresented = potentialPrior.filter { term =>
+  //      term match {
+  //        case eb: ElementBase => eb.isRepresented
+  //        case _ => true
+  //      }
+  //    }
+  //    (potentialPriorRepresented, optEnclosingParent)
+  //  }.value
 
   /*
    * This function returns at list of simple elements that are descendents of
@@ -616,95 +619,95 @@ trait Term
    * Note that this currently only requires OVC since default's aren't
    * implemented. This function may need to change when we support defaults.
    */
-  lazy val childrenInHiddenGroupNotDefaultableOrOVC: Seq[ElementBase] = {
-    // this should only be called on hidden elements
-    val isH = isHidden
-    Assert.invariant(isH)
-
-    val res = this match {
-      case s: SequenceTermBase => {
-        s.groupMembers.flatMap { member =>
-          val res = member.childrenInHiddenGroupNotDefaultableOrOVC
-          res
-        }
-      }
-      case c: ChoiceTermBase => {
-        val branches = c.groupMembers.map { _.childrenInHiddenGroupNotDefaultableOrOVC }
-        val countFullyDefaultableOrOVCBranches = branches.count { _.length == 0 }
-        if (countFullyDefaultableOrOVCBranches == 0) {
-          c.SDE("xs:choice inside a hidden group must contain a branch with all children having the dfdl:outputValueCalc property set.")
-          // TODO: Diagnostics to display which branches contained non-defaultable elements, and what those elements were
-        }
-        Nil
-      }
-      case e: ElementBase if e.isComplexType => {
-        e.complexType.group.childrenInHiddenGroupNotDefaultableOrOVC
-      }
-      case e: ElementBase => {
-        if (!e.canBeAbsentFromUnparseInfoset) {
-          Seq(e)
-        } else {
-          Nil
-        }
-      }
-    }
-    res
-  }
-
-  final lazy val possibleNextTerms: Seq[Term] = LV('possibleNextTerms) {
-    val es = this.nearestEnclosingSequence
-    val eus = this.nearestEnclosingUnorderedSequenceBeforeSequence
-    val ec = this.nearestEnclosingChoiceBeforeSequence
-
-    val enclosingUnorderedGroup = {
-      (ec, eus) match {
-        case (None, None) => None
-        case (Some(choice), _) => Some(choice)
-        case (None, Some(uoSeq)) => Some(uoSeq)
-      }
-    }
-    val listOfNextTerm = (enclosingUnorderedGroup, es) match {
-      case (None, None) => Seq.empty
-      case (Some(unorderedGroup), _) => {
-        // We're in a choice or unordered sequence
-        //
-        // List must be all of our peers since (as well as our self)
-        // we could be followed by any of them plus
-        // whatever follows the unordered group.
-        val peersCouldBeNext = unorderedGroup.groupMembers
-
-        val termsUntilFirstRequiredTerm = peersCouldBeNext ++ unorderedGroup.possibleNextTerms
-        termsUntilFirstRequiredTerm
-      }
-      case (None, Some(oSeq)) => {
-        // We're in an ordered sequence
-
-        val termsUntilFirstRequiredTerm =
-          isLastDeclaredRepresentedInSequence match {
-            case true => oSeq.possibleNextTerms
-            case false => {
-
-              val members = oSeq.groupMembers
-
-              val selfAndAfter = members.dropWhile(m => m ne this)
-              val after = selfAndAfter.drop(1)
-              val nextMember = after.headOption
-
-              val nextMembers =
-                nextMember match {
-                  case Some(e: ElementBase) if e.isOptional => Seq(e) ++ e.possibleNextTerms
-                  case Some(e: ElementBase) => Seq(e)
-                  case Some(mg: ModelGroup) => Seq(mg)
-                  case None => Nil // Assert.impossibleCase
-                }
-              nextMembers
-            }
-          }
-        termsUntilFirstRequiredTerm
-      }
-    }
-    listOfNextTerm
-  }.value
+  //  lazy val childrenInHiddenGroupNotDefaultableOrOVC: Seq[ElementBase] = {
+  //    // this should only be called on hidden elements
+  //    val isH = isHidden
+  //    Assert.invariant(isH)
+  //
+  //    val res = this match {
+  //      case s: SequenceTermBase => {
+  //        s.groupMembers.flatMap { member =>
+  //          val res = member.childrenInHiddenGroupNotDefaultableOrOVC
+  //          res
+  //        }
+  //      }
+  //      case c: ChoiceTermBase => {
+  //        val branches = c.groupMembers.map { _.childrenInHiddenGroupNotDefaultableOrOVC }
+  //        val countFullyDefaultableOrOVCBranches = branches.count { _.length == 0 }
+  //        if (countFullyDefaultableOrOVCBranches == 0) {
+  //          c.SDE("xs:choice inside a hidden group must contain a branch with all children having the dfdl:outputValueCalc property set.")
+  //          // TODO: Diagnostics to display which branches contained non-defaultable elements, and what those elements were
+  //        }
+  //        Nil
+  //      }
+  //      case e: ElementBase if e.isComplexType => {
+  //        e.complexType.group.childrenInHiddenGroupNotDefaultableOrOVC
+  //      }
+  //      case e: ElementBase => {
+  //        if (!e.canBeAbsentFromUnparseInfoset) {
+  //          Seq(e)
+  //        } else {
+  //          Nil
+  //        }
+  //      }
+  //    }
+  //    res
+  //  }
+  //
+  //  final lazy val possibleNextTerms: Seq[Term] = LV('possibleNextTerms) {
+  //    val es = this.nearestEnclosingSequence
+  //    val eus = this.nearestEnclosingUnorderedSequenceBeforeSequence
+  //    val ec = this.nearestEnclosingChoiceBeforeSequence
+  //
+  //    val enclosingUnorderedGroup = {
+  //      (ec, eus) match {
+  //        case (None, None) => None
+  //        case (Some(choice), _) => Some(choice)
+  //        case (None, Some(uoSeq)) => Some(uoSeq)
+  //      }
+  //    }
+  //    val listOfNextTerm = (enclosingUnorderedGroup, es) match {
+  //      case (None, None) => Seq.empty
+  //      case (Some(unorderedGroup), _) => {
+  //        // We're in a choice or unordered sequence
+  //        //
+  //        // List must be all of our peers since (as well as our self)
+  //        // we could be followed by any of them plus
+  //        // whatever follows the unordered group.
+  //        val peersCouldBeNext = unorderedGroup.groupMembers
+  //
+  //        val termsUntilFirstRequiredTerm = peersCouldBeNext ++ unorderedGroup.possibleNextTerms
+  //        termsUntilFirstRequiredTerm
+  //      }
+  //      case (None, Some(oSeq)) => {
+  //        // We're in an ordered sequence
+  //
+  //        val termsUntilFirstRequiredTerm =
+  //          isLastDeclaredRepresentedInSequence match {
+  //            case true => oSeq.possibleNextTerms
+  //            case false => {
+  //
+  //              val members = oSeq.groupMembers
+  //
+  //              val selfAndAfter = members.dropWhile(m => m ne this)
+  //              val after = selfAndAfter.drop(1)
+  //              val nextMember = after.headOption
+  //
+  //              val nextMembers =
+  //                nextMember match {
+  //                  case Some(e: ElementBase) if e.isOptional => Seq(e) ++ e.possibleNextTerms
+  //                  case Some(e: ElementBase) => Seq(e)
+  //                  case Some(mg: ModelGroup) => Seq(mg)
+  //                  case None => Nil // Assert.impossibleCase
+  //                }
+  //              nextMembers
+  //            }
+  //          }
+  //        termsUntilFirstRequiredTerm
+  //      }
+  //    }
+  //    listOfNextTerm
+  //  }.value
 
   /**
    * True if this term is the last one in the enclosing sequence that is represented
@@ -720,19 +723,19 @@ trait Term
 
   protected def possibleFirstChildTerms: Seq[Term]
 
-  /*
-   * Returns list of Elements that could be the first child in the infoset of this model group or element.
-   */
-  final def possibleFirstChildElementsInInfoset: Seq[ElementBase] = LV('possibleFirstChildElementsInInfoset) {
-    val pfct = possibleFirstChildTerms
-    val firstChildren = pfct.flatMap {
-      case e: ElementBase if e.isHidden => Nil
-      case e: ElementBase => Seq(e)
-      case s: SequenceTermBase if s.isHidden => Nil
-      case mg: ModelGroup => mg.possibleFirstChildElementsInInfoset
-    }
-    firstChildren.distinct
-  }.value
+  //  /*
+  //   * Returns list of Elements that could be the first child in the infoset of this model group or element.
+  //   */
+  //  final def possibleFirstChildElementsInInfoset: Seq[ElementBase] = LV('possibleFirstChildElementsInInfoset) {
+  //    val pfct = possibleFirstChildTerms
+  //    val firstChildren = pfct.flatMap {
+  //      case e: ElementBase if e.isHidden => Nil
+  //      case e: ElementBase => Seq(e)
+  //      case s: SequenceTermBase if s.isHidden => Nil
+  //      case mg: ModelGroup => mg.possibleFirstChildElementsInInfoset
+  //    }
+  //    firstChildren.distinct
+  //  }.value
 
   /*
    * Returns a list of Elements that could follow this Term, including
@@ -740,25 +743,25 @@ trait Term
    *
    * What stops this is when the end of an enclosing element has to be next.
    */
-  final def possibleNextChildElementsInInfoset: Seq[ElementBase] = LV('possibleNextChildElementsInInfoset) {
-    val arrayNext = if (isArray) Seq(this.asInstanceOf[ElementBase]) else Nil
-
-    val nextSiblingElements = {
-      val poss = possibleNextSiblingTerms
-      val res = poss.flatMap {
-        possible =>
-          possible match {
-            case e: ElementBase => Seq(e)
-            case mg: ModelGroup => mg.possibleFirstChildElementsInInfoset
-          }
-      }
-      res
-    }
-
-    val nextParentElts = nextParentElements
-    val res = arrayNext ++ nextSiblingElements ++ nextParentElts
-    res
-  }.value
+  //  final def possibleNextChildElementsInInfoset: Seq[ElementBase] = LV('possibleNextChildElementsInInfoset) {
+  //    val arrayNext = if (isArray) Seq(this.asInstanceOf[ElementBase]) else Nil
+  //
+  //    val nextSiblingElements = {
+  //      val poss = possibleNextSiblingTerms
+  //      val res = poss.flatMap {
+  //        possible =>
+  //          possible match {
+  //            case e: ElementBase => Seq(e)
+  //            case mg: ModelGroup => mg.possibleFirstChildElementsInInfoset
+  //          }
+  //      }
+  //      res
+  //    }
+  //
+  //    val nextParentElts = nextParentElements
+  //    val res = arrayNext ++ nextSiblingElements ++ nextParentElts
+  //    res
+  //  }.value
 
   def nextParentElements: Seq[ElementBase]
 

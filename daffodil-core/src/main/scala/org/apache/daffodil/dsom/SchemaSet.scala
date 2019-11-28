@@ -280,9 +280,8 @@ final class SchemaSet(
         }
       })
     Assert.invariant(candidates.length == 1)
-    val gef = candidates(0)
-    val re = gef.forRoot()
-    re
+    val ge = candidates(0)
+    ge
   }
 
   /**
@@ -293,11 +292,8 @@ final class SchemaSet(
     rootSpec match {
       case RootSpec(Some(rootNamespaceName), rootElementName) => {
         val qn = RefQName(None, rootElementName, rootNamespaceName)
-        val geFactory = getGlobalElementDecl(qn)
-        val ge = geFactory match {
-          case None => schemaDefinitionError("No global element found for %s", rootSpec)
-          case Some(f) => f.forRoot()
-        }
+        val optGE = getGlobalElementDecl(qn)
+        val ge = optGE.getOrElse { schemaDefinitionError("No global element found for %s", rootSpec) }
         ge
       }
       case RootSpec(None, rootElementName) => {
@@ -319,7 +315,7 @@ final class SchemaSet(
    */
   def rootElement(rootSpecFromProcessorFactory: Option[RootSpec]): Root = {
     val rootSpecFromCompiler = rootSpec
-    val re =
+    val re: GlobalElementDecl =
       (rootSpecFromCompiler, rootSpecFromProcessorFactory) match {
         case (Some(rs), None) =>
           getGlobalElement(rs)
@@ -333,17 +329,16 @@ final class SchemaSet(
           val sDocs = this.allSchemaDocuments
           assuming(sDocs.length > 0)
           val firstSchemaDocument = sDocs(0)
-          val gdeclf = firstSchemaDocument.globalElementDecls
+          val gdecl = firstSchemaDocument.globalElementDecls
           val firstElement = {
-            schemaDefinitionUnless(gdeclf.length >= 1, "No global elements in: " + firstSchemaDocument.uriString)
-            val root = gdeclf(0).forRoot()
-            root
+            schemaDefinitionUnless(gdecl.length >= 1, "No global elements in: " + firstSchemaDocument.uriString)
+            gdecl(0)
           }
           firstElement
         }
         case _ => Assert.invariantFailed("illegal combination of root element specifications")
       }
-    re
+    re.asRoot
   }
 
   /**

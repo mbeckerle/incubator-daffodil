@@ -125,7 +125,7 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
    * This is the compile info for this element term.
    */
   lazy val dpathElementCompileInfo: DPathElementCompileInfo = {
-    val ee = enclosingElement.toSeq
+    val ee = enclosingElements.toSeq
     lazy val parents = ee.map {
       _.dpathElementCompileInfo
     }
@@ -185,7 +185,7 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
       name,
       targetNamespacePrefix,
       thisElementsNamespacePrefix,
-      isHidden,
+      false, // optKnownHidden (wants to be an Option[Boolean] so we have true/false/unknown
       isNillable,
       isArray, // can have more than 1 occurrence
       isOptional, // can have exactly 0 or 1 occurrence

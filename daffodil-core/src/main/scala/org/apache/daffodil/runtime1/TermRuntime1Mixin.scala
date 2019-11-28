@@ -192,7 +192,7 @@ trait TermRuntime1Mixin { self: Term =>
             }
           res
         }
-        case stb: SequenceTermBase if !stb.isHidden => {
+        case stb: SequenceTermBase if !stb.isHiddenGroupRef => {
           //
           // This case only applies to when we are analyzing a sequence, but it is
           // being considered as contributing possible elements that are after the
@@ -205,7 +205,7 @@ trait TermRuntime1Mixin { self: Term =>
             subTerms.headOption.map { _.possibleSelfPlusNextLexicalSiblingStreamingUnparserElements }
           res.getOrElse(Open(Nil))
         }
-        case stb: SequenceTermBase if stb.isHidden =>
+        case stb: SequenceTermBase if stb.isHiddenGroupRef =>
           Open(Nil)
       }
       val res = thisItself match {

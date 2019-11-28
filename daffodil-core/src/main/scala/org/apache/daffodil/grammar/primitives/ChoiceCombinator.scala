@@ -85,11 +85,11 @@ case class ChoiceCombinator(ch: ChoiceTermBase, alternatives: Seq[Gram])
       }
     } else {
       //Verify that every alternative has some form of branch key
-      alternatives.map{ alt =>
+      alternatives.map { alt =>
         val keyTerm = alt.context.asInstanceOf[Term]
         val hasBranchKey = keyTerm.findPropertyOption("choiceBranchKey").isDefined
         val hasBranchKeyRanges = keyTerm.findPropertyOption("choiceBranchKeyRanges").isDefined
-        if(!hasBranchKey && !hasBranchKeyRanges && ch.defaultableChoiceBranchKeyKind != ChoiceKeyKindType.ByType){
+        if (!hasBranchKey && !hasBranchKeyRanges && ch.defaultableChoiceBranchKeyKind != ChoiceKeyKindType.ByType) {
           keyTerm.SDE("Neither dfdl:choiceBranchKey nor dfdlx:choiceBranchKeyRanges is defined.")
         }
       }
@@ -105,13 +105,13 @@ case class ChoiceCombinator(ch: ChoiceTermBase, alternatives: Seq[Gram])
               val ans = repValueSet.valueSet.toSeq.map(_.toString).mkString(" ")
               ans
             }
-            case ChoiceKeyKindType.Explicit | ChoiceKeyKindType.Implicit   => keyTerm.findPropertyOption("choiceBranchKey").toOption.getOrElse("")
+            case ChoiceKeyKindType.Explicit | ChoiceKeyKindType.Implicit => keyTerm.findPropertyOption("choiceBranchKey").toOption.getOrElse("")
             case ChoiceKeyKindType.Speculative => Assert.invariantFailed("Cannot have choiceKeyKind==speculative with direct dispatch")
           }
         val cbks = {
-          if(uncookedBranchKeys.isEmpty){
+          if (uncookedBranchKeys.isEmpty) {
             List()
-          }else{
+          } else {
             ChoiceBranchKeyCooker.convertConstant(uncookedBranchKeys, ch.runtimeData, forUnparse = false)
           }
         }
@@ -122,19 +122,19 @@ case class ChoiceCombinator(ch: ChoiceTermBase, alternatives: Seq[Gram])
       //Since there is not a choiceBranchKeyRanges attribute, this can only currently be populated by repType
       val dispatchBranchKeyRangeTuples: Seq[(RangeBound[BigInt], RangeBound[BigInt], Parser, Boolean)] = alternatives.flatMap { alt =>
         val keyTerm = alt.context.asInstanceOf[Term]
-        val branchKeyRanges:Seq[(RangeBound[BigInt],RangeBound[BigInt])] = ch.defaultableChoiceBranchKeyKind match {
+        val branchKeyRanges: Seq[(RangeBound[BigInt], RangeBound[BigInt])] = ch.defaultableChoiceBranchKeyKind match {
           case ChoiceKeyKindType.ByType => {
             val keyTerm_ = keyTerm.asInstanceOf[ElementBase]
-            keyTerm_.simpleType.optRepValueSet.get.valueRanges.toSeq.map(x=>{
-              val x_ = x.asInstanceOf[(RangeBound[BigInt],RangeBound[BigInt])]
-              (x_._1,x_._2)
+            keyTerm_.simpleType.optRepValueSet.get.valueRanges.toSeq.map(x => {
+              val x_ = x.asInstanceOf[(RangeBound[BigInt], RangeBound[BigInt])]
+              (x_._1, x_._2)
             })
           }
-          case ChoiceKeyKindType.Explicit | ChoiceKeyKindType.Implicit    => 
+          case ChoiceKeyKindType.Explicit | ChoiceKeyKindType.Implicit =>
             IntRangeCooker.convertConstant(keyTerm.findPropertyOption("choiceBranchKeyRanges").toOption.getOrElse(""), context, false)
           case ChoiceKeyKindType.Speculative => Assert.invariantFailed("Cannot have choiceKeyKind==speculative with direct dispatch")
         }
-        branchKeyRanges.toSeq.map(x=>(x._1, x._2, alt.parser, alt.context.enclosingTerm.get.isRepresented))
+        branchKeyRanges.toSeq.map(x => (x._1, x._2, alt.parser, alt.context.enclosingTerm.get.isRepresented))
       }
 
       // check for duplicate branch keys
@@ -142,9 +142,9 @@ case class ChoiceCombinator(ch: ChoiceTermBase, alternatives: Seq[Gram])
       // we don't see enough distinct ranges on a single element for this to be an issue
       // Additionally, at this point, the keys could be comming from either the choiceBranchKey family of attributes
       // or the repValue family of attributes
-      val (branchKeyAttribute, branchKeyRangeAttribute) = ch.defaultableChoiceBranchKeyKind match{
-        case ChoiceKeyKindType.ByType => ("dfdlx:repValues","dfdlx:repValueRanges")
-        case ChoiceKeyKindType.Explicit | ChoiceKeyKindType.Implicit => ("dfdl:choiceBranchKey","dfdlx:choiceBranchKeyRanges")
+      val (branchKeyAttribute, branchKeyRangeAttribute) = ch.defaultableChoiceBranchKeyKind match {
+        case ChoiceKeyKindType.ByType => ("dfdlx:repValues", "dfdlx:repValueRanges")
+        case ChoiceKeyKindType.Explicit | ChoiceKeyKindType.Implicit => ("dfdl:choiceBranchKey", "dfdlx:choiceBranchKeyRanges")
         case ChoiceKeyKindType.Speculative => Assert.invariantFailed("Cannot have choiceKeyKind==speculative with direct dispatch")
       }
       val groupedByKey = dispatchBranchKeyValueTuples.groupBy(_._1)
@@ -153,7 +153,7 @@ case class ChoiceCombinator(ch: ChoiceTermBase, alternatives: Seq[Gram])
           if (kvs.length > 1) {
             SDE(
               "%s value (%s) is not unique across all branches of a direct dispatch choice. Offending branches are:\n%s",
-              branchKeyAttribute, k, 
+              branchKeyAttribute, k,
               kvs.map(_._2.context.runtimeData).map(rd => rd.diagnosticDebugName + " " + rd.schemaFileLocation.locationDescription).mkString("- ", "\n- ", ""))
           }
           Try(k.toLong) match {
@@ -210,7 +210,7 @@ case class ChoiceCombinator(ch: ChoiceTermBase, alternatives: Seq[Gram])
   }
 
   override lazy val unparser: Unparser = {
-    if (!ch.isHidden) {
+    if (!ch.isHiddenGroupRef) {
       val eventRDMap = ch.choiceBranchMap
       val eventUnparserMap = eventRDMap.flatMap {
         case (cbe, rd) =>

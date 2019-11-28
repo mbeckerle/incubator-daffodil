@@ -1019,7 +1019,7 @@ trait ElementBase
     termChildren
 
   protected final def couldBeLastElementInModelGroup: Boolean = LV('couldBeLastElementInModelGroup) {
-    val couldBeLast = enclosingTerm match {
+    val couldBeLast = this.immediatelyEnclosingGroupDef match {
       case None => true
       case Some(s: SequenceTermBase) if s.isOrdered => {
         !possibleNextSiblingTerms.exists {
@@ -1032,14 +1032,14 @@ trait ElementBase
     couldBeLast
   }.value
 
-  final override lazy val nextParentElements: Seq[ElementBase] =
-    enclosingTerms.flatMap { enclosingTerm =>
-      if (couldBeLastElementInModelGroup) {
-        enclosingTerm.possibleNextChildElementsInInfoset
-      } else {
-        Nil
-      }
-    }
+  //  final override lazy val nextParentElements: Seq[ElementBase] =
+  //    enclosingTerms.flatMap { enclosingTerm =>
+  //      if (couldBeLastElementInModelGroup) {
+  //        enclosingTerm.possibleNextChildElementsInInfoset
+  //      } else {
+  //        Nil
+  //      }
+  //    }
 
   final lazy val defaultParseUnparsePolicy = optionParseUnparsePolicy.getOrElse(ParseUnparsePolicy.Both)
 
@@ -1090,7 +1090,7 @@ trait ElementBase
    */
   private lazy val checkForAlignmentAmbiguity: Unit = {
     if (isOptional) {
-      this.possibleNextTerms.filterNot(m => m == this).foreach { that =>
+      this.laterSiblings.filterNot(m => m == this).foreach { that =>
         val isSame = this.alignmentValueInBits == that.alignmentValueInBits
         if (!isSame) {
           this.SDW(WarnID.AlignmentNotSame, "%s is an optional element or a variable-occurrence array and its alignment (%s) is not the same as %s's alignment (%s).",

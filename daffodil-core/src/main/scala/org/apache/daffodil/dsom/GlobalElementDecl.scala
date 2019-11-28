@@ -21,9 +21,7 @@ import scala.xml.Node
 
 final class GlobalElementDecl(
   xmlArg: Node,
-  schemaDocument: SchemaDocument,
-  elementRefArg: => AbstractElementRef,
-  override val factory: GlobalElementDeclFactory)
+  schemaDocument: SchemaDocument)
   extends AnnotatedSchemaComponentImpl(xmlArg, schemaDocument)
   with GlobalElementComponentMixin
   with ElementDeclFactoryDelegatingMixin
@@ -33,14 +31,9 @@ final class GlobalElementDecl(
   // Such as dfdl:choiceBranchKey
   with ResolvesLocalProperties {
 
-  final override def delegate = factory
-
-  lazy val elementRef = elementRefArg
-  override lazy val dpathCompileInfo = elementRef.dpathElementCompileInfo
+  lazy val asRoot = new Root(xml, schemaDocument, namedQName, this)
 
   requiredEvaluations(validateChoiceBranchKey)
-
-  override lazy val referringComponent: Option[SchemaComponent] = Some(elementRef) // optElementRef
 
   def validateChoiceBranchKey(): Unit = {
     // Ensure that the global element decl does not have choiceBranchKey set.

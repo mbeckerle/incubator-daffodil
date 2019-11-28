@@ -218,17 +218,17 @@ abstract class SimpleTypeDefBase(xml: Node, lexicalParent: SchemaComponent)
 
   //Perfoming this validation on construction causes infinite loops
   //So we defer it to later
-  def validate: Unit = {
-    if (optRepType.isDefined
-      && optRepType.get.isInstanceOf[PrimitiveType]
-      && enclosingElement.isDefined
-      && enclosingElement.get.isRepresented) {
-      SDE("Primitive types can only be used as repTypes when the enclosing element is computed with inputValueCalc")
-    }
-  }
+  //  def validate: Unit = {
+  //    if (optRepType.isDefined
+  //      && optRepType.get.isInstanceOf[PrimitiveType]
+  //      && enclosingElement.isDefined
+  //      && enclosingElement.get.isRepresented) {
+  //      SDE("Primitive types can only be used as repTypes when the enclosing element is computed with inputValueCalc")
+  //    }
+  //  }
 
   lazy val simpleTypeRuntimeData: SimpleTypeRuntimeData = {
-    validate
+    // validate
     new SimpleTypeRuntimeData(
       variableMap,
       schemaFileLocation,
@@ -552,10 +552,10 @@ final class GlobalSimpleTypeDef(xmlArg: Node, schemaDocumentArg: SchemaDocument)
  * computes additional information based on the context in the schema where it is being used.
  * In this sense, all usages of EnumerationDefs are using them as a "factory".
  */
-final class EnumerationDefFactory(
+final class EnumerationDef(
   xml: Node,
   parentType: SimpleTypeDefBase)
-  extends SchemaComponentFactory(xml, parentType.schemaDocument)
+  extends SchemaComponentImpl(xml, parentType.schemaDocument)
   with NestingLexicalMixin
   with HasRepValueAttributes {
 

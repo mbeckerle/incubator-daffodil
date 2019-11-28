@@ -53,21 +53,21 @@ trait TermGrammarMixin
     newVarEnds.fold(mt) { _ ~ _ }
   }
 
-  /**
-   * public for unit testing use.
-   */
-  final lazy val Some(es) = {
-    //
-    // Not sure how to assert this,
-    // but an invariant we're assuming here is that we are NOT the
-    // root element, which has no enclosing sequence at all.
-    //
-    // The grammar rules shouldn't be asking for separated stuff
-    // in that situation, so we shouldn't be here.
-    //
-    subset(nearestEnclosingSequence != None, "(Current restriction) There must be an enclosing sequence.")
-    nearestEnclosingSequence
-  }
+//  /**
+//   * public for unit testing use.
+//   */
+//  final lazy val Some(es) = {
+//    //
+//    // Not sure how to assert this,
+//    // but an invariant we're assuming here is that we are NOT the
+//    // root element, which has no enclosing sequence at all.
+//    //
+//    // The grammar rules shouldn't be asking for separated stuff
+//    // in that situation, so we shouldn't be here.
+//    //
+//    subset(nearestEnclosingSequence != None, "(Current restriction) There must be an enclosing sequence.")
+//    nearestEnclosingSequence
+//  }
 
   /**
    * Mandatory text alignment or mta

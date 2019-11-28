@@ -1251,7 +1251,7 @@ trait ElementBaseGrammarMixin
     }
 
   private def withDelimiterStack(body: => Gram) = {
-    if (hasDelimiters || enclosingTerm.map(_.hasDelimiters).getOrElse(false)) DelimiterStackCombinatorElement(this, body)
+    if (hasDelimiters || immediatelyEnclosingModelGroup.map(_.hasDelimiters).getOrElse(false)) DelimiterStackCombinatorElement(this, body)
     else body
   }
 

@@ -47,7 +47,7 @@ trait NestingMixin {
   //
   //
   //@deprecated("2019-06-03", "Use enclosingComponentDefs method, and deal with sharing.")
-  protected def enclosingComponentDef: Option[SchemaComponent]
+  //protected def enclosingComponentDef: Option[SchemaComponent]
 
   protected def enclosingComponentDefs: Seq[EnclosingComponentDef]
 
@@ -68,7 +68,7 @@ trait NestingMixin {
   //
   //
   //@deprecated("2019-06-03", "Rewrite to use lexicalParent or enclosingComponents methods, and deal with sharing.")
-  final lazy val enclosingComponent: Option[SchemaComponent] = enclosingComponentDef
+  //final lazy val enclosingComponent: Option[SchemaComponent] = enclosingComponentDef
 
   final lazy val enclosingComponents: Seq[EnclosingComponentDef] = {
     val res = enclosingComponentDefs
@@ -101,44 +101,44 @@ trait NestingLexicalMixin
     }.toSeq
 }
 
-/**
- * Mixin for all global schema components
- */
-trait NestingTraversesToReferenceMixin
-  extends NestingMixin { self: SchemaComponent =>
-
-  def factory: SchemaComponentFactory
-
-  //@deprecated("2019-06-03", "Use referringComponents method, and deal with sharing.")
-  def referringComponent: Option[SchemaComponent]
-
-  //@deprecated("2019-06-03", "Use enclosingComponentDefs method, and deal with sharing.")
-  final override protected lazy val enclosingComponentDef: Option[SchemaComponent] = LV('enclosingComponentDef) {
-    Assert.invariant(optLexicalParent.isDefined &&
-      optLexicalParent.get.isInstanceOf[SchemaDocument]) // global things have schema documents as their parents.
-    referringComponent
-  }.value
-
-  /**
-   * Enables compilation to know all the points of use of a global
-   * component.
-   */
-  lazy val referringComponents: Seq[(String, Seq[RefSpec])] = {
-    schemaSet.root.refMap.get(this.factory) match {
-      case None => Seq()
-      case Some(seq) => seq
-    }
-  }
-
-  final override protected lazy val enclosingComponentDefs: Seq[EnclosingComponentDef] = LV('enclosingComponentDefs) {
-    Assert.invariant(optLexicalParent.isDefined &&
-      optLexicalParent.get.isInstanceOf[SchemaDocument]) // global things have schema documents as their parents.
-    val res = referringComponents.flatMap {
-      case (_, seq: Seq[RefSpec]) =>
-        seq.map { rs =>
-          EnclosingComponentDef(rs.from, rs.index)
-        }
-    }
-    res
-  }.value
-}
+///**
+// * Mixin for all global schema components
+// */
+//trait NestingTraversesToReferenceMixin
+//  extends NestingMixin { self: SchemaComponent =>
+//
+//  def factory: SchemaComponentFactory
+//
+//  //@deprecated("2019-06-03", "Use referringComponents method, and deal with sharing.")
+//  def referringComponent: Option[SchemaComponent]
+//
+//  //@deprecated("2019-06-03", "Use enclosingComponentDefs method, and deal with sharing.")
+//  final override protected lazy val enclosingComponentDef: Option[SchemaComponent] = LV('enclosingComponentDef) {
+//    Assert.invariant(optLexicalParent.isDefined &&
+//      optLexicalParent.get.isInstanceOf[SchemaDocument]) // global things have schema documents as their parents.
+//    referringComponent
+//  }.value
+//
+//  /**
+//   * Enables compilation to know all the points of use of a global
+//   * component.
+//   */
+//  lazy val referringComponents: Seq[(String, Seq[RefSpec])] = {
+//    schemaSet.root.refMap.get(this.factory) match {
+//      case None => Seq()
+//      case Some(seq) => seq
+//    }
+//  }
+//
+//  final override protected lazy val enclosingComponentDefs: Seq[EnclosingComponentDef] = LV('enclosingComponentDefs) {
+//    Assert.invariant(optLexicalParent.isDefined &&
+//      optLexicalParent.get.isInstanceOf[SchemaDocument]) // global things have schema documents as their parents.
+//    val res = referringComponents.flatMap {
+//      case (_, seq: Seq[RefSpec]) =>
+//        seq.map { rs =>
+//          EnclosingComponentDef(rs.from, rs.index)
+//        }
+//    }
+//    res
+//  }.value
+//}

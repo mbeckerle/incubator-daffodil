@@ -86,7 +86,7 @@ abstract class AbstractElementRef(
         //
         SDE("Referenced element not found: %s.", this.refQName)
       }
-      case Some(x) => x.forElementRef(this)
+      case Some(x) => x
     }
     res
   }.value

@@ -106,8 +106,7 @@ sealed trait ElementDeclInstanceImplMixin
 
   final override lazy val optNamedComplexType: Option[GlobalComplexTypeDef] = {
     namedTypeQName.flatMap { qn =>
-      val gctdFactory = schemaSet.getGlobalComplexTypeDef(qn)
-      val res = gctdFactory.map { gctdf => gctdf.forElement(this) }
+      val res = schemaSet.getGlobalComplexTypeDef(qn)
       res
     }
   }

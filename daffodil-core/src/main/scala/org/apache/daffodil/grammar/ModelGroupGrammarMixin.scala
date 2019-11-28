@@ -51,7 +51,7 @@ trait ModelGroupGrammarMixin
   private lazy val _content = prod("_content") {
     val finalContent =
       if (hasDelimiters ||
-        enclosingTerm.map(_.hasDelimiters).getOrElse(false) //
+        immediatelyEnclosingModelGroup.map(_.hasDelimiters).getOrElse(false) //
         // The above reference to the delimiters of the enclosing term,
         // has to do with the way our delim stack works.
         // Even if this model group doesn't have delimiters,
