@@ -52,7 +52,8 @@ trait AlignedMixin extends GrammarMixin { self: Term =>
    * will be properly aligned by where the prior thing left us positioned.
    * Hence we are guaranteed to be properly aligned.
    */
-  //  final lazy val isKnownToBeAligned: Boolean = LV('isKnownToBeAligned) {
+  final lazy val isKnownToBeAligned: Boolean = false
+  // LV('isKnownToBeAligned) {
   //    if (!isRepresented) {
   //      true
   //    } else {
@@ -71,7 +72,8 @@ trait AlignedMixin extends GrammarMixin { self: Term =>
    * This goes further TermEncodingMixin.hasTextAlignment because it
    * considers the surrounding context meeting the alignment needs.
    */
-  //  final lazy val isKnownToBeTextAligned: Boolean = LV('isKnownToBeTextAligned) {
+  final lazy val isKnownToBeTextAligned: Boolean = false
+  // LV('isKnownToBeTextAligned) {
   //    if (self.encodingInfo.isKnownEncoding) {
   //      if (self.encodingInfo.knownEncodingAlignmentInBits == 1)
   //        true
@@ -85,7 +87,8 @@ trait AlignedMixin extends GrammarMixin { self: Term =>
   //      false
   //  }.value
   //
-  //  final lazy val isDelimiterKnownToBeTextAligned: Boolean = {
+  final lazy val isDelimiterKnownToBeTextAligned: Boolean = false
+  // {
   //    if (self.encodingInfo.isKnownEncoding) {
   //      if (self.encodingInfo.knownEncodingAlignmentInBits == 1)
   //        true

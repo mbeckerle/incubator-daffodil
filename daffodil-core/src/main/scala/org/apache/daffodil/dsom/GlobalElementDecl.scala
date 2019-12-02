@@ -25,10 +25,9 @@ final class GlobalElementDecl(
   extends AnnotatedSchemaComponentImpl(xmlArg, schemaDocument)
   with GlobalElementComponentMixin
   with ElementDeclFactoryDelegatingMixin
-  with NestingTraversesToReferenceMixin
-  // Below needed so we can insure some properties are
-  // NOT on global element decls that are allowed on local element decls.
-  // Such as dfdl:choiceBranchKey
+  with NestingLexicalMixin
+  // Needed to check that some properties are
+  // NOT on global element decls, such as choiceBranchKey
   with ResolvesLocalProperties {
 
   lazy val asRoot = new Root(xml, schemaDocument, namedQName, this)

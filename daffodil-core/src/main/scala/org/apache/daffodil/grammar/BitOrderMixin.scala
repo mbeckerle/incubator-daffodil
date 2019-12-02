@@ -65,7 +65,8 @@ trait BitOrderMixin extends GrammarMixin with ByteOrderAnalysisMixin { self: Ter
   //    res
   //  }
   //
-  //  protected final lazy val needsBitOrderChange = {
+  protected final lazy val needsBitOrderChange = true
+  // {
   //    enclosingTerm.isEmpty || (
   //      optionBitOrder.isDefined &&
   //      thereIsAByteOrderDefined && // if there is no byte order, then there's no need for bit order. The two go together. An all-textual format doesn't need either one.
