@@ -25,7 +25,7 @@ sealed abstract class LocalElementDeclBase(
   final override val position: Int)
   extends ElementBase
   with LocalElementComponentMixin
-  with ElementDeclNonFactoryDelegatingMixin
+  with ElementDeclMixin
   with NestingLexicalMixin {
 
   requiredEvaluations(minOccurs, maxOccurs)

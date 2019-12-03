@@ -80,13 +80,15 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
     } else {
       allComponentsSet.add(component)
       component match {
-        case er: ElementBase => er.typeDef match {
-          case std: SimpleTypeDefBase => //ok
+        case aer: AbstractElementRef => allSchemaComponents(aer.referencedElement, None)
+        case eb: ElementDeclMixin => eb.typeDef match {
+          case std: SimpleTypeDefBase => std.bases.foreach { allSchemaComponents(_, None) }
           case ctd: ComplexTypeBase => allSchemaComponents(ctd, None)
           case _ => // ok
         }
+        case gr: GroupRef => allSchemaComponents(gr.groupDef, None)
         case ct: ComplexTypeBase => allSchemaComponents(ct.modelGroup, None)
-        case mg: ModelGroup => mg.groupMembers.foreach { gm =>
+        case mg: GroupDefLike => mg.groupMembers.foreach { gm =>
           allSchemaComponents(gm, Some(gm.position))
         }
       }
@@ -94,7 +96,7 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
   }
 
   final lazy val allComponents = {
-    allSchemaComponents(this, None)
+    allSchemaComponents(this.referencedElement, None)
     allComponentsSet.toSeq
   }
 
@@ -109,6 +111,9 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
 
   final lazy val refTargets: Seq[RefSpec] = {
     allComponents.collect {
+      case ed: GlobalElementDecl => {
+        ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd, 1) }.toSeq
+      }
       case er: AbstractElementRef => {
         val ed = er.referencedElement
         RefSpec(er, ed, er.position) +:
@@ -133,7 +138,10 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
 
   lazy val allCTRefs = {
     val cts = allComponents.collect {
-      case e: ElementBase if (e.optComplexType.isDefined && e.complexType.isInstanceOf[GlobalComplexTypeDef]) => e.complexType
+      case e: ElementDeclMixin if (
+        e.optComplexType.isDefined &&
+        e.complexType.isInstanceOf[GlobalComplexTypeDef]) =>
+        e.complexType
     }
     val ctsIDs = cts.map { _.shortSchemaComponentDesignator }.distinct
     ctsIDs

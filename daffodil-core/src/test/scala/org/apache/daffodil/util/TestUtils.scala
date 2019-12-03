@@ -212,17 +212,17 @@ object TestUtils {
   }
 
   private val defaultIncludeImports =
-     <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
+    <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
   private val defaultTopLevels =
     <dfdl:format ref="tns:GeneralFormat" lengthKind="delimited" encoding="US-ASCII"/>
-  
+
   /**
    * For convenient unit testing of schema compiler attributes defined on Term types.
    */
   def getRoot(
     contentElements: Seq[Node],
     elementFormDefault: String = "unqualified",
-    includeImports : Seq[Node] = defaultIncludeImports,
+    includeImports: Seq[Node] = defaultIncludeImports,
     topLevels: Seq[Node] = defaultTopLevels): Root = {
     val testSchema = SchemaUtils.dfdlTestSchema(
       includeImports,
@@ -247,7 +247,6 @@ object Fakes {
   def fakeGroupRef = new Fakes().fakeGroupRef
   def fakeChoiceGroupRef = new Fakes().fakeChoiceGroupRef
   def fakeSequenceGroupRef = new Fakes().fakeSequenceGroupRef
-  def fakeGroupRefFactory = new Fakes().fakeGroupRefFactory
 }
 
 class Fakes private () {
@@ -278,14 +277,14 @@ class Fakes private () {
   lazy val xsd_sset: SchemaSet = new SchemaSet(sch, "http://example.com", "fake")
   lazy val xsd_schema = xsd_sset.getSchema(NS("http://example.com")).get
   lazy val fakeSD = xsd_schema.schemaDocuments(0)
-  lazy val fakeElem = fakeSD.getGlobalElementDecl("fake").get.forRoot()
-  lazy val fakeCT = fakeSD.getGlobalElementDecl("fake2").get.forRoot().typeDef.asInstanceOf[GlobalComplexTypeDef]
+  lazy val fakeElem = fakeSD.getGlobalElementDecl("fake").get
+  lazy val fakeCT = fakeSD.getGlobalElementDecl("fake2").get.typeDef.asInstanceOf[GlobalComplexTypeDef]
   lazy val fakeSequence = fakeCT.sequence
   lazy val Seq(fs1, fs2, fs3) = fakeSequence.groupMembers
   lazy val fakeChoiceGroupRef = fs1.asInstanceOf[ChoiceGroupRef]
-  lazy val fakeGroupRef = fakeChoiceGroupRef
+  lazy val fakeCGroupRef = fakeChoiceGroupRef
   lazy val fakeSequenceGroupRef = fs3.asInstanceOf[SequenceGroupRef]
-  lazy val fakeGroupRefFactory = new GroupRefFactory(fs1.xml, fs1, 1, false)
+  lazy val fakeGroupRef = GroupRefFactory(fs1.xml, fs1, 1, false)
 
   class FakeDataProcessor extends DFDL.DataProcessor {
     protected var tunablesObj = DaffodilTunables()

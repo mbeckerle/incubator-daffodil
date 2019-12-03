@@ -55,8 +55,7 @@ class TestMiddleEndAttributes3 {
     val Seq(sd, _) = sch.schemaDocuments
 
     // Explore global element decl
-    val Seq(ef) = sd.globalElementDecls
-    val e = ef.forRoot()
+    val Seq(e) = sd.globalElementDecls
     val ect = e.complexType
     val seq = ect.sequence
     val mems = seq.groupMembers
@@ -115,8 +114,7 @@ class TestMiddleEndAttributes3 {
     val Seq(sd, _) = sch.schemaDocuments
 
     // Explore global element decl
-    val Seq(ef) = sd.globalElementDecls
-    val e = ef.forRoot()
+    val Seq(e) = sd.globalElementDecls
     val ect = e.complexType
     val seq = ect.sequence
     val mems = seq.groupMembers

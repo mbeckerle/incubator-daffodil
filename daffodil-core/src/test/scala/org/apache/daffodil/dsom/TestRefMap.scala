@@ -50,17 +50,9 @@ class TestRefMap extends Logging {
     assertEquals(1, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(1, numEntries)
+    assertEquals(0, numEntries)
     val numRefPairs = root.refPairsMap.size
-    assertEquals(1, numRefPairs) // good proxy for schema size
-    val rootDecl = root.referencedElement
-    val rootRefPair = refMap.get(rootDecl.factory)
-    assertTrue(rootRefPair.isDefined)
-    val Seq((fromSSCD, refSpecs)) = rootRefPair.get
-    assertEquals(root.shortSchemaComponentDesignator, fromSSCD)
-    val Seq(RefSpec(rootRef, to, 1)) = refSpecs
-    assertEquals(root, rootRef)
-    assertEquals(rootDecl.factory, to)
+    assertEquals(0, numRefPairs) // good proxy for schema size
   }
 
   @Test def testRefMapComplex1() {
@@ -80,17 +72,12 @@ class TestRefMap extends Logging {
     assertEquals(4, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(2, numEntries)
+    assertEquals(1, numEntries)
     val numRefPairs = root.refPairsMap.size
-    assertEquals(2, numRefPairs) // good proxy for schema size
-    val rootDecl = root.referencedElement
-    val rootRefPair = refMap.get(rootDecl.factory)
-    assertTrue(rootRefPair.isDefined)
-    val Seq((fromSSCD, refSpecs)) = rootRefPair.get
-    assertEquals(root.shortSchemaComponentDesignator, fromSSCD)
+    assertEquals(1, numRefPairs) // good proxy for schema size
     val ctDef = root.complexType.asInstanceOf[GlobalComplexTypeDef]
-    val Some(Seq((edecl, ctRefSpecs))) = refMap.get(ctDef.factory)
-    assertEquals(rootDecl.shortSchemaComponentDesignator, edecl)
+    val Some(Seq((edecl, ctRefSpecs))) = refMap.get(ctDef)
+    assertEquals(root.referencedElement.shortSchemaComponentDesignator, edecl)
   }
 
   @Test def testRefMapGroupRefSeq1() {
@@ -110,25 +97,21 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(4, comps.length)
+    assertEquals(5, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(3, numEntries)
+    assertEquals(2, numEntries)
     val numRefPairs = root.refPairsMap.size
-    assertEquals(3, numRefPairs) // good proxy for schema size
+    assertEquals(2, numRefPairs) // good proxy for schema size
     val rootDecl = root.referencedElement
-    val rootRefPair = refMap.get(rootDecl.factory)
-    assertTrue(rootRefPair.isDefined)
-    val Seq((fromSSCD, refSpecs)) = rootRefPair.get
-    assertEquals(root.shortSchemaComponentDesignator, fromSSCD)
     val ctDef = root.complexType.asInstanceOf[GlobalComplexTypeDef]
-    val Some(Seq((edecl, ctRefSpecs))) = refMap.get(ctDef.factory)
+    val Some(Seq((edecl, ctRefSpecs))) = refMap.get(ctDef)
     assertEquals(rootDecl.shortSchemaComponentDesignator, edecl)
     val gref = rootDecl.complexType.modelGroup.asInstanceOf[SequenceGroupRef]
-    val Seq((grefSSCD, gdRefSpecs)) = refMap.get(gref.groupDef.factory).get
+    val Seq((grefSSCD, gdRefSpecs)) = refMap.get(gref.groupDef).get
     assertEquals(gref.shortSchemaComponentDesignator, grefSSCD)
-    assertEquals(4, root.numComponents)
-    assertEquals(4, root.numUniqueComponents)
+    assertEquals(5, root.numComponents)
+    assertEquals(5, root.numUniqueComponents)
   }
 
   @Test def testRefMapGroupRefChoice1() {
@@ -149,25 +132,21 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(5, comps.length)
+    assertEquals(6, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(3, numEntries)
+    assertEquals(2, numEntries)
     val numRefPairs = root.refPairsMap.size
-    assertEquals(3, numRefPairs) // good proxy for schema size
+    assertEquals(2, numRefPairs) // good proxy for schema size
     val rootDecl = root.referencedElement
-    val rootRefPair = refMap.get(rootDecl.factory)
-    assertTrue(rootRefPair.isDefined)
-    val Seq((fromSSCD, refSpecs)) = rootRefPair.get
-    assertEquals(root.shortSchemaComponentDesignator, fromSSCD)
     val ctDef = root.complexType.asInstanceOf[GlobalComplexTypeDef]
-    val Some(Seq((edecl, ctRefSpecs))) = refMap.get(ctDef.factory)
+    val Some(Seq((edecl, ctRefSpecs))) = refMap.get(ctDef)
     assertEquals(rootDecl.shortSchemaComponentDesignator, edecl)
     val gref = rootDecl.complexType.modelGroup.asInstanceOf[ChoiceGroupRef]
-    val Seq((grefSSCD, gdRefSpecs)) = refMap.get(gref.groupDef.factory).get
+    val Seq((grefSSCD, gdRefSpecs)) = refMap.get(gref.groupDef).get
     assertEquals(gref.shortSchemaComponentDesignator, grefSSCD)
-    assertEquals(5, root.numComponents)
-    assertEquals(5, root.numUniqueComponents)
+    assertEquals(6, root.numComponents)
+    assertEquals(6, root.numUniqueComponents)
   }
 
   @Test def testRefMapGroupRefNest1() {
@@ -199,28 +178,24 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(10, comps.length)
+    assertEquals(13, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(6, numEntries)
+    assertEquals(5, numEntries)
     val numRefPairs = root.refPairsMap.size
-    assertEquals(6, numRefPairs) // good proxy for schema size
+    assertEquals(5, numRefPairs) // good proxy for schema size
     val rootDecl = root.referencedElement
-    val rootRefPair = refMap.get(rootDecl.factory)
-    assertTrue(rootRefPair.isDefined)
-    val Seq((fromSSCD, refSpecs)) = rootRefPair.get
-    assertEquals(root.shortSchemaComponentDesignator, fromSSCD)
     val ctDef = root.complexType.asInstanceOf[GlobalComplexTypeDef]
-    val Some(Seq((edecl, ctRefSpecs))) = refMap.get(ctDef.factory)
+    val Some(Seq((edecl, ctRefSpecs))) = refMap.get(ctDef)
     assertEquals(rootDecl.shortSchemaComponentDesignator, edecl)
     val gref = rootDecl.complexType.modelGroup.asInstanceOf[ChoiceGroupRef]
-    val Seq((grefSSCD, gdRefSpecs)) = refMap.get(gref.groupDef.factory).get
+    val Seq((grefSSCD, gdRefSpecs)) = refMap.get(gref.groupDef).get
     assertEquals(gref.shortSchemaComponentDesignator, grefSSCD)
-    assertEquals(10, root.numComponents)
-    assertEquals(10, root.numUniqueComponents)
+    assertEquals(13, root.numComponents)
+    assertEquals(13, root.numUniqueComponents)
   }
 
-  @Test def testRefMapExplosion1() {
+  @Test def testRefMapNonExplosion1() {
     val testSchema = SchemaUtils.dfdlTestSchema(
       <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>,
       <dfdl:format ref="tns:GeneralFormat"/>,
@@ -249,24 +224,24 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(25, comps.length)
+    assertEquals(13, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(4, numEntries)
+    assertEquals(3, numEntries)
     val refPairsMap = root.refPairsMap.toSeq
     val numRefPairs = refPairsMap.map { _._2.length }.sum
-    assertEquals(6, numRefPairs) // good proxy for schema size
+    assertEquals(5, numRefPairs) // good proxy for schema size
     val allGRefs = root.allGRefs
     assertEquals(2, allGRefs.size)
     val allERefsCount = root.allERefs.size
     assertEquals(2, allERefsCount)
     val allCTRefsCount = root.allCTRefs.size
     assertEquals(1, allCTRefsCount)
-    assertEquals(25, root.numComponents)
-    assertEquals(11, root.numUniqueComponents)
+    assertEquals(13, root.numComponents)
+    assertEquals(13, root.numUniqueComponents)
   }
 
-  @Test def testRefMapExplosion2() {
+  @Test def testRefMapNonExplosion2() {
     val testSchema = SchemaUtils.dfdlTestSchema(
       <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>,
       <dfdl:format ref="tns:GeneralFormat"/>,
@@ -303,18 +278,18 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(57, comps.length)
+    assertEquals(18, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(5, numEntries)
+    assertEquals(4, numEntries)
     val refPairsMap = root.refPairsMap.toSeq
     val numRefPairs = refPairsMap.map { _._2.length }.sum
-    assertEquals(8, numRefPairs)
-    assertEquals(57, root.numComponents)
-    assertEquals(15, root.numUniqueComponents)
+    assertEquals(7, numRefPairs)
+    assertEquals(18, root.numComponents)
+    assertEquals(18, root.numUniqueComponents)
   }
 
-  @Test def testRefMapExplosion3() {
+  @Test def testRefMapNonExplosion3() {
     val testSchema = SchemaUtils.dfdlTestSchema(
       <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>,
       <dfdl:format ref="tns:GeneralFormat"/>,
@@ -354,18 +329,18 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(61, comps.length)
+    assertEquals(20, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(4, numEntries)
+    assertEquals(3, numEntries)
     val refPairsMap = root.refPairsMap.toSeq
     val numRefPairs = refPairsMap.map { _._2.length }.sum
-    assertEquals(7, numRefPairs)
-    assertEquals(61, root.numComponents)
-    assertEquals(17, root.numUniqueComponents)
+    assertEquals(6, numRefPairs)
+    assertEquals(20, root.numComponents)
+    assertEquals(20, root.numUniqueComponents)
   }
 
-  @Test def testRefMapExplosion4() {
+  @Test def testRefMapNonExplosion4() {
     val testSchema = SchemaUtils.dfdlTestSchema(
       <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>,
       <dfdl:format ref="tns:GeneralFormat"/>,
@@ -413,18 +388,18 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(125, comps.length)
+    assertEquals(25, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(5, numEntries)
+    assertEquals(4, numEntries)
     val refPairsMap = root.refPairsMap.toSeq
     val numRefPairs = refPairsMap.map { _._2.length }.sum
-    assertEquals(9, numRefPairs)
-    assertEquals(125, root.numComponents)
-    assertEquals(21, root.numUniqueComponents)
+    assertEquals(8, numRefPairs)
+    assertEquals(25, root.numComponents)
+    assertEquals(25, root.numUniqueComponents)
   }
 
-  @Test def testRefMapExplosion5() {
+  @Test def testRefMapNonExplosion5() {
     val testSchema = SchemaUtils.dfdlTestSchema(
       <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>,
       <dfdl:format ref="tns:GeneralFormat"/>,
@@ -480,18 +455,18 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(253, comps.length)
+    assertEquals(30, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(6, numEntries)
+    assertEquals(5, numEntries)
     val refPairsMap = root.refPairsMap.toSeq
     val numRefPairs = refPairsMap.map { _._2.length }.sum
-    assertEquals(11, numRefPairs)
-    assertEquals(253, root.numComponents)
-    assertEquals(25, root.numUniqueComponents)
+    assertEquals(10, numRefPairs)
+    assertEquals(30, root.numComponents)
+    assertEquals(30, root.numUniqueComponents)
   }
 
-  @Test def testRefMapExplosion6() {
+  @Test def testRefMapNonExplosion6() {
     val testSchema = SchemaUtils.dfdlTestSchema(
       <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>,
       <dfdl:format ref="tns:GeneralFormat"/>,
@@ -555,18 +530,18 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(509, comps.length)
+    assertEquals(35, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(7, numEntries)
+    assertEquals(6, numEntries)
     val refPairsMap = root.refPairsMap.toSeq
     val numRefPairs = refPairsMap.map { _._2.length }.sum
-    assertEquals(13, numRefPairs)
-    assertEquals(509, root.numComponents)
-    assertEquals(29, root.numUniqueComponents)
+    assertEquals(12, numRefPairs)
+    assertEquals(35, root.numComponents)
+    assertEquals(35, root.numUniqueComponents)
   }
 
-  @Test def testRefMapExplosion7() {
+  @Test def testRefMapNonExplosion7() {
     val testSchema = SchemaUtils.dfdlTestSchema(
       <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>,
       <dfdl:format ref="tns:GeneralFormat"/>,
@@ -638,14 +613,14 @@ class TestRefMap extends Logging {
     val sset = compiler.compileNode(testSchema).sset
     val root = sset.root
     val comps = root.allComponents
-    assertEquals(1021, comps.length)
+    assertEquals(40, comps.length)
     val refMap = root.refMap
     val numEntries = refMap.size
-    assertEquals(8, numEntries)
+    assertEquals(7, numEntries)
     val refPairsMap = root.refPairsMap.toSeq
     val numRefPairs = refPairsMap.map { _._2.length }.sum
-    assertEquals(15, numRefPairs)
-    assertEquals(1021, root.numComponents)
-    assertEquals(33, root.numUniqueComponents)
+    assertEquals(14, numRefPairs)
+    assertEquals(40, root.numComponents)
+    assertEquals(40, root.numUniqueComponents)
   }
 }

@@ -319,6 +319,7 @@ trait Term
           None
         }
         case gdd: GlobalGroupDef => Some(gdd)
+        case ctd: ComplexTypeBase => None
 
         case _ => Assert.invariantFailed("immediatelyEnclosingModelGroup called on " + this + " with lexical parent " + lexicalParent)
       }
@@ -372,7 +373,14 @@ trait Term
   //    res.getOrElse(Nil)
   //  }
   //
-  //  final lazy val priorSiblings = ListUtils.preceding(allSiblings, this)
+  final lazy val priorSiblings = {
+    optLexicalParent match {
+      case Some(stb: SequenceTermBase) => stb.groupMembers.take(position - 1)
+      case Some(gsgd: GlobalSequenceGroupDef) => gsgd.groupMembers.take(position - 1)
+      case _ => Nil
+    }
+  }
+
   /**
    * Siblings in the lexically enclosing group.
    */
@@ -385,8 +393,8 @@ trait Term
   }
   //  final lazy val laterElementSiblings = laterSiblings.collect { case elt: ElementBase => elt }
   //
-  //  final lazy val priorSibling = priorSiblings.lastOption
-  //  final lazy val nextSibling = laterSiblings.headOption
+  final lazy val priorSibling = priorSiblings.lastOption
+  final lazy val nextSibling = laterSiblings.headOption
   //
   //  final lazy val priorPhysicalSiblings = priorSiblings.filter { _.isRepresented }
   //  final lazy val priorPhysicalSibling = priorPhysicalSiblings.lastOption
@@ -443,8 +451,8 @@ trait Term
   //    }
   //  }
   //
-  //  final lazy val hasLaterRequiredSiblings = laterSiblings.exists(_.hasStaticallyRequiredOccurrencesInDataRepresentation)
-  //  final lazy val hasPriorRequiredSiblings = priorSiblings.exists(_.hasStaticallyRequiredOccurrencesInDataRepresentation)
+  final lazy val hasLaterRequiredSiblings = laterSiblings.exists(_.hasStaticallyRequiredOccurrencesInDataRepresentation)
+  final lazy val hasPriorRequiredSiblings = priorSiblings.exists(_.hasStaticallyRequiredOccurrencesInDataRepresentation)
 
   /**
    * Does this term have always have statically required instances in the data stream.
@@ -619,7 +627,8 @@ trait Term
    * Note that this currently only requires OVC since default's aren't
    * implemented. This function may need to change when we support defaults.
    */
-  //  lazy val childrenInHiddenGroupNotDefaultableOrOVC: Seq[ElementBase] = {
+  lazy val childrenInHiddenGroupNotDefaultableOrOVC: Seq[ElementBase] = Nil
+  // {
   //    // this should only be called on hidden elements
   //    val isH = isHidden
   //    Assert.invariant(isH)

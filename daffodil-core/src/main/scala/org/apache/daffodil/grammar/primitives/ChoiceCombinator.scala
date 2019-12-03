@@ -134,7 +134,7 @@ case class ChoiceCombinator(ch: ChoiceTermBase, alternatives: Seq[Gram])
             IntRangeCooker.convertConstant(keyTerm.findPropertyOption("choiceBranchKeyRanges").toOption.getOrElse(""), context, false)
           case ChoiceKeyKindType.Speculative => Assert.invariantFailed("Cannot have choiceKeyKind==speculative with direct dispatch")
         }
-        branchKeyRanges.toSeq.map(x => (x._1, x._2, alt.parser, alt.context.enclosingTerm.get.isRepresented))
+        branchKeyRanges.toSeq.map(x => (x._1, x._2, alt.parser, true )) // alt.context.enclosingTerm.get.isRepresented))
       }
 
       // check for duplicate branch keys
@@ -192,7 +192,7 @@ case class ChoiceCombinator(ch: ChoiceTermBase, alternatives: Seq[Gram])
       })
 
       val dispatchBranchKeyMap = dispatchBranchKeyValueTuples.toMap.mapValues(gram => {
-        val isRepresented = gram.context.enclosingTerm.get.isRepresented
+        val isRepresented = true // gram.context.enclosingTerm.get.isRepresented
         val parser = gram.parser
         (parser, isRepresented)
       })

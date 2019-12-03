@@ -210,7 +210,8 @@ abstract class SequenceGroupTermBase(
     }
   }
 
-  //  lazy val checkHiddenSequenceIsDefaultableOrOVC: Unit = {
+  lazy val checkHiddenSequenceIsDefaultableOrOVC: Unit = ()
+  // {
   //    if (this.isHidden) {
   //      val nonDefaultableOrOVC =
   //        this.childrenInHiddenGroupNotDefaultableOrOVC

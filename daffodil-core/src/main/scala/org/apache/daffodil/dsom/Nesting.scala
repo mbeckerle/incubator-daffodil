@@ -88,7 +88,7 @@ trait NestingLexicalMixin
   extends NestingMixin { self: SchemaComponent =>
 
   //@deprecated("2019-06-03", "Use enclosingComponentDefs method, and deal with sharing.")
-  override protected lazy val enclosingComponentDef = optLexicalParent
+  // override protected lazy val enclosingComponentDef = optLexicalParent
 
   final override protected lazy val enclosingComponentDefs: Seq[EnclosingComponentDef] =
     optLexicalParent.map {

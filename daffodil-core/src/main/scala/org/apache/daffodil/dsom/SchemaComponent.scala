@@ -229,7 +229,7 @@ trait SchemaComponent
         case er: AbstractElementRef => "er" + (if (er.position > 1) er.position else "") + "=" + er.namedQName.toQNameString
         case e: ElementBase => "e" + (if (e.position > 1) e.position else "") + "=" +
           e.namedQName.toQNameString
-        case ed: GlobalElementDecl => ed.shortSchemaComponentDesignator
+        case ed: GlobalElementDecl => "e=" + ed.namedQName.toQNameString
         case ct: GlobalComplexTypeDef => "ct=" + ct.namedQName.toQNameString
         case ct: ComplexTypeBase => "ct"
         case st: SimpleTypeDefBase => "st=" + st.namedQName.toQNameString
@@ -310,7 +310,7 @@ final class Schema(val namespace: NS, schemaDocs: Seq[SchemaDocument], schemaSet
 
   override def targetNamespace: NS = namespace
 
-  final override protected def enclosingComponentDef = None
+  // final override protected def enclosingComponentDef = None
   final override protected def enclosingComponentDefs = Seq()
 
   override lazy val schemaDocument: SchemaDocument = Assert.usageError("schemaDocument should not be called on Schema")

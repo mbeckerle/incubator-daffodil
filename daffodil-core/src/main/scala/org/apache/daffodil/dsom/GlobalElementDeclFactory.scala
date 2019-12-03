@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.apache.daffodil.dsom
-
-import scala.xml.Node
+//
+//package org.apache.daffodil.dsom
+//
+//import scala.xml.Node
 
 /**
  * Factory to create an instance of a global element declaration

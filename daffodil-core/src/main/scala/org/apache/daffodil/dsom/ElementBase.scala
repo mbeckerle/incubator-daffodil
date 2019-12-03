@@ -263,7 +263,7 @@ trait ElementBase
   private lazy val myOwnNSPairs: Set[(String, NS)] = thisElementsRequiredNamespaceBindings
 
   private lazy val myParentNSPairs: Set[(String, NS)] = LV('myParentNSPairs) {
-    val ee: Option[ElementBase] = enclosingElement
+    val ee: Option[ElementBase] = None // enclosingElement
     ee match {
       case None => emptyNSPairs
       case Some(ee) => ee.myOwnNSPairs
@@ -287,7 +287,7 @@ trait ElementBase
     }
   }
 
-  private lazy val parentMinimizedScope = enclosingElement.map { _.minimizedScope }.getOrElse(scala.xml.TopScope)
+  private lazy val parentMinimizedScope = xml.scope // enclosingElement.map { _.minimizedScope }.getOrElse(scala.xml.TopScope)
 
   /**
    * To be properly constructed, scala's xml Elems must share the scope (namespace bindings) of the enclosing
@@ -1032,7 +1032,7 @@ trait ElementBase
     couldBeLast
   }.value
 
-  //  final override lazy val nextParentElements: Seq[ElementBase] =
+  final override lazy val nextParentElements: Seq[ElementBase] = Nil
   //    enclosingTerms.flatMap { enclosingTerm =>
   //      if (couldBeLastElementInModelGroup) {
   //        enclosingTerm.possibleNextChildElementsInInfoset

@@ -41,7 +41,7 @@ final class DFDLEscapeScheme(node: Node, decl: AnnotatedSchemaComponent, defES: 
   with EscapeScheme_AnnotationMixin
   with RawEscapeSchemeRuntimeValuedPropertiesMixin {
 
-  final protected override lazy val enclosingComponentDef = Some(defES)
+  // final protected override lazy val enclosingComponentDef = Some(defES)
 
   final lazy val referringComponent: Option[SchemaComponent] = Some(defES)
 
@@ -156,7 +156,7 @@ final class DFDLDefineEscapeScheme(node: Node, decl: SchemaDocument,
   // with DefineEscapeScheme_AnnotationMixin
   {
 
-  final override protected lazy val enclosingComponentDef = Some(pointOfUse)
+  // final override protected lazy val enclosingComponentDef = Some(pointOfUse)
 
   /*
    * For diagnostic messages, we need the decl - because that's where the

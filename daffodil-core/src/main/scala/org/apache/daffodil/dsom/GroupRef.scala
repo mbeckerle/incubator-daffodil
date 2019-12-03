@@ -21,6 +21,7 @@ import scala.xml.Node
 import scala.xml._
 import org.apache.daffodil.xml.HasRefMixin
 import org.apache.daffodil.schema.annotation.props.NotFound
+import org.apache.daffodil.oolag.OOLAG._
 
 trait GroupRef { self: ModelGroup =>
 
@@ -53,13 +54,28 @@ trait GroupRef { self: ModelGroup =>
  * A GroupRefFactory (group reference) is an indirection to
  * factories to create a SequenceGroupRef, or ChoiceGroupRef.
  *
- * The refXMLArg is the xml for the group reference.
+ * The refXML is the xml for the group reference.
  *
  * This factory exists in order to make error messages refer to the
- * right part of the schema.
+ * right part of the schema and to navigate the ref prior to creating the
+ * object so that we can create a more specific kind of group ref that
+ * knows if it is referring to a choice or a sequence.
  */
-final class GroupRefFactory(refXML: Node, val refLexicalParent: SchemaComponent, position: Int, isHidden: Boolean)
-  extends HasRefMixin {
+object GroupRefFactory {
+  def apply(refXML: Node, refLexicalParent: SchemaComponent, position: Int, isHidden: Boolean) = {
+    val f = new GroupRefFactory(refXML, refLexicalParent, position, isHidden)
+    f.groupRef
+  }
+}
+
+/**
+ * This is a "quasi" schema component. It is one simply to share a bunch of
+ * mechanism that schema components inherit, in a hassle-free manner.
+ */
+final class GroupRefFactory private (refXML: Node, val refLexicalParent: SchemaComponent, position: Int, isHidden: Boolean)
+  extends SchemaComponentImpl(refXML, refLexicalParent)
+  with NestingLexicalMixin
+  with HasRefMixin {
 
   final def qname = this.refQName
 

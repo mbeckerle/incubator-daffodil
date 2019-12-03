@@ -24,7 +24,7 @@ final class GlobalElementDecl(
   schemaDocument: SchemaDocument)
   extends AnnotatedSchemaComponentImpl(xmlArg, schemaDocument)
   with GlobalElementComponentMixin
-  with ElementDeclFactoryDelegatingMixin
+  with ElementDeclMixin
   with NestingLexicalMixin
   // Needed to check that some properties are
   // NOT on global element decls, such as choiceBranchKey

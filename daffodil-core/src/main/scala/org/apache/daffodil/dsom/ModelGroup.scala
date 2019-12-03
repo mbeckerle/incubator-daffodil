@@ -86,9 +86,8 @@ object ModelGroupFactory {
           case mg: ModelGroup => position
           case gd: GlobalGroupDef => position
         }
-        val groupRefFactory = new GroupRefFactory(child, lexicalParent, pos, isHidden)
-        val groupRefInstance = groupRefFactory.groupRef
-        groupRefInstance.asModelGroup
+        val groupRef = GroupRefFactory(child, lexicalParent, pos, isHidden)
+        groupRef.asModelGroup
       }
       case _ => {
         Assert.invariantFailed("Unrecognized construct %s should be handled by caller.".format(child))
@@ -331,7 +330,8 @@ abstract class ModelGroup(index: Int)
     firstTerms
   }.value
 
-  //  final override lazy val nextParentElements: Seq[ElementBase] = {
+  final override lazy val nextParentElements: Seq[ElementBase] = Nil
+  // {
   //    Assert.invariant(enclosingTerm.isDefined)
   //    val et = enclosingTerm.get
   //    et match {
