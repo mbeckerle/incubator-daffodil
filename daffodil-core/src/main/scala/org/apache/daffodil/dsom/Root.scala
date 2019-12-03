@@ -91,6 +91,7 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
         case mg: GroupDefLike => mg.groupMembers.foreach { gm =>
           allSchemaComponents(gm, Some(gm.position))
         }
+        case gstd: GlobalSimpleTypeDef => gstd.bases.foreach { allSchemaComponents(_, None) }
       }
     }
   }

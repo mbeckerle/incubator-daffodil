@@ -126,7 +126,7 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
    */
   lazy val dpathElementCompileInfo: DPathElementCompileInfo = {
     val ee = enclosingElements.toSeq
-    lazy val parents = ee.map {
+    val parents = ee.map {
       _.dpathElementCompileInfo
     }
     val eci = new DPathElementCompileInfo(

@@ -71,7 +71,7 @@ trait SchemaFileLocatableImpl
 }
 
 trait CommonContextMixin
-  extends NestingMixin { self: OOLAGHost with ThrowsSDE =>
+  extends NestingLexicalMixin { self: SchemaComponent =>
 
   def optLexicalParent: Option[SchemaComponent]
 

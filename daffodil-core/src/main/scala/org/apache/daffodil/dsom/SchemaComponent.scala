@@ -146,20 +146,31 @@ trait SchemaComponent
    * next tier out.
    */
   final lazy val enclosingElements: Seq[ElementBase] = LV('enclosingElements) {
-    val res = enclosingTerms.flatMap { et =>
-      val ee = et match {
-        case eb: ElementBase => Seq(eb)
-        case sc: SchemaComponent => {
-          val scee = sc.enclosingElements
-          scee
-        }
+    val ets = enclosingTerms
+    if (ets.isEmpty) {
+      // only a root element (in test situations there can be several) has no enclosing term
+      val r = this.schemaSet.root
+      if (this eq r) Nil
+      else {
+        // Assert.invariant(this eq r.referencedElement) // not true for some tests
+        Seq(r)
       }
-      ee
+    } else {
+      val res = ets.flatMap { et =>
+        val ee = et match {
+          case eb: ElementBase => Seq(eb)
+          case sc: SchemaComponent => {
+            val scee = sc.enclosingElements
+            scee
+          }
+        }
+        ee
+      }
+      //    System.err.println("enclosingElements: Component " + this.shortSchemaComponentDesignator + (
+      //      if (res.isEmpty) " has no enclosing element."
+      //      else " has enclosing elements " + res.map { _.shortSchemaComponentDesignator }.mkString(" ")))
+      res
     }
-    //    System.err.println("enclosingElements: Component " + this.shortSchemaComponentDesignator + (
-    //      if (res.isEmpty) " has no enclosing element."
-    //      else " has enclosing elements " + res.map { _.shortSchemaComponentDesignator }.mkString(" ")))
-    res
   }.value
 
   //
@@ -187,7 +198,7 @@ trait SchemaComponent
     val res = ec.flatMap { sc =>
       sc match {
         case t: Term => Seq(t)
-        case sd: SchemaDocument => Nil
+        case sd: SchemaDocument => Assert.invariantFailed("enclosing component should never be a schema document for " + this)
         case other => other.enclosingComponents.map { _.encloser }.flatMap {
           case t: Term => Seq(t)
           case x => x.enclosingTerms
@@ -311,7 +322,7 @@ final class Schema(val namespace: NS, schemaDocs: Seq[SchemaDocument], schemaSet
   override def targetNamespace: NS = namespace
 
   // final override protected def enclosingComponentDef = None
-  final override protected def enclosingComponentDefs = Seq()
+  // final override protected def enclosingComponentDefs = Seq()
 
   override lazy val schemaDocument: SchemaDocument = Assert.usageError("schemaDocument should not be called on Schema")
 
