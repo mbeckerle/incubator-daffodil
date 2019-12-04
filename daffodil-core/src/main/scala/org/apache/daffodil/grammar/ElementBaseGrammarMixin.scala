@@ -26,7 +26,6 @@ import org.apache.daffodil.dpath.NodeInfo.PrimType
 import org.apache.daffodil.dsom.PrefixLengthQuasiElementDecl
 import org.apache.daffodil.dsom.ElementBase
 import org.apache.daffodil.dsom.ExpressionCompilers
-import org.apache.daffodil.dsom.InitiatedTerminatedMixin
 import org.apache.daffodil.dsom.TunableLimitExceededError
 import org.apache.daffodil.exceptions.Assert
 import org.apache.daffodil.grammar.primitives._ // there are too many to show individually
@@ -46,8 +45,7 @@ import org.apache.daffodil.runtime1.ElementBaseRuntime1Mixin
 /////////////////////////////////////////////////////////////////
 
 trait ElementBaseGrammarMixin
-  extends InitiatedTerminatedMixin
-  with AlignedMixin
+  extends AlignedMixin
   with HasStatementsGrammarMixin
   with PaddingInfoMixin
   with ElementBaseRuntime1Mixin { self: ElementBase =>

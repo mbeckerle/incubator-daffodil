@@ -19,26 +19,15 @@ package org.apache.daffodil.dsom
 
 import org.apache.daffodil.grammar._
 import org.apache.daffodil.schema.annotation.props.gen._
-import org.apache.daffodil.grammar.GrammarMixin
-import org.apache.daffodil.grammar.primitives.InitiatedContent
-import org.apache.daffodil.grammar.primitives.Terminator
-import org.apache.daffodil.grammar.primitives.Initiator
+import org.apache.daffodil.grammar.primitives._
 import org.apache.daffodil.exceptions.Assert
 import org.apache.daffodil.compiler.ForParser
 import org.apache.daffodil.api.WarnID
 
-trait InitiatedTerminatedMixin
+trait InitiatedTerminatedTermMixin
   extends GrammarMixin
   with AnnotatedMixin
   with DelimitedRuntimeValuedPropertiesMixin { self: Term =>
-
-  private lazy val parentSaysInitiatedContent = {
-    val parentSays = self.immediatelyEnclosingModelGroup match {
-      case Some(s) if (s.initiatedContent == YesNo.Yes) => true
-      case _ => false
-    }
-    parentSays
-  }
 
   /**
    * True if the term has an initiator expressed on it.
@@ -64,6 +53,46 @@ trait InitiatedTerminatedMixin
     res
   }
 
+  /**
+   * True if this term has initiator, terminator, or separator that are either statically
+   * present, or there is an expression. (Such expressions are not allowed to evaluate to "" - you
+   * can't turn off a delimiter by providing "" at runtime. Minimum length is 1 for these at runtime.
+   * <p>
+   * Override in SequenceTermBase to also check for separator.
+   */
+  lazy val hasDelimiters = hasInitiator || hasTerminator
+
+  /**
+   * Mandatory text alignment or mta
+   *
+   * mta can only apply to things with encodings. No encoding, no MTA.
+   *
+   * In addition, it has to be textual data. Just because there's an encoding
+   * in the property environment shouldn't get you an MTA region. It has
+   * to be textual.
+   */
+  protected final lazy val mtaBase = prod("mandatoryTextAlignment", hasEncoding) {
+    MandatoryTextAlignment(this, knownEncodingAlignmentInBits, false)
+  }
+
+  /**
+   * Mandatory text alignment for delimiters
+   */
+  protected final lazy val delimMTA = prod(
+    "delimMTA",
+    {
+      hasDelimiters
+    }) {
+      // This is different from mtaBase because it passes in 'true' for the
+      // last parameter to signify that it is MTA for a delimiter. mtaBase
+      // passes in 'false'
+      MandatoryTextAlignment(this, knownEncodingAlignmentInBits, true)
+    }
+}
+
+trait InitiatedTerminatedGrammarMixin
+  extends GrammarMixin { self: ModelGroupChild =>
+
   private lazy val isInitiatedContentChoice: Boolean = {
     immediatelyEnclosingModelGroup.map {
       case c: ChoiceTermBase => c.initiatedContent == YesNo.Yes
@@ -71,13 +100,21 @@ trait InitiatedTerminatedMixin
     }.getOrElse(false)
   }
 
+  private lazy val parentSaysInitiatedContent = {
+    val parentSays = self.immediatelyEnclosingModelGroup match {
+      case Some(s) if (s.initiatedContent == YesNo.Yes) => true
+      case _ => false
+    }
+    parentSays
+  }
+
   private lazy val shouldUseInitiatorDiscriminator: Boolean = {
-    parentSaysInitiatedContent &&
-      immediatelyEnclosingGroupDef.map {
-        case c: ChoiceTermBase => true
-        case s: SequenceTermBase => (isArray || isOptional) &&
-          isVariableOccurrences
-      }.getOrElse(false)
+    parentSaysInitiatedContent && (
+      self.parentGroupDef match {
+        case c: ChoiceDefMixin => true
+        case s: SequenceDefMixin => (childTerm.isArray || childTerm.isOptional) &&
+          childTerm.isVariableOccurrences
+      })
   }
 
   private lazy val initiatorDiscriminator = prod("initiatorDiscriminator", shouldUseInitiatorDiscriminator) {
@@ -89,21 +126,15 @@ trait InitiatedTerminatedMixin
       }
       case _ => // ok
     }
-    InitiatedContent(immediatelyEnclosingModelGroup.get, this)
+    InitiatedContent(immediatelyEnclosingModelGroup.get, childTerm)
   }
 
+  private def hasInitiator = childTerm.hasInitiator
+
+  private lazy val initiatorItself = childTerm.delimMTA ~ Initiator(childTerm)
+
   lazy val initiatorRegion = prod("initiatorRegion", hasInitiator) { initiatorItself ~ initiatorDiscriminator }
-  private lazy val initiatorItself = delimMTA ~ Initiator(this)
 
-  lazy val terminatorRegion = prod("terminatorRegion", hasTerminator) { delimMTA ~ Terminator(this) }
-
-  /**
-   * True if this term has initiator, terminator, or separator that are either statically
-   * present, or there is an expression. (Such expressions are not allowed to evaluate to "" - you
-   * can't turn off a delimiter by providing "" at runtime. Minimum length is 1 for these at runtime.
-   * <p>
-   * Override in SequenceTermBase to also check for separator.
-   */
-  lazy val hasDelimiters = hasInitiator || hasTerminator
+  lazy val terminatorRegion = prod("terminatorRegion", hasTerminator) { childTerm.delimMTA ~ Terminator(childTerm) }
 
 }

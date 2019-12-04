@@ -34,7 +34,7 @@ import org.apache.daffodil.processors.parsers._
 import org.apache.daffodil.processors.TerminatorParseEv
 
 /**
- * A SequenceChild is exactly that, a child Term of a Sequence
+ * A SequenceChildPrim is exactly that, a child Term of a Sequence
  *
  * Methods/members of this class combine information about a child term
  * with that about the sequence itself. This class is really a part of the
@@ -48,7 +48,7 @@ import org.apache.daffodil.processors.TerminatorParseEv
  * These objects are part of the Gram object hierarchy.
  * They represent the use of a Term in a context. They are
  * objects that belong to (are owned by exactly one) the enclosing sequence, are part of it, and
- * so it is reasonable for a SequenceChild to have a backpointer to the
+ * so it is reasonable for a SequenceChildPrim to have a backpointer to the
  * enclosing Sequence object in all cases, and this is passed to them on construction.
  * This particular backpointer is
  * not a challenge to sharing substructure as these objects cannot and are
@@ -56,19 +56,21 @@ import org.apache.daffodil.processors.TerminatorParseEv
  * broken out for convenience.
  *
  * This allows the child (of the Sequence) Term object (dsom object) that provides the
- * definition of the SequenceChild to be shared/reused, in principle without having
+ * definition of the SequenceChildPrim to be shared/reused, in principle without having
  * a backpointer to the enclosing Sequence. That allows sharing, and removes lots of
  * duplication/copying that is otherwise needed in the schema compiler data structures.
  *
  * Eventually things like alignment calculations should move from
  * Terms to these objects. That is, those calculations should not be done
- * on the DSOM objects, but on these SequenceChild objects in the Gram
+ * on the DSOM objects, but on these SequenceChildPrim objects in the Gram
  * objects.
  */
-abstract class SequenceChild(protected val sq: SequenceTermBase, child: Term, groupIndex: Int)
-  extends Terminal(child, true) {
+abstract class SequenceChildPrim(protected val sq: SequenceTermBase, seqChild: SequenceChild, groupIndex: Int)
+  extends Terminal(seqChild.childTerm, true) {
   import SeparatorSuppressionPolicy._
   import SeparatedSequenceChildBehavior._
+  
+  private def child = seqChild.childTerm
 
   private lazy val sgtb = sq.asInstanceOf[SequenceGroupTermBase]
 
@@ -124,7 +126,7 @@ abstract class SequenceChild(protected val sq: SequenceTermBase, child: Term, gr
     import SeparatedSequenceChildBehavior._
     child match {
       case m: ModelGroup => {
-        if (child.isPotentiallyTrailing) {
+        if (seqChild.isPotentiallyTrailing) {
           ssp match {
             case AnyEmpty => NonPositional
             case TrailingEmpty => PositionalTrailingLax
@@ -145,19 +147,19 @@ abstract class SequenceChild(protected val sq: SequenceTermBase, child: Term, gr
           case Implicit => {
             val UNB = -1
             (
-              eb.isPotentiallyTrailing,
+              seqChild.isPotentiallyTrailing,
               this.isDeclaredLast,
               sq.separatorSuppressionPolicy,
               eb.maxOccurs) match {
                 case (false, _, AnyEmpty, _) => NonPositional
-                case (false, _, _, UNB) if !eb.isLastDeclaredRepresentedInSequence =>
+                case (false, _, _, UNB) if !seqChild.isLastDeclaredRepresentedInSequence =>
                   Assert.invariantFailed("Should be SDE found elsewhere.")
                 case (false, _, _, _) => Positional
                 case (true, _, Never, UNB) => Assert.invariantFailed("Should be SDE found elsewhere.")
                 case (true, false, AnyEmpty, UNB) => NonPositional
-                case (true, false, TrailingEmpty, UNB) if !eb.isLastDeclaredRepresentedInSequence =>
+                case (true, false, TrailingEmpty, UNB) if !seqChild.isLastDeclaredRepresentedInSequence =>
                   Assert.invariantFailed("Should be SDE found elsewhere.")
-                case (true, false, TrailingEmptyStrict, UNB) if !eb.isLastDeclaredRepresentedInSequence =>
+                case (true, false, TrailingEmptyStrict, UNB) if !seqChild.isLastDeclaredRepresentedInSequence =>
                   Assert.invariantFailed("Should be SDE found elsewhere.")
                 case (true, _, Never, _) => Positional
                 case (true, _, AnyEmpty, _) => NonPositional
@@ -168,7 +170,7 @@ abstract class SequenceChild(protected val sq: SequenceTermBase, child: Term, gr
         }
       }
       case eb: ElementBase if eb.isScalar => {
-        if (child.isPotentiallyTrailing) {
+        if (seqChild.isPotentiallyTrailing) {
           ssp match {
             case AnyEmpty => NonPositional
             case TrailingEmpty => PositionalTrailingLax
@@ -188,7 +190,7 @@ abstract class SequenceChild(protected val sq: SequenceTermBase, child: Term, gr
   protected final def sscb = separatedSequenceChildBehavior
 
   final protected def isDeclaredLast: Boolean = {
-    child.isLastDeclaredRepresentedInSequence
+    seqChild.isLastDeclaredRepresentedInSequence
   }
 
   final protected lazy val isPositional: Boolean = {
@@ -220,7 +222,7 @@ abstract class SequenceChild(protected val sq: SequenceTermBase, child: Term, gr
       else {
         ssp match {
           case TrailingEmpty | TrailingEmptyStrict =>
-            if (child.isPotentiallyTrailing)
+            if (seqChild.isPotentiallyTrailing)
               sometimesSuppressSeparator
             else
               neverSuppressSeparator
@@ -245,7 +247,7 @@ abstract class SequenceChild(protected val sq: SequenceTermBase, child: Term, gr
   final protected lazy val (isModelGroupRepPossiblyZeroLength, isModelGroupRepNonZeroLength): (Boolean, Boolean) = {
     if (!childModelGroup.isRepresented) (false, false)
     else childModelGroup match {
-      case mg if mg.isPotentiallyTrailing => (true, false)
+      case mg if seqChild.isPotentiallyTrailing => (true, false)
       case mg => {
         val hasSyntax = mg.hasKnownRequiredSyntax
         //
@@ -382,10 +384,12 @@ abstract class SequenceChild(protected val sq: SequenceTermBase, child: Term, gr
 
 }
 
-class ScalarOrderedSequenceChild(sq: SequenceTermBase, term: Term, groupIndex: Int)
-  extends SequenceChild(sq, term, groupIndex) {
+class ScalarOrderedSequenceChild(sq: SequenceTermBase, seqChild: SequenceChild, groupIndex: Int)
+  extends SequenceChildPrim(sq, seqChild, groupIndex) {
   import SeparatedSequenceChildBehavior._
 
+  private def term = seqChild.childTerm
+  
   lazy val sequenceChildParser: SequenceChildParser = {
     val HasSep = true
     val UnSep = false
@@ -412,7 +416,7 @@ class ScalarOrderedSequenceChild(sq: SequenceTermBase, term: Term, groupIndex: I
       if (sq.hasSeparator) {
         new ScalarOrderedSeparatedSequenceChildUnparser(
           childUnparser, srd, trd, sepUnparser, sq.separatorPosition, sq.separatorSuppressionPolicy,
-          zeroLengthDetector, term.isPotentiallyTrailing,
+          zeroLengthDetector, seqChild.isPotentiallyTrailing,
           isKnownStaticallyNotToSuppressSeparator,
           isPositional,
           isDeclaredLast)
@@ -480,11 +484,12 @@ class ScalarOrderedSequenceChild(sq: SequenceTermBase, term: Term, groupIndex: I
 }
 
 sealed abstract class RepElementSequenceChild(
-  sq: SequenceTermBase,
-  protected val e: ElementBase, groupIndex: Int)
-  extends SequenceChild(sq, e, groupIndex) {
+  sq: SequenceTermBase, seqChild: SequenceChild, groupIndex: Int)
+  extends SequenceChildPrim(sq, seqChild, groupIndex) {
   import SeparatedSequenceChildBehavior._
 
+  protected val e: ElementBase = seqChild.childTerm.asInstanceOf[ElementBase]
+  
   Assert.usage(!e.isScalar)
 
   override lazy val sequenceChildUnparser: SequenceChildUnparser =
@@ -492,7 +497,7 @@ sealed abstract class RepElementSequenceChild(
       case true => {
         new RepOrderedSeparatedSequenceChildUnparser(
           childUnparser, srd, erd, sepUnparser, sq.separatorPosition, sq.separatorSuppressionPolicy,
-          zeroLengthDetector, e.isPotentiallyTrailing,
+          zeroLengthDetector, seqChild.isPotentiallyTrailing,
           isKnownStaticallyNotToSuppressSeparator,
           isPositional,
           isDeclaredLast)
@@ -520,8 +525,8 @@ sealed abstract class RepElementSequenceChild(
   }
 }
 
-class RepOrderedExactlyNSequenceChild(sq: SequenceTermBase, e: ElementBase, groupIndex: Int, repeatCount: Long)
-  extends RepElementSequenceChild(sq, e, groupIndex) {
+class RepOrderedExactlyNSequenceChild(sq: SequenceTermBase, seqChild:SequenceChild, groupIndex: Int, repeatCount: Long)
+  extends RepElementSequenceChild(sq, seqChild, groupIndex) {
 
   lazy val sequenceChildParser: SequenceChildParser = sq.hasSeparator match {
     case true => new RepOrderedExactlyNSeparatedSequenceChildParser(
@@ -532,8 +537,8 @@ class RepOrderedExactlyNSequenceChild(sq: SequenceTermBase, e: ElementBase, grou
 
 }
 
-class RepOrderedExactlyTotalOccursCountSequenceChild(sq: SequenceTermBase, e: ElementBase, groupIndex: Int)
-  extends RepElementSequenceChild(sq, e, groupIndex) {
+class RepOrderedExactlyTotalOccursCountSequenceChild(sq: SequenceTermBase, seqChild:SequenceChild, groupIndex: Int)
+  extends RepElementSequenceChild(sq, seqChild, groupIndex) {
 
   lazy val sequenceChildParser: SequenceChildParser = sq.hasSeparator match {
     case true => new RepOrderedExactlyTotalOccursCountSeparatedSequenceChildParser(
@@ -543,8 +548,8 @@ class RepOrderedExactlyTotalOccursCountSequenceChild(sq: SequenceTermBase, e: El
   }
 }
 
-class RepOrderedWithMinMaxSequenceChild(sq: SequenceTermBase, e: ElementBase, groupIndex: Int)
-  extends RepElementSequenceChild(sq, e, groupIndex) {
+class RepOrderedWithMinMaxSequenceChild(sq: SequenceTermBase, seqChild:SequenceChild, groupIndex: Int)
+  extends RepElementSequenceChild(sq, seqChild, groupIndex) {
 
   lazy val sequenceChildParser: SequenceChildParser = sq.hasSeparator match {
     case true => new RepOrderedWithMinMaxSeparatedSequenceChildParser(

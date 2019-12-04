@@ -87,7 +87,7 @@ trait ChoiceDefMixin
 
   protected def emptyFormatFactory: DFDLFormatAnnotation = new DFDLChoice(newDFDLAnnotationXML("choice"), this)
 
-  lazy val xmlChildren = xml match {
+  override lazy val xmlChildren = xml match {
     case <choice>{ c @ _* }</choice> => c
     case <group>{ _* }</group> => {
       val ch = this match {
@@ -97,6 +97,18 @@ trait ChoiceDefMixin
       c
     }
   }
+
+  override def groupMembers = choiceMembers
+
+  /** Returns the group members that are elements or model groups. */
+  lazy val choiceMembers: Seq[ChoiceChild] = LV('choiceMembers) {
+    xmlPositionPairs.map {
+      case (n, i) =>
+        val t = TermFactory(n, this, i)
+        val mgChild = new ChoiceChild(i, t, this)
+        mgChild
+    }
+  }.value
 }
 
 abstract class ChoiceTermBase(
@@ -113,6 +125,8 @@ abstract class ChoiceTermBase(
   requiredEvaluations(branchesAreNonOptional)
   requiredEvaluations(branchesAreNotIVCElements)
   requiredEvaluations(modelGroupRuntimeData.preSerialization)
+
+  def choiceChildren: Seq[ChoiceChild]
 
   final protected lazy val optionChoiceDispatchKeyRaw = findPropertyOption("choiceDispatchKey")
   final protected lazy val choiceDispatchKeyRaw = requireProperty(optionChoiceDispatchKeyRaw)

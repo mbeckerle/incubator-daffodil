@@ -48,7 +48,7 @@ trait ChoiceGrammarMixin
         val cbis = new ChoiceBranchImpliedSequence(t)
         cbis.termContentBody
       } else {
-        t.termContentBody
+        t.modelGroupChildContentBody
       }
     }
   }

@@ -84,7 +84,6 @@ trait ElementBase
   requiredEvaluations(if (hasMaxExclusive) maxExclusive)
   requiredEvaluations(if (hasTotalDigits) totalDigits)
   requiredEvaluations(if (hasFractionDigits) fractionDigits)
-  requiredEvaluations(checkForAlignmentAmbiguity)
   requiredEvaluations(checkFloating)
 
   def name: String
@@ -1015,24 +1014,24 @@ trait ElementBase
     }
   }.value
 
-  protected final lazy val possibleFirstChildTerms: Seq[Term] =
-    termChildren
+  //  protected final lazy val possibleFirstChildTerms: Seq[Term] =
+  //    termChildren
 
-  protected final def couldBeLastElementInModelGroup: Boolean = LV('couldBeLastElementInModelGroup) {
-    val couldBeLast = this.immediatelyEnclosingGroupDef match {
-      case None => true
-      case Some(s: SequenceTermBase) if s.isOrdered => {
-        !possibleNextSiblingTerms.exists {
-          case e: ElementBase => e.isRequiredStreamingUnparserEvent
-          case mg: ModelGroup => mg.mustHaveRequiredElement
-        }
-      }
-      case _ => true
-    }
-    couldBeLast
-  }.value
+  //  protected final def couldBeLastElementInModelGroup: Boolean = LV('couldBeLastElementInModelGroup) {
+  //    val couldBeLast = this.immediatelyEnclosingGroupDef match {
+  //      case None => true
+  //      case Some(s: SequenceTermBase) if s.isOrdered => {
+  //        !possibleNextSiblingTerms.exists {
+  //          case e: ElementBase => e.isRequiredStreamingUnparserEvent
+  //          case mg: ModelGroup => mg.mustHaveRequiredElement
+  //        }
+  //      }
+  //      case _ => true
+  //    }
+  //    couldBeLast
+  //  }.value
 
-  final override lazy val nextParentElements: Seq[ElementBase] = Nil
+  // final override lazy val nextParentElements: Seq[ElementBase] = Nil
   //    enclosingTerms.flatMap { enclosingTerm =>
   //      if (couldBeLastElementInModelGroup) {
   //        enclosingTerm.possibleNextChildElementsInInfoset
@@ -1070,35 +1069,6 @@ trait ElementBase
   }
 
   private def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
-
-  /**
-   * Changed to a warning - DFDL WG decided to make this check optional, but it
-   * is still useful as a warning.
-   *
-   * Turns out that MIL STD 2045 header format needs to pad out to a byte boundary
-   * at the end of the structure. An optional, non-byte aligned field precedes
-   * the end of the structure; hence, putting a zero-length byte-aligned field
-   * at the end was crashing into this error. I couldn't think of a work-around,
-   * so changed this into a warning.
-   *
-   * The old requirement was:
-   *   To avoid ambiguity when parsing, optional elements and variable-occurrence arrays
-   *   where the minimum number of occurrences is zero cannot have alignment properties
-   *   different from the items that follow them. It is a schema definition error otherwise.
-   *
-   * Part of the required evaluations for ElementBase.
-   */
-  private lazy val checkForAlignmentAmbiguity: Unit = {
-    if (isOptional) {
-      this.laterSiblings.filterNot(m => m == this).foreach { that =>
-        val isSame = this.alignmentValueInBits == that.alignmentValueInBits
-        if (!isSame) {
-          this.SDW(WarnID.AlignmentNotSame, "%s is an optional element or a variable-occurrence array and its alignment (%s) is not the same as %s's alignment (%s).",
-            this.toString, this.alignmentValueInBits, that.toString, that.alignmentValueInBits)
-        }
-      }
-    }
-  }
 
   private lazy val optionFloating = findPropertyOption("floating")
 

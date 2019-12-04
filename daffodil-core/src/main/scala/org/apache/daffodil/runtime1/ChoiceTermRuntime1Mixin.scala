@@ -31,6 +31,7 @@ import org.apache.daffodil.api.WarnID
 import org.apache.daffodil.processors.ChoiceDispatchKeyEv
 import org.apache.daffodil.dsom.ExpressionCompilers
 import org.apache.daffodil.dpath.NodeInfo
+import org.apache.daffodil.dsom.ChoiceChild
 
 trait ChoiceTermRuntime1Mixin { self: ChoiceTermBase =>
 
@@ -48,12 +49,19 @@ trait ChoiceTermRuntime1Mixin { self: ChoiceTermBase =>
 
   final def choiceBranchMap: Map[ChoiceBranchEvent, RuntimeData] = LV('choiceBranchMap) {
 
-    val eventTuples = groupMembers.flatMap {
-      case e: ElementBase => Seq((ChoiceBranchStartEvent(e.namedQName), e))
-      case mg: ModelGroup => {
-        val idEvents = mg.identifyingEventsForChoiceBranch
-        Assert.invariant(!idEvents.isEmpty)
-        idEvents.map { (_, mg) }
+    val eventTuples = groupMembers.flatMap { gm =>
+      gm.childTerm match {
+        case e: ElementBase => Seq((ChoiceBranchStartEvent(e.namedQName), e))
+        case mg: ModelGroup => {
+          gm match {
+            case cc: ChoiceChild => {
+              val idEvents = cc.identifyingEventsForChoiceBranch
+              Assert.invariant(!idEvents.isEmpty)
+              idEvents.map { (_, cc) }
+            }
+            case x => Assert.invariantFailed("Not a ChoiceChild: " + x)
+          }
+        }
       }
     }
 

@@ -103,12 +103,16 @@ object ModelGroupFactory {
 object TermFactory {
 
   /**
-   * Returns a Term.
+   * Returns a ModelGroupChild, which contains a Term
    *
    * Non Term/Model Group elements are/should be taken care of by the caller.
    *
    */
-  def apply(child: Node, lexicalParent: GroupDefLike, position: Int, nodesAlreadyTrying: Set[Node] = Set()) = {
+  def apply(
+    child: Node,
+    lexicalParent: GroupDefLike,
+    position: Int,
+    nodesAlreadyTrying: Set[Node] = Set()): Term = {
     val childTerm: Term = child match {
       case <element>{ _* }</element> => {
         val refProp = child.attribute("ref").map { _.text }
@@ -156,12 +160,13 @@ abstract class ModelGroup(index: Int)
   final lazy val hasStaticallyRequiredOccurrencesInDataRepresentation = {
     hasFraming ||
       // or if all arms of the choice have statically required instances.
-      groupMembers.forall { _.hasStaticallyRequiredOccurrencesInDataRepresentation }
+      groupMembers.forall { _.childTerm.hasStaticallyRequiredOccurrencesInDataRepresentation }
   }
 
-  def groupMembers: Seq[Term]
+  def groupMembers: Seq[ModelGroupChild]
+  final lazy val groupMemberTerms: Seq[Term] = groupMembers.map { _.childTerm }
 
-  final lazy val representedMembers = groupMembers.filter { _.isRepresented }
+  final lazy val representedMembers = groupMembers.filter { _.childTerm.isRepresented }
 
   def xmlChildren: Seq[Node]
 
@@ -199,11 +204,13 @@ abstract class ModelGroup(index: Int)
 
   protected final lazy val prettyBaseName = xml.label
 
-  final lazy val sequenceChildren = groupMembers.collect { case s: SequenceTermBase => s }
-  final lazy val choiceChildren = groupMembers.collect { case s: ChoiceTermBase => s }
-  final lazy val groupRefChildren = groupMembers.collect { case s: GroupRef => s }
+  final lazy val sequenceChildren = groupMembers.collect { case s: SequenceChild => s }
+  final lazy val choiceChildren = groupMembers.collect { case s: ChoiceChild => s }
+  //  final lazy val groupRefChildren = groupMembers.collect {
+  //    case s: ModelGroupChild if (s.childTerm.isInstanceOf[GroupRef]) => s
+  //    }
 
-  final override lazy val termChildren = groupMembers
+  final override lazy val termChildren = groupMembers.map { _.childTerm }
 
   /**
    * Returns tuple, where the first is children that could be last, and the
@@ -262,75 +269,34 @@ abstract class ModelGroup(index: Int)
   //      listOfTerms
   //    }.value
 
-  final def identifyingEventsForChoiceBranch: Seq[ChoiceBranchEvent] = LV('identifyingEventsForChoiceBranch) {
-    Assert.usage(
-      immediatelyEnclosingGroupDef.isDefined &&
-        immediatelyEnclosingGroupDef.get.isInstanceOf[ChoiceTermBase],
-      "identifyingElementsForChoiceBranch must only be called on children of choices")
-
-    ??? // Copy pattern from calculations for element resolver.
-
-    //    val startEvents = (childrenIdentifiers ++ parentNextIdentifiers).map { e =>
-    //      ChoiceBranchStartEvent(e.namedQName)
-
-    // Look at the enclosing terms, and find either the first model group that
-    // has required next sibling elements, or find an element. If we find an
-    // element without finding such a model group, then the end event of that
-    // element could potentially be an identifying event for this model group
-    // Otherwise, only start events (either children start events next start
-    // events of enclosing model groups) could identify this branch, and no end
-    // event could identify this branch. Also note that if this model group
-    // must have a required element (i.e. it must contribute to the infost)
-    // then none of this matters, and it will not have an identifying end
-    // event, since one of the child elements must appear in the infoset.
-    //    val endEvent =
-    //      if (mustHaveRequiredElement) {
-    //        Nil
-    //      } else {
-    //        var ec = enclosingTerm.get
-    //        while (!ec.isInstanceOf[ElementBase] &&
-    //          !ec.asInstanceOf[ModelGroup].hasRequiredNextSiblingElement) {
-    //          ec = ec.enclosingTerm.get
-    //        }
-    //        val ee = ec match {
-    //          case e: ElementBase => Seq(ChoiceBranchEndEvent(e.namedQName))
-    //          case mg: ModelGroup => Nil
-    //        }
-    //        ee
-    //      }
-    //
-    //    val idEvents = startEvents ++ endEvent
-    //    idEvents
-  }.value
-
   /*
    * Returns list of Terms that could contain the first child element in the infoset
    */
-  protected final lazy val possibleFirstChildTerms: Seq[Term] = LV('possibleFirstChildTerms) {
-    val firstTerms = this match {
-      case c: ChoiceTermBase => groupMembers
-      case s: SequenceTermBase if !s.isOrdered => groupMembers
-      case s: SequenceTermBase => {
-        groupMembers.headOption match {
-          case None => Nil
-          case Some(e: ElementBase) if e.canBeAbsentFromUnparseInfoset => {
-            // this case covers optional elements, arrrays with minOccurs = 0,
-            // and elements with outputValueCalc. In each of these cases, the
-            // first child could be first, but so could any siblings that
-            // follow it
-            Seq(e) ++ e.possibleNextSiblingTerms
-          }
-          case Some(s: SequenceTermBase) if s.isHiddenGroupRef => s.possibleNextSiblingTerms
-          case Some(mg: ModelGroup) if !mg.mustHaveRequiredElement => Seq(mg) ++ mg.possibleNextSiblingTerms
-          case Some(e: ElementBase) => Seq(e)
-          case Some(mg: ModelGroup) => Seq(mg)
-        }
-      }
-    }
-    firstTerms
-  }.value
+  //  protected final lazy val possibleFirstChildTerms: Seq[Term] = LV('possibleFirstChildTerms) {
+  //    val firstTerms = this match {
+  //      case c: ChoiceTermBase => groupMembers
+  //      case s: SequenceTermBase if !s.isOrdered => groupMembers
+  //      case s: SequenceTermBase => {
+  //        groupMembers.headOption match {
+  //          case None => Nil
+  //          case Some(e: ElementBase) if e.canBeAbsentFromUnparseInfoset => {
+  //            // this case covers optional elements, arrrays with minOccurs = 0,
+  //            // and elements with outputValueCalc. In each of these cases, the
+  //            // first child could be first, but so could any siblings that
+  //            // follow it
+  //            Seq(e) ++ e.possibleNextSiblingTerms
+  //          }
+  //          case Some(s: SequenceTermBase) if s.isHiddenGroupRef => s.possibleNextSiblingTerms
+  //          case Some(mg: ModelGroup) if !mg.mustHaveRequiredElement => Seq(mg) ++ mg.possibleNextSiblingTerms
+  //          case Some(e: ElementBase) => Seq(e)
+  //          case Some(mg: ModelGroup) => Seq(mg)
+  //        }
+  //      }
+  //    }
+  //    firstTerms
+  //  }.value
 
-  final override lazy val nextParentElements: Seq[ElementBase] = Nil
+  // final override lazy val nextParentElements: Seq[ElementBase] = Nil
   // {
   //    Assert.invariant(enclosingTerm.isDefined)
   //    val et = enclosingTerm.get
@@ -346,8 +312,8 @@ abstract class ModelGroup(index: Int)
   //    }
   //  }
 
-  /** Always false as model groups can't be elements.*/
-  protected final def couldBeLastElementInModelGroup: Boolean = false
+  // /** Always false as model groups can't be elements.*/
+  // protected final def couldBeLastElementInModelGroup: Boolean = false
 
   /*
    * Determines if any of the of the terms that could be next have or are
@@ -397,9 +363,9 @@ abstract class ModelGroup(index: Int)
 
   lazy val initiatedContentCheck: Unit = {
     if (initiatedContent eq YesNo.Yes) {
-      groupMembers.foreach { term =>
-        term.schemaDefinitionUnless(
-          term.hasInitiator,
+      groupMembers.foreach { mgc =>
+        mgc.schemaDefinitionUnless(
+          mgc.childTerm.hasInitiator,
           "Enclosing group has initiatedContent='yes', but initiator is not defined.")
       }
     }

@@ -28,7 +28,7 @@ import org.apache.daffodil.util.Misc
 /**
  * Base class for all kinds of sequences.
  */
-abstract class SequenceCombinator(sq: SequenceTermBase, sequenceChildren: Seq[SequenceChild])
+abstract class SequenceCombinator(sq: SequenceTermBase, sequenceChildren: Seq[SequenceChildPrim])
   extends Terminal(sq, sequenceChildren.length > 0) {
 
   /**
@@ -42,7 +42,7 @@ abstract class SequenceCombinator(sq: SequenceTermBase, sequenceChildren: Seq[Se
       "</" + Misc.getNameFromClass(this) + ">"
 }
 
-class OrderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceChild])
+class OrderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceChildPrim])
   extends SequenceCombinator(sq, sequenceChildrenArg) {
 
   private lazy val sepGram = sq.sequenceSeparator
@@ -79,7 +79,7 @@ class OrderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceChi
   }
 }
 
-class UnorderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceChild], alternatives: Seq[Gram])
+class UnorderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceChildPrim], alternatives: Seq[Gram])
   extends SequenceCombinator(sq, sequenceChildrenArg) {
 
   import SeparatedSequenceChildBehavior._

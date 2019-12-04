@@ -55,6 +55,8 @@ abstract class SequenceTermBase(
   extends ModelGroup(position)
   with SequenceGrammarMixin {
 
+  def sequenceMembers: Seq[SequenceChild]
+
   def separatorSuppressionPolicy: SeparatorSuppressionPolicy
 
   def sequenceKind: SequenceKind
@@ -162,7 +164,7 @@ abstract class SequenceGroupTermBase(
 
   private lazy val checkMembersHaveValidOccursCountKind: Unit = {
     val validChildren: Seq[ElementBase] =
-      groupMembers.filter { m => m.isInstanceOf[LocalElementDecl] || m.isInstanceOf[ElementRef]
+      groupMemberTerms.filter { m => m.isInstanceOf[LocalElementDecl] || m.isInstanceOf[ElementRef]
       }.map(_.asInstanceOf[ElementBase])
 
     val invalidChildren = validChildren.filter(e => {
@@ -180,7 +182,7 @@ abstract class SequenceGroupTermBase(
   }
 
   private lazy val checkMembersAreAllElementOrElementRef: Unit = {
-    val invalidChildren = groupMembers.filterNot(child =>
+    val invalidChildren = groupMemberTerms.filterNot(child =>
       child.isInstanceOf[LocalElementDecl] || child.isInstanceOf[ElementRef])
     val hasInvalidChildren = invalidChildren.length > 0
     if (hasInvalidChildren)
@@ -277,7 +279,7 @@ trait SequenceDefMixin
 
   final lazy val <sequence>{ apparentXMLChildren @ _* }</sequence> = (xml \\ "sequence")(0)
 
-  def xmlChildren = apparentXMLChildren
+  override def xmlChildren = apparentXMLChildren
 
   // The dfdl:hiddenGroupRef property cannot be scoped, nor defaulted. It's really a special
   // attribute, not a format property in the usual sense.
@@ -287,6 +289,17 @@ trait SequenceDefMixin
     findPropertyOption("hiddenGroupRef")
   }.value
 
+  override def groupMembers = sequenceMembers
+
+  /** Returns the group members that are elements or model groups. */
+  lazy val sequenceMembers: Seq[SequenceChild] = LV('sequenceMembers) {
+    xmlPositionPairs.map {
+      case (n, i) =>
+        val t = TermFactory(n, this, i)
+        val mgChild = new SequenceChild(i, t, this)
+        mgChild
+    }
+  }.value
 }
 
 /**
@@ -329,12 +342,12 @@ final class Sequence(xmlArg: Node, lexicalParent: SchemaComponent, position: Int
  * sequence machinery. In effect this is specifying the properties needed to ensure it is
  * handled as a degenerate sequence having only one element decl within it.
  */
-final class ChoiceBranchImpliedSequence(rawGM: Term)
+final class ChoiceBranchImpliedSequence(rawGM: ModelGroupChild)
   extends SequenceTermBase(rawGM.xml, rawGM.optLexicalParent, rawGM.position)
   with SequenceDefMixin
   with ChoiceBranchImpliedSequenceRuntime1Mixin {
 
-  override final lazy val groupMembers: Seq[Term] = Seq(rawGM)
+  override final lazy val groupMembers: Seq[ModelGroupChild] = Seq(rawGM)
 
   override def separatorSuppressionPolicy: SeparatorSuppressionPolicy = SeparatorSuppressionPolicy.TrailingEmptyStrict
 
@@ -360,7 +373,7 @@ final class ChoiceBranchImpliedSequence(rawGM: Term)
 
   override def checkHiddenSequenceIsDefaultableOrOVC: Unit = ()
 
-  override def findPropertyOption(pname: String): PropertyLookupResult = rawGM.findPropertyOption(pname)
+  override def findPropertyOption(pname: String): PropertyLookupResult = rawGM.childTerm.findPropertyOption(pname)
 
   /**
    * Implied sequence doesn't exist textually, so can't have properties on it.

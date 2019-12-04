@@ -55,18 +55,14 @@ trait GroupDefLike
 
   def xmlChildren: Seq[Node]
 
+  def groupMembers: Seq[ModelGroupChild]
+
   private lazy val goodXmlChildren = LV('goodXMLChildren) { xmlChildren.flatMap { removeNonInteresting(_) } }.value
 
-  /** Returns the group members that are elements or model groups. */
-  lazy val groupMembers: Seq[Term] = LV('groupMembers) {
+  protected final lazy val xmlPositionPairs = {
     val positions = List.range(1, goodXmlChildren.length + 1) // range is exclusive on 2nd arg. So +1.
-    val pairs = goodXmlChildren zip positions
-    pairs.map {
-      case (n, i) =>
-        val t = TermFactory(n, this, i)
-        t
-    }
-  }.value
+    goodXmlChildren zip positions
+  }
 
   /**
    * XML is full of uninteresting text nodes. We just want the element children, not all children.

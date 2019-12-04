@@ -21,8 +21,6 @@ import org.apache.daffodil.schema.annotation.props.SeparatorSuppressionPolicy
 import org.apache.daffodil.dsom._
 import org.apache.daffodil.exceptions.Assert
 import org.apache.daffodil.grammar.primitives._
-import org.apache.daffodil.grammar.primitives.OrderedSequence
-import org.apache.daffodil.grammar.primitives.UnorderedSequence
 import org.apache.daffodil.runtime1.SequenceTermRuntime1Mixin
 
 trait SequenceGrammarMixin
@@ -45,14 +43,14 @@ trait SequenceGrammarMixin
   private lazy val layerContent = {
     schemaDefinitionUnless(groupMembers.length == 1, "Layered sequence can have only 1 child term. %s were found: %s", groupMembers.length,
       groupMembers.mkString(", "))
-    val term = groupMembers(0)
-    schemaDefinitionWhen(term.isArray, "Layered sequence body cannot be an array.")
-    LayeredSequence(this, new ScalarOrderedSequenceChild(this, term, 1)) // We use 1-based indexing for children.
+    val seqChild = sequenceMembers(0)
+    schemaDefinitionWhen(seqChild.isArray, "Layered sequence body cannot be an array.")
+    LayeredSequence(this, new ScalarOrderedSequenceChild(this, seqChild, 1)) // We use 1-based indexing for children.
   }
 
   private lazy val seqChildren = LV('seqChildren) {
     (groupMembers zip Stream.from(1)).map {
-      case (gm, i) =>
+      case (gm: SequenceChild, i) =>
         sequenceChild(gm, i)
     }
   }.value
@@ -64,7 +62,7 @@ trait SequenceGrammarMixin
 
   private lazy val unorderedSequence = {
     schemaDefinitionUnless(groupMembers.length > 0, "Unordered sequences must not be empty")
-    val alternatives = groupMembers.map { _.termContentBody }
+    val alternatives = groupMembers.map { _.modelGroupChildContentBody }
     val res = new UnorderedSequence(this, seqChildren, alternatives)
     res
   }
@@ -104,16 +102,17 @@ trait SequenceGrammarMixin
   }
 
   /**
-   * Produces the right kind of SequenceChild object for this particular child
+   * Produces the right kind of SequenceChildPrim object for this particular child
    * for the role it must play within this sequence's behavior.
    *
-   * A SequenceChild object is effectively generator for part of the Sequence's parse/unparse
-   * algorithm. For arrays these SequenceChild objects enable processing exactly one array instance at
+   * A SequenceChildPrim object is effectively generator for part of the Sequence's parse/unparse
+   * algorithm. For arrays these SequenceChildPrim objects enable processing exactly one array instance at
    * a time, orchestrated by the surrounding sequence's processor.
    */
-  private def sequenceChild(child: Term, groupIndex: Int): SequenceChild = {
+  private def sequenceChild(seqChild: SequenceChild, groupIndex: Int): SequenceChildPrim = {
     import columnConstants._
 
+    val child = seqChild.childTerm
     val (max, min, ock) = child match {
       case e: EB =>
         // don't require OCK unnecessarily
@@ -128,28 +127,28 @@ trait SequenceGrammarMixin
         separatorSuppressionPolicy
 
     val res = (child, sequenceKind, ssp, ock, min, max) match {
-      case (e: EB, Ordered__, ___________, __________, ONE, ONE) => new ScalarOrderedSequenceChild(this, e, groupIndex)
+      case (e: EB, Ordered__, ___________, __________, ONE, ONE) => new ScalarOrderedSequenceChild(this, seqChild, groupIndex)
       case (e: EB, _________, ___________, StopValue_, ___, __2) => e.subsetError("dfdl:occursCountKind 'stopValue' is not supported.")
-      case (e: EB, Ordered__, ___________, Parsed____, ___, __2) => new RepOrderedWithMinMaxSequenceChild(this, e, groupIndex)
+      case (e: EB, Ordered__, ___________, Parsed____, ___, __2) => new RepOrderedWithMinMaxSequenceChild(this, seqChild, groupIndex)
       case (e: EB, Ordered__, ___________, Fixed_____, ___, UNB) => e.SDE("occursCountKind='fixed' not allowed with unbounded maxOccurs")
-      case (e: EB, Ordered__, Never______, Implicit__, ___, UNB) if !e.isLastDeclaredRepresentedInSequence => unboundedPositionalError(e)
-      case (e: EB, Ordered__, Trailing___, Implicit__, ___, UNB) if !e.isLastDeclaredRepresentedInSequence => unboundedPositionalError(e)
-      case (e: EB, Ordered__, TrailingStr, Implicit__, ___, UNB) if !e.isLastDeclaredRepresentedInSequence => unboundedPositionalError(e)
-      case (e: EB, Ordered__, ___________, Fixed_____, ___, `min`) => new RepOrderedExactlyNSequenceChild(this, e, groupIndex, min)
+      case (e: EB, Ordered__, Never______, Implicit__, ___, UNB) if !seqChild.isLastDeclaredRepresentedInSequence => unboundedPositionalError(e)
+      case (e: EB, Ordered__, Trailing___, Implicit__, ___, UNB) if !seqChild.isLastDeclaredRepresentedInSequence => unboundedPositionalError(e)
+      case (e: EB, Ordered__, TrailingStr, Implicit__, ___, UNB) if !seqChild.isLastDeclaredRepresentedInSequence => unboundedPositionalError(e)
+      case (e: EB, Ordered__, ___________, Fixed_____, ___, `min`) => new RepOrderedExactlyNSequenceChild(this, seqChild, groupIndex, min)
       case (e: EB, Ordered__, ___________, Fixed_____, ___, max) => { Assert.invariant(min != max); e.SDE("occursCountKind='fixed' requires minOccurs and maxOccurs to be equal (%d != %d)", min, max) }
-      case (e: EB, Ordered__, ___________, Expression, ___, __2) => new RepOrderedExactlyTotalOccursCountSequenceChild(this, e, groupIndex)
+      case (e: EB, Ordered__, ___________, Expression, ___, __2) => new RepOrderedExactlyTotalOccursCountSequenceChild(this, seqChild, groupIndex)
       case (e: EB, Ordered__, Never______, Implicit__, ___, UNB) => e.SDE("separatorSuppressionPolicy='never' with occursCountKind='implicit' requires bounded maxOccurs.")
-      case (e: EB, Ordered__, Never______, Implicit__, ___, max) => new RepOrderedExactlyNSequenceChild(this, e, groupIndex, max)
+      case (e: EB, Ordered__, Never______, Implicit__, ___, max) => new RepOrderedExactlyNSequenceChild(this, seqChild, groupIndex, max)
       case (e: EB, Ordered__, Never______, ock /****/ , ___, __2) if (ock ne null) => e.SDE("separatorSuppressionPolicy='never' not allowed in combination with occursCountKind='" + ock + "'.")
-      case (e: EB, Ordered__, Trailing___, Implicit__, ___, max) => new RepOrderedWithMinMaxSequenceChild(this, e, groupIndex)
-      case (e: EB, Ordered__, TrailingStr, Implicit__, ___, UNB) => new RepOrderedWithMinMaxSequenceChild(this, e, groupIndex)
-      case (e: EB, Ordered__, TrailingStr, Implicit__, ___, max) => new RepOrderedWithMinMaxSequenceChild(this, e, groupIndex)
-      case (e: EB, Ordered__, Always_____, Implicit__, ___, max) => new RepOrderedWithMinMaxSequenceChild(this, e, groupIndex)
-      case (e: EB, Unordered, ___________, __________, ___, ONE) => new ScalarOrderedSequenceChild(this, e, groupIndex)
-      case (e: EB, Unordered, ___________, Parsed____, ___, max) => new RepOrderedWithMinMaxSequenceChild(this, e, groupIndex)
+      case (e: EB, Ordered__, Trailing___, Implicit__, ___, max) => new RepOrderedWithMinMaxSequenceChild(this, seqChild, groupIndex)
+      case (e: EB, Ordered__, TrailingStr, Implicit__, ___, UNB) => new RepOrderedWithMinMaxSequenceChild(this, seqChild, groupIndex)
+      case (e: EB, Ordered__, TrailingStr, Implicit__, ___, max) => new RepOrderedWithMinMaxSequenceChild(this, seqChild, groupIndex)
+      case (e: EB, Ordered__, Always_____, Implicit__, ___, max) => new RepOrderedWithMinMaxSequenceChild(this, seqChild, groupIndex)
+      case (e: EB, Unordered, ___________, __________, ___, ONE) => new ScalarOrderedSequenceChild(this, seqChild, groupIndex)
+      case (e: EB, Unordered, ___________, Parsed____, ___, max) => new RepOrderedWithMinMaxSequenceChild(this, seqChild, groupIndex)
       case (e: EB, Unordered, ___________, __________, ___, __2) => e.SDE("When sequenceKind='unordered', occursCountKind must be 'parsed'")
       case (m: MG, Unordered, ___________, __________, ___, __2) => child.SDE("All memebers of an unordered sequence must be Element or ElemenntRef")
-      case (m: MG, _________, ___________, __________, ___, __2) => new ScalarOrderedSequenceChild(this, m, groupIndex)
+      case (m: MG, _________, ___________, __________, ___, __2) => new ScalarOrderedSequenceChild(this, seqChild, groupIndex)
       case (_____, _________, policy /**/ , ock /**/ , ___, __2) => child.SDE("separatorSuppressionPolicy='" + policy + "' not allowed with occursCountKind='" + ock + "'.")
     }
     res

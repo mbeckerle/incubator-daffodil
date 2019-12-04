@@ -19,7 +19,6 @@ package org.apache.daffodil.grammar
 import org.apache.daffodil.dsom.DFDLNewVariableInstance
 import org.apache.daffodil.dsom.Term
 import org.apache.daffodil.grammar.primitives._
-import org.apache.daffodil.grammar.primitives.MandatoryTextAlignment
 import org.apache.daffodil.runtime1.TermRuntime1Mixin
 
 /////////////////////////////////////////////////////////////////
@@ -42,7 +41,7 @@ trait TermGrammarMixin
   private lazy val newVarStarts = newVars.map { _.gram(self) }
   private lazy val newVarEnds = newVars.map { _.endGram(self) }
 
-  protected lazy val hasEncoding = optionEncodingRaw.isDefined
+  final lazy val hasEncoding = optionEncodingRaw.isDefined
 
   // TODO: replace dfdlScopeBegin and dfdlScopeEnd with a single Combinator.
   protected final lazy val dfdlScopeBegin = prod("dfdlScopeBegin", newVarStarts.length > 0) {
@@ -53,47 +52,20 @@ trait TermGrammarMixin
     newVarEnds.fold(mt) { _ ~ _ }
   }
 
-//  /**
-//   * public for unit testing use.
-//   */
-//  final lazy val Some(es) = {
-//    //
-//    // Not sure how to assert this,
-//    // but an invariant we're assuming here is that we are NOT the
-//    // root element, which has no enclosing sequence at all.
-//    //
-//    // The grammar rules shouldn't be asking for separated stuff
-//    // in that situation, so we shouldn't be here.
-//    //
-//    subset(nearestEnclosingSequence != None, "(Current restriction) There must be an enclosing sequence.")
-//    nearestEnclosingSequence
-//  }
-
-  /**
-   * Mandatory text alignment or mta
-   *
-   * mta can only apply to things with encodings. No encoding, no MTA.
-   *
-   * In addition, it has to be textual data. Just because there's an encoding
-   * in the property environment shouldn't get you an MTA region. It has
-   * to be textual.
-   */
-  protected final lazy val mtaBase = prod("mandatoryTextAlignment", hasEncoding) {
-    MandatoryTextAlignment(this, knownEncodingAlignmentInBits, false)
-  }
-
-  /**
-   * Mandatory text alignment for delimiters
-   */
-  protected final lazy val delimMTA = prod(
-    "delimMTA",
-    {
-      hasDelimiters
-    }) {
-      // This is different from mtaBase because it passes in 'true' for the
-      // last parameter to signify that it is MTA for a delimiter. mtaBase
-      // passes in 'false'
-      MandatoryTextAlignment(this, knownEncodingAlignmentInBits, true)
-    }
+  //  /**
+  //   * public for unit testing use.
+  //   */
+  //  final lazy val Some(es) = {
+  //    //
+  //    // Not sure how to assert this,
+  //    // but an invariant we're assuming here is that we are NOT the
+  //    // root element, which has no enclosing sequence at all.
+  //    //
+  //    // The grammar rules shouldn't be asking for separated stuff
+  //    // in that situation, so we shouldn't be here.
+  //    //
+  //    subset(nearestEnclosingSequence != None, "(Current restriction) There must be an enclosing sequence.")
+  //    nearestEnclosingSequence
+  //  }
 
 }

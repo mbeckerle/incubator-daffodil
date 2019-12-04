@@ -24,6 +24,15 @@ import scala.xml.UnprefixedAttribute
 import org.apache.daffodil.grammar.RootGrammarMixin
 import org.apache.daffodil.xml.NamedQName
 import org.apache.daffodil.xml.XMLUtils
+import org.apache.daffodil.dsom.GlobalComplexTypeDef
+import org.apache.daffodil.dsom.SimpleTypeDefBase
+import org.apache.daffodil.dsom.GlobalSimpleTypeDef
+import org.apache.daffodil.dsom.ComplexTypeBase
+import org.apache.daffodil.exceptions.Assert
+import org.apache.daffodil.dsom.GlobalSimpleTypeDef
+import org.apache.daffodil.dsom.GlobalComplexTypeDef
+import org.apache.daffodil.dsom.ComplexTypeBase
+import org.apache.daffodil.dsom.SimpleTypeDefBase
 
 /**
  * Root is a special kind of ElementRef that has no enclosing group.
@@ -92,6 +101,7 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
           allSchemaComponents(gm, Some(gm.position))
         }
         case gstd: GlobalSimpleTypeDef => gstd.bases.foreach { allSchemaComponents(_, None) }
+        case mgc: ModelGroupChild => allSchemaComponents(mgc.childTerm, Some(mgc.position))
       }
     }
   }
@@ -115,15 +125,20 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
       case ed: GlobalElementDecl => {
         ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd, 1) }.toSeq
       }
-      case er: AbstractElementRef => {
-        val ed = er.referencedElement
-        RefSpec(er, ed, er.position) +:
-          ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd, 1) }.toSeq
-      }
       case ed: LocalElementDecl => {
         ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd, 1) }.toSeq
       }
-      case gr: GroupRef => Seq(RefSpec(gr, gr.groupDef, gr.asModelGroup.position))
+      case mgc: ModelGroupChild => {
+        mgc.childTerm match {
+          case er: AbstractElementRef => {
+        val ed = er.referencedElement
+        RefSpec(mgc, ed, mgc.position) +:
+          ed.optNamedComplexType.map { gctd => RefSpec(ed, gctd, 1) }.toSeq
+      }
+      case gr: GroupRef => Seq(RefSpec(mgc, gr.groupDef, mgc.position))
+      case _ => Nil
+        }
+      }
     }.flatten
   }
 
@@ -151,6 +166,12 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
 
 case class RefSpec(from: SchemaComponent, to: GlobalComponent, index: Int) {
 
+  from match {
+    case mgc: ModelGroupChild => // ok
+    case ed: ElementDeclMixin => // ok
+    case _ => Assert.invariantFailed("Not accepted type for RefSpec from: " + from)
+  }
+  
   override def toString = "RefSpec(from=" +
     from.shortSchemaComponentDesignator + ", to=" +
     to.shortSchemaComponentDesignator + ", " + index +
