@@ -79,7 +79,7 @@ class OrderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceChi
   }
 }
 
-class UnorderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceChild])
+class UnorderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceChild], alternatives: Seq[Gram])
   extends SequenceCombinator(sq, sequenceChildrenArg) {
 
   import SeparatedSequenceChildBehavior._
@@ -90,7 +90,9 @@ class UnorderedSequence(sq: SequenceTermBase, sequenceChildrenArg: Seq[SequenceC
 
   private lazy val sequenceChildren = sequenceChildrenArg.toVector
 
-  private lazy val parsers = sequenceChildren.map(_.parser)
+
+  private lazy val parsers = alternatives.map(_.parser)
+
 
   override lazy val parser: Parser = {
 
