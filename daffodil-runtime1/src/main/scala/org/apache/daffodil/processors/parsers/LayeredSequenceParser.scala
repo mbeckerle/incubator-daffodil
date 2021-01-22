@@ -41,9 +41,6 @@ class LayeredSequenceParser(
 
     val newDIS = layerTransformer.addLayer(savedDIS, state)
 
-    //
-    // FIXME: Cast should not be needed
-    //
     state.dataInputStream = newDIS
 
     super.parse(state)

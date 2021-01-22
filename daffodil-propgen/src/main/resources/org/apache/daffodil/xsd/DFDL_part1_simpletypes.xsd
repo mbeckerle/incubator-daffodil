@@ -819,6 +819,13 @@
            </xsd:documentation>
          </xsd:annotation>
        </xsd:enumeration>
+      <xsd:enumeration value="zip">
+        <xsd:annotation>
+          <xsd:documentation>
+            Zip archive format as supported by java.util.zip library.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
     </xsd:restriction>
   </xsd:simpleType>
   

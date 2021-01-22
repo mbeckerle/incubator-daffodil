@@ -99,6 +99,7 @@ object LayerTransformerFactory {
    */
   register(Base64MIMETransformerFactory)
   register(GZIPTransformerFactory)
+  register(ZIPTransformerFactory)
   register(IMFLineFoldedTransformerFactory)
   register(ICalendarLineFoldedTransformerFactory)
   register(AISPayloadArmoringTransformerFactory)
@@ -202,6 +203,14 @@ abstract class LayerTransformer()
   //  }
 }
 
+/**
+ * Converts a Daffodil InputSourceDataInputStream back into a regular java InputStream.
+ * As bytes are pulled from the java InputStream, the corresponding bits are pulled from the
+ * underlying InputSourceDataInputStream.
+ *
+ * @param s - the InputSourceDataInputStream being converted
+ * @param finfo - FormatInfo used for byte order, bit order.
+ */
 class JavaIOInputStream(s: InputSourceDataInputStream, finfo: FormatInfo)
   extends java.io.InputStream {
 
@@ -238,6 +247,15 @@ class JavaIOInputStream(s: InputSourceDataInputStream, finfo: FormatInfo)
   override def markSupported() = true
 }
 
+
+/**
+ * Converts a Daffodil DataOutputStream back into a regular java OutputStream.
+ * As bytes are written to the java OutputStream the corresponding bits are written to the
+ * underlying DataOutputStream.
+ *
+ * @param s - the DataOutputStream being converted
+ * @param finfo - FormatInfo used for byte order, bit order.
+ */
 class JavaIOOutputStream(dos: DataOutputStream, finfo: FormatInfo)
   extends java.io.OutputStream {
 

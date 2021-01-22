@@ -28,6 +28,7 @@ object Dependencies {
     "xerces" % "xercesImpl" % "2.12.0",
     "xml-resolver" % "xml-resolver" % "1.2",
     "commons-io" % "commons-io" % "2.8.0",
+    "org.apache.commons" % "commons-compress" % "1.20",
     "jline" % "jline" % "2.14.6",
     "com.typesafe" % "config" % "1.4.0"
   )
