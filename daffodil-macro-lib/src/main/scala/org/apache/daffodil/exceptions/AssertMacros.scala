@@ -67,7 +67,7 @@ object AssertMacros {
     """
   }
 
-  def notYetImplementedMacro0(c: Context)(): c.Tree = {
+  def notYetImplementedMacro0(c: Context): c.Tree = {
     import c.universe._
 
     q"""
