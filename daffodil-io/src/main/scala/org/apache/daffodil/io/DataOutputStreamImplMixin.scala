@@ -23,12 +23,13 @@ import org.apache.daffodil.util.Maybe.Nope
 import org.apache.daffodil.schema.annotation.props.gen.ByteOrder
 import org.apache.daffodil.schema.annotation.props.gen.BitOrder
 import passera.unsigned.ULong
+
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import java.nio.ByteBuffer
-import java.math.{BigInteger => JBigInt}
 import org.apache.daffodil.exceptions.Assert
+
 import java.nio.charset.CoderResult
 import java.nio.channels.Channels
 import java.io.ByteArrayOutputStream
@@ -38,6 +39,7 @@ import org.apache.daffodil.equality._
 import org.apache.daffodil.util.Bits
 import org.apache.daffodil.util.LogLevel
 import org.apache.daffodil.processors.charset.BitsCharsetNonByteSizeEncoder
+
 import java.math.{BigInteger => JBigInt}
 
 
@@ -1078,7 +1080,7 @@ trait DataOutputStreamImplMixin extends DataStreamCommonState
     setMaybeRelBitLimit0b(savedBitLimit0b, true)
   }
 
-  final override def validateFinalStreamState: Unit = {
+  final override def validateFinalStreamState(): Unit = {
     // nothing to validate
   }
 

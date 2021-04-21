@@ -308,7 +308,7 @@ object OOLAG extends Logging {
      * Unconditionally, evaluate the LV arg in order to insure all checks for this
      * object are performed.
      */
-    private def requiredEvaluationsAlways(lv: OOLAGValueBase) : Unit = {
+    private def requiredEvaluationsAlways(lv: OOLAGValueBase) (): Unit = {
       val accumPoint =
         if (this.hasOOLAGRootSetup)
           oolagRoot
@@ -364,7 +364,7 @@ object OOLAG extends Logging {
      * Saves the arg LV, and insures it is evaluated later only if
      * setRequiredEvaluationActive() is called for this object.
      */
-    private def requiredEvaluationsIfActivated(lv: OOLAGValueBase) : Unit = {
+    private def requiredEvaluationsIfActivated(lv: OOLAGValueBase) (): Unit = {
       if (requiredEvalStatus eq Active)
         if (hasOOLAGRootSetup)
           oolagRoot.requiredEvalFunctions +:= lv // active. Rooted. Accumulate centrally.
@@ -383,7 +383,7 @@ object OOLAG extends Logging {
      * expression/LV, and if so, all the conditional evaluations will be captured and
      * evaluated as part of the ongoing evaluation of requiredEvaluations expressions.
      */
-    final def setRequiredEvaluationsActive() : Unit = setRequiredEvaluationsActiveOnceOnly
+    final def setRequiredEvaluationsActive() (): Unit = setRequiredEvaluationsActiveOnceOnly
     private lazy val setRequiredEvaluationsActiveOnceOnly = {
       requiredEvalStatus = Active
       centralizeEvalFunctionsWhenReady()
@@ -397,7 +397,7 @@ object OOLAG extends Logging {
      * become activated during evaluation of required evaluations of
      * any object recursively.
      */
-    final def checkErrors: Unit = {
+    final def checkErrors(): Unit = {
       Assert.usage(this.isOOLAGRoot || requiredEvalFunctions == Nil)
       while (oolagRoot.requiredEvalFunctions != Nil) { // while there is an accumulated crop of eval functions
         // grab the current crop of eval functions
@@ -629,7 +629,7 @@ object OOLAG extends Logging {
       value_ = Maybe(res)
     }
 
-    protected final def oolagFinalize = {
+    protected final def oolagFinalize() = {
       setIndent(indent - 2)
       log(LogLevel.OOLAGDebug, " " * indent + "pop:  " + thisThing)
       if (oolagContext.currentOVList.nonEmpty)

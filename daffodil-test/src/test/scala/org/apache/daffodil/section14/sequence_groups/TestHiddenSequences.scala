@@ -27,7 +27,7 @@ object TestHiddenSequences {
 
   val runner = Runner(testDir, "HiddenSequences.tdml", validateTDMLFile = true)
 
-  @AfterClass def shutDown: Unit = {
+  @AfterClass def shutDown(): Unit = {
     runner.reset
   }
 

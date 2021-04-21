@@ -92,7 +92,7 @@ object TresysTests {
   val bd = testDir + "BD.tdml"
   lazy val runnerBD = new DFDLTestSuite(Misc.getRequiredResource(bd))
 
-  @AfterClass def shutDown: Unit = {
+  @AfterClass def shutDown(): Unit = {
     runnerDelimited.reset
     runnerMD.reset
     runnerMD_NV.reset

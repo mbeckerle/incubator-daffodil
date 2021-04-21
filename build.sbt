@@ -130,7 +130,11 @@ lazy val commonSettings = Seq(
     "-unchecked",
     "-Xfatal-warnings",
     "-Xxml:-coalescing",
-    "-Xfuture"
+    "-Xfuture",
+    "-Ywarn-infer-any",
+    "-Ywarn-inaccessible",
+    "-Ywarn-nullary-unit",
+    "-Ywarn-unused-import"
 ),
   // add scalac options that are version specific
   scalacOptions ++= scalacCrossOptions(scalaVersion.value),

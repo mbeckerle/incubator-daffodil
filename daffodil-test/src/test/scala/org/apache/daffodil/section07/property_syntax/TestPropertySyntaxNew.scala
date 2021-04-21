@@ -26,7 +26,7 @@ object TestPropertySyntax2 {
   val testDir1 = "/org/apache/daffodil/section07/property_syntax/"
   val runner = Runner(testDir1, "PropertySyntax.tdml", false, false)
 
-  @AfterClass def shutDown: Unit = {
+  @AfterClass def shutDown(): Unit = {
     runner.reset
   }
 

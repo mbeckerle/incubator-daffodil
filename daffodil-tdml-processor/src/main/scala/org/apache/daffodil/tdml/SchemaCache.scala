@@ -61,7 +61,7 @@ class SchemaCache[CachedType, DiagnosticType] {
 
   private val compiledSchemaCache = new Cache
 
-  def resetCache: Unit = {
+  def resetCache(): Unit = {
     compiledSchemaCache.clear()
   }
 

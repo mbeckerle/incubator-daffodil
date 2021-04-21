@@ -323,7 +323,7 @@ object XMLUtils {
     //
     var tn: Node = null
     var sb: StringBuilder = null
-    def processText = {
+    def processText() = {
       if (tn == null) {
         if (sb != null && sb.length > 0) {
           // we have accumulated text

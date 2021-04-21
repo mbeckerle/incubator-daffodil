@@ -27,7 +27,7 @@ object TestSimpleTypesNew {
   val runner = Runner(testDir, "SimpleTypes.tdml")
   val runner1 = Runner(testDir, "BitOrder.tdml")
   val runner2 = Runner(testDir, "SimpleTypes2.tdml")
-  @AfterClass def shutdown: Unit = {
+  @AfterClass def shutdown(): Unit = {
     runner.reset
     runner1.reset
     runner2.reset

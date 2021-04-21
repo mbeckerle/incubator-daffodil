@@ -595,7 +595,7 @@ object Currency {
   def generateNonEnumStringInit(pgName: String, propInits: Seq[String]) = {
     val initFuncName = initialLowerCase(pgName)
     """
-  def """ + initFuncName + """Init() : Unit = {""" +
+  def """ + initFuncName + """Init() (): Unit = {""" +
       propInits.foldLeft("")(_ + """
     """ + _) + """
   }

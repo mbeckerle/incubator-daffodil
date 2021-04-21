@@ -154,7 +154,7 @@ class Runner private (elem: scala.xml.Elem, dir: String, file: String,
    *  Call this from an @AfterClass method
    *  to drop any state (like the test suite object) so we don't leak
    */
-  def reset: Unit = {
+  def reset(): Unit = {
     try {
       tl_ts.set(null)
     } catch {
@@ -172,7 +172,7 @@ class Runner private (elem: scala.xml.Elem, dir: String, file: String,
     debug
   }
 
-  def debug = {
+  def debug() = {
     getTS.setDebugging(true)
   }
 

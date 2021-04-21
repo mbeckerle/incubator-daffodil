@@ -20,10 +20,10 @@ package org.apache.daffodil.tdml
 import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Test
+
 import java.io.FileOutputStream
 import org.apache.daffodil.api.URISchemaSource
 import org.junit.Before
-import scala.Right
 
 class TestSchemaCache {
 
@@ -34,7 +34,7 @@ class TestSchemaCache {
   var newUSS: URISchemaSource = null
   var tempFile: File = null
 
-  @Before def setup: Unit = {
+  @Before def setup(): Unit = {
     compileCount = 0
     SCache.resetCache
     tempFile = java.io.File.createTempFile("tdml", "tdml")
@@ -72,19 +72,19 @@ class TestSchemaCache {
     }
   }
 
-  @Test def testReset: Unit = {
+  @Test def testReset(): Unit = {
     compileTheSchema(originalUSS)
     SCache.resetCache
   }
 
-  @Test def testSameFileCompiledOnce: Unit = {
+  @Test def testSameFileCompiledOnce(): Unit = {
     compileTheSchema(originalUSS)
     assertEquals(1, compileCount)
     compileTheSchema(newUSS) // file has not been touched, so this should hit the cache.
     assertEquals(1, compileCount)
   }
 
-  @Test def testSameFileCompiledTwice: Unit = {
+  @Test def testSameFileCompiledTwice(): Unit = {
     compileTheSchema(originalUSS)
     assertEquals(1, compileCount)
 

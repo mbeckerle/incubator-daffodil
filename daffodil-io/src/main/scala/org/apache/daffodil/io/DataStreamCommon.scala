@@ -106,6 +106,6 @@ trait DataStreamCommon {
    * Use to perform checks such as that data structures held in pools are
    * all returned before end of parse.
    */
-  def validateFinalStreamState: Unit
+  def validateFinalStreamState(): Unit
 
 }

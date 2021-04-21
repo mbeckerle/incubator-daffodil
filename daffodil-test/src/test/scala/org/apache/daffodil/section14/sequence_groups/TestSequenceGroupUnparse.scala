@@ -27,7 +27,7 @@ object TestSequenceGroupUnparse {
   val aa = testDir + "SequenceGroupUnparse.tdml"
   val res = Misc.getRequiredResource(aa)
   var runner = new DFDLTestSuite(res)
-  @AfterClass def shutDown: Unit = {
+  @AfterClass def shutDown(): Unit = {
     runner = null
   }
 }

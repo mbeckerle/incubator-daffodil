@@ -569,7 +569,7 @@ final class InputSourceDataInputStream private (val inputSource: InputSource)
     setBitPos0b(m)
   }
 
-  def validateFinalStreamState: Unit = {
+  def validateFinalStreamState(): Unit = {
     // threadCheck()
     markPool.finalCheck
   }

@@ -20,7 +20,6 @@ package org.apache.daffodil.dsom
 import org.apache.daffodil.dsom.walker.ChoiceView
 
 import scala.xml.Node
-import scala.xml._
 import org.apache.daffodil.schema.annotation.props.gen.Choice_AnnotationMixin
 import org.apache.daffodil.schema.annotation.props.gen.ChoiceAGMixin
 import org.apache.daffodil.grammar.ChoiceGrammarMixin
@@ -229,7 +228,7 @@ abstract class ChoiceTermBase(
    * This latter need to be allowed, because while they do not have known required syntax they do
    * have to be executed for side-effect.
    */
-  final def branchesAreNonOptional = LV('branchesAreNonOptional) {
+  final lazy val branchesAreNonOptional = LV('branchesAreNonOptional) {
     val branchesOk = groupMembers map { branch =>
       if (branch.isOptional) {
         schemaDefinitionErrorButContinue("Branch of choice %s must be non-optional.".format(branch.path))
@@ -239,7 +238,7 @@ abstract class ChoiceTermBase(
     assuming(branchesOk.forall { x => x })
   }.value
 
-  final def branchesAreNotIVCElements = LV('branchesAreNotIVCElements) {
+  final lazy val branchesAreNotIVCElements = LV('branchesAreNotIVCElements) {
     val branchesOk = groupMembers map { branch =>
       if (!branch.isRepresented) {
         schemaDefinitionErrorButContinue("Branch of choice %s cannot have the dfdl:inputValueCalc property.".format(branch.path))

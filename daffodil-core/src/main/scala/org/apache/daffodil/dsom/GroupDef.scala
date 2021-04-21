@@ -136,7 +136,7 @@ final class GlobalSequenceGroupDef(
 
   requiredEvaluationsIfActivated(checkGroupDefIsNotHiddenSequence)
 
-  private def checkGroupDefIsNotHiddenSequence: Unit = {
+  private def checkGroupDefIsNotHiddenSequence(): Unit = {
     if (hiddenGroupRefOption.isDefined) {
       SDE("the model group of a group definition cannot be a sequence with dfdl:hiddenGroupRef")
     }

@@ -160,7 +160,7 @@ sealed abstract class TermRuntimeData(
   lazy val maybeCheckByteAndBitOrderEv = maybeCheckByteAndBitOrderEvArg
   lazy val maybeCheckBitOrderAndCharsetEv = maybeCheckBitOrderAndCharsetEvArg
 
-  override def preSerialization: Unit = {
+  override def preSerialization(): Unit = {
     super.preSerialization
     partialNextElementResolver
     encodingInfo
@@ -637,7 +637,7 @@ sealed class ElementRuntimeData(
   lazy val maybeByteOrderEv = maybeByteOrderEvArg
   lazy val isQuasiElement = isQuasiElementArg
 
-  override def preSerialization: Unit = {
+  override def preSerialization(): Unit = {
     super.preSerialization
     children
     variableMap
@@ -865,7 +865,7 @@ sealed abstract class ModelGroupRuntimeData(
   lazy val ci = ciArg
   lazy val groupMembers = groupMembersArg
 
-  override def preSerialization: Unit = {
+  override def preSerialization(): Unit = {
     super.preSerialization
     variableMap
     encInfo
@@ -968,7 +968,7 @@ final class VariableRuntimeData(
 
   lazy val maybeDefaultValueExpr = maybeDefaultValueExprArg
 
-  override def preSerialization: Unit = {
+  override def preSerialization(): Unit = {
     super.preSerialization
     maybeDefaultValueExpr
   }

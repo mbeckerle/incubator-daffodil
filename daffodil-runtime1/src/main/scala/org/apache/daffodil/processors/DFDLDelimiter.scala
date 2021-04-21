@@ -412,7 +412,7 @@ class Delimiter {
 
 abstract class DelimBase extends Base {
   def typeName: String
-  def print: Unit
+  def print(): Unit
   def printStr: String
   def allChars: Seq[Char]
   override def toString(): String = {
@@ -427,7 +427,7 @@ trait Base {
   var charPos: Int = -1
   var charPosEnd: Int = -1
 
-  def clear = {
+  def clear() = {
     isMatched = false
     charPos = -1
     charPosEnd = -1
@@ -445,7 +445,7 @@ class CharDelim(val char: Char, ignoreCase: Boolean) extends DelimBase {
   }
 
   lazy val typeName = "CharDelim"
-  def print = {
+  def print() = {
     //log(LogLevel.Debug, "\t\t\t" + typeName + ": '" + char + "' d" + char.toInt + " isMatched: " + isMatched.toString()))
   }
 
@@ -510,7 +510,7 @@ class NLDelim extends DelimBase with NL {
     }
   }
 
-  def print = {
+  def print(): Unit = {
     //log(LogLevel.Debug, "\t\t\t" + typeName + ": NL" + " isMatched: " + isMatched.toString()))
   }
   def printStr = {
@@ -574,7 +574,7 @@ abstract class WSPBase extends DelimBase with WSP {
     }
     isMatched
   }
-  def print = {
+  def print(): Unit = {
     //log(LogLevel.Debug, "\t\t\t" + typeName + ": WSPBase" + " isMatched: " + isMatched.toString()))
   }
   def printStr = {
@@ -585,7 +585,7 @@ abstract class WSPBase extends DelimBase with WSP {
 
 class WSPDelim extends WSPBase with WSP {
   override lazy val typeName = "WSPDelim"
-  override def print = {
+  override def print(): Unit = {
     //log(LogLevel.Debug, "\t\t\t" + typeName + ": WSP" + " isMatched: " + isMatched.toString()))
   }
   override def printStr = {
@@ -597,7 +597,7 @@ class WSPDelim extends WSPBase with WSP {
 
 class WSPPlusDelim extends WSPBase with WSP {
   override lazy val typeName = "WSP+Delim"
-  override def print = {
+  override def print(): Unit = {
     //log(LogLevel.Debug, "\t\t\t" + typeName + ": WSP+" + " isMatched: " + isMatched.toString()))
   }
   override def printStr = {
@@ -609,7 +609,7 @@ class WSPPlusDelim extends WSPBase with WSP {
 
 class WSPStarDelim extends WSPBase with WSP {
   override lazy val typeName = "WSP*Delim"
-  override def print = {
+  override def print(): Unit = {
     //log(LogLevel.Debug, "\t\t\t" + typeName + ": WSP*" + " isMatched: " + isMatched.toString()))
   }
   override def printStr = {
@@ -635,7 +635,7 @@ class WSPStarDelim extends WSPBase with WSP {
 class ESDelim extends DelimBase {
   override def checkMatch(charIn: Char): Boolean = Assert.impossible("We should never ask if a character matches an %ES;")
   override def allChars: Seq[Char] = Seq.empty
-  override def print: Unit = {
+  override def print(): Unit = {
     //do nothing
   }
   override def printStr: String = typeName

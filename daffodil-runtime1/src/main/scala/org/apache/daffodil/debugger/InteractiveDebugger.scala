@@ -71,8 +71,8 @@ class InteractiveDebugger(runner: InteractiveDebuggerRunner, eCompilers: Express
 
   trait Disablable {
     var enabled = true
-    def disable = { enabled = false }
-    def enable = { enabled = true }
+    def disable() = { enabled = false }
+    def enable() = { enabled = true }
   }
 
   case class Breakpoint(id: Int, breakpoint: String) extends Disablable {

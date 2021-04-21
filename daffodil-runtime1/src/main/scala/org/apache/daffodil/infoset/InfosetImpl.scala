@@ -158,7 +158,7 @@ sealed trait DINode {
    * use to require it be finalized or throw the appropriate
    * Array or Complex exception.
    */
-  def requireFinal: Unit
+  def requireFinal(): Unit
 }
 
 /**
@@ -937,7 +937,7 @@ sealed trait DIElement
   protected final var _isHidden = false
   final def isHidden: Boolean = _isHidden
 
-  override def setHidden: Unit = {
+  override def setHidden(): Unit = {
     _isHidden = true
   }
 
@@ -1017,7 +1017,7 @@ final class DIArray(
 
   private lazy val nfe = new InfosetArrayNotFinalException(this)
 
-  override def requireFinal: Unit = {
+  override def requireFinal(): Unit = {
     if (!isFinal) throw nfe
   }
 
@@ -1279,7 +1279,7 @@ sealed class DISimple(override val erd: ElementRuntimeData)
     }
   }
 
-  def resetValue = {
+  def resetValue(): Unit = {
     _isNilled = false
     _isNilledSet = false
     _isDefaulted = false
@@ -1404,7 +1404,7 @@ sealed class DISimple(override val erd: ElementRuntimeData)
    * implementation of this function, as DINode requires isFinal for parsing
    * and allowing the cleanup of unneeded DINodes.
    */
-  override def requireFinal: Unit = {
+  override def requireFinal(): Unit = {
     Assert.invariantFailed("Should not requireFinal a simple type")
   }
 
@@ -1463,7 +1463,7 @@ sealed class DIComplex(override val erd: ElementRuntimeData)
     }
   }
 
-  override def requireFinal: Unit = {
+  override def requireFinal(): Unit = {
     if (!isFinal) throw nfe
   }
 

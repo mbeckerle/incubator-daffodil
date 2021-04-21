@@ -386,7 +386,7 @@ final class UStateForSuspension(
   override def advanceAccessor: InfosetAccessor = die
   override def inspect: Boolean = die
   override def inspectAccessor: InfosetAccessor = die
-  override def fini: Unit = {
+  override def fini(): Unit = {
     //do nothing
   }
   override def inspectOrError = die
@@ -530,7 +530,7 @@ final class UStateMain private (
   override def advanceAccessor: InfosetAccessor = inputter.advanceAccessor
   override def inspect: Boolean = inputter.inspect
   override def inspectAccessor: InfosetAccessor = inputter.inspectAccessor
-  override def fini: Unit = { inputter.fini }
+  override def fini(): Unit = { inputter.fini }
 
   /**
    * Use this so if there isn't an event we get a clean diagnostic message saying

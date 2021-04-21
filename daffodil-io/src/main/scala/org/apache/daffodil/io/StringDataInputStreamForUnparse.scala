@@ -81,5 +81,5 @@ final class StringDataInputStreamForUnparse
   override def isDefinedForLength(length: Long): Boolean = doNotUse
   override def skip(nBits: Long, finfo: FormatInfo): Boolean = doNotUse
   override def resetBitLimit0b(savedBitLimit0b: MaybeULong): Unit = doNotUse
-  override def validateFinalStreamState: Unit = {} // does nothing
+  override def validateFinalStreamState(): Unit = {} // does nothing
 }
