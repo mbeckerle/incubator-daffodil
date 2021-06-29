@@ -22,6 +22,7 @@ import org.apache.daffodil.xml._
 import org.apache.daffodil.dpath.NodeInfo.PrimType
 import org.apache.daffodil.dsom.walker.ElementDeclView
 import org.apache.daffodil.equality._
+
 import scala.xml.Node
 
 trait ElementLikeMixin
@@ -126,11 +127,7 @@ trait ElementDeclMixin
 
   final lazy val typeName = getAttributeOption("type")
 
-  final lazy val namedTypeQName: Option[RefQName] = {
-    typeName.map { tname =>
-      QName.resolveRef(tname, namespaces, tunable.unqualifiedPathStepPolicy).get
-    }
-  }
+  final lazy val namedTypeQName: Option[RefQName] = typeName.map { resolveQName(_) }
 
   final lazy val optNamedSimpleType: Option[SimpleTypeBase] = {
     namedTypeQName.flatMap { qn =>

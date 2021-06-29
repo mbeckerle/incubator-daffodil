@@ -17,11 +17,16 @@
 
 package org.apache.daffodil.dpath
 
-import java.lang.{Byte => JByte, Double => JDouble, Float => JFloat, Integer => JInt, Long => JLong, Short => JShort}
-import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
+import java.lang.{ Integer => JInt }
+import java.lang.{ Byte => JByte }
+import java.lang.{ Double => JDouble }
+import java.lang.{ Short => JShort }
+import java.lang.{ Long => JLong }
+import java.lang.{ Float => JFloat }
+import java.math.{ BigInteger => JBigInt }
+import java.math.{ BigDecimal => JBigDecimal }
 import java.net.URI
 import java.net.URISyntaxException
-
 import org.apache.daffodil.calendar.DFDLCalendar
 import org.apache.daffodil.calendar.DFDLDateConversion
 import org.apache.daffodil.calendar.DFDLDateTimeConversion
@@ -44,7 +49,10 @@ import org.apache.daffodil.infoset.DataValue.DataValuePrimitive
 import org.apache.daffodil.infoset.DataValue.DataValueShort
 import org.apache.daffodil.infoset.DataValue.DataValueTime
 import org.apache.daffodil.infoset.DataValue.DataValueURI
-import org.apache.daffodil.util.{Enum, MaybeInt, Misc}
+import org.apache.daffodil.util.Delay
+import org.apache.daffodil.util.Enum
+import org.apache.daffodil.util.MaybeInt
+import org.apache.daffodil.util.Misc
 import org.apache.daffodil.util.Numbers.asBigInt
 import org.apache.daffodil.util.Numbers.asBigDecimal
 import org.apache.daffodil.xml.GlobalQName
@@ -60,17 +68,22 @@ import org.apache.daffodil.xml.XMLUtils
  * This is what TypeNodes are for. They are linked into a graph that
  * can answer questions about how two types are related. It can find the
  * least general supertype, or most general subtype of two types.
+ *
+ * We construct this highly-cyclic graph functionally, using lazy evaluation/Delay
+ * tricks to allow us to allocate an object that will eventually point at something
+ * that points back at this.
  */
-sealed abstract class TypeNode(parentsArg: => Seq[NodeInfo.Kind], childrenArg: => Seq[NodeInfo.Kind])
+sealed abstract class TypeNode private (
+  val parents:  Seq[NodeInfo.Kind],
+  childrenDelay: Delay[Seq[NodeInfo.Kind]])
   extends Serializable
   with NodeInfo.Kind {
 
-  def this(parentArg: NodeInfo.Kind, childrenArg: => Seq[NodeInfo.Kind]) = this(Seq(parentArg), childrenArg)
-  def this(parentArg: NodeInfo.Kind) = this(Seq(parentArg), Seq(NodeInfo.Nothing))
+  def this(parents: Seq[NodeInfo.Kind], children: => Seq[NodeInfo.Kind]) = this(parents, Delay(children))
+  def this(parentArg: NodeInfo.Kind, childrenArg: => Seq[NodeInfo.Kind]) = this(Seq(parentArg), Delay(childrenArg))
+  def this(parentArg: NodeInfo.Kind) = this(Seq(parentArg), Delay(Seq[NodeInfo.Kind](NodeInfo.Nothing)))
 
-  // Eliminated a var here. Doing functional graph construction now below.
-  final override lazy val parents = parentsArg
-  final override lazy val children = childrenArg
+  final override lazy val children = childrenDelay.value
 }
 
 /*
@@ -436,6 +449,9 @@ object NodeInfo extends Enum {
     DateTime,
     Date,
     Time)
+
+  // force delays to all be evaluated.
+  allPrims.foreach{ _.children }
 
   /**
    * The PrimType objects are a child enum within the overall NodeInfo

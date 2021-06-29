@@ -69,6 +69,7 @@ final class XMLSchemaDocument(
   with SchemaDocIncludesAndImportsMixin {
 
   requiredEvaluationsAlways(checkUnsupportedAttributes)
+  requiredEvaluationsAlways(seenBefore.value)
 
   final lazy val seenBefore = seenBeforeArg
 
@@ -102,7 +103,7 @@ final class XMLSchemaDocument(
     else qualOrUnqual(afdAttr, "attribute")
   }
 
-  final def checkUnsupportedAttributes = LV('checkUnsupportedAttributes) {
+  final lazy val checkUnsupportedAttributes = LV('checkUnsupportedAttributes) {
     val hasSchemaLocation = (xml \ "@schemaLocation").text != ""
     val hasBlockDefault = (xml \ "@blockDefault").text != ""
     val hasFinalDefault = (xml \ "@finalDefault").text != ""

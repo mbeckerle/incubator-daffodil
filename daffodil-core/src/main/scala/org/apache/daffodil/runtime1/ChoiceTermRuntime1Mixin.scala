@@ -17,7 +17,10 @@
 
 package org.apache.daffodil.runtime1
 
-import org.apache.daffodil.dsom.{ChoiceTermBase, ExpressionCompilers, SequenceTermBase, Term}
+import org.apache.daffodil.dsom.ChoiceTermBase
+import org.apache.daffodil.dsom.ExpressionCompilers
+import org.apache.daffodil.dsom.SequenceTermBase
+import org.apache.daffodil.dsom.Term
 import org.apache.daffodil.infoset.ChoiceBranchStartEvent
 import org.apache.daffodil.processors.ChoiceRuntimeData
 import org.apache.daffodil.infoset.ChoiceBranchEvent
@@ -26,9 +29,9 @@ import org.apache.daffodil.infoset.ChoiceBranchEndEvent
 import org.apache.daffodil.api.WarnID
 import org.apache.daffodil.processors.ChoiceDispatchKeyEv
 import org.apache.daffodil.dpath.NodeInfo
-import org.apache.daffodil.grammar.Gram
 import org.apache.daffodil.processors.ElementRuntimeData
 import org.apache.daffodil.grammar.Gram
+import org.apache.daffodil.util.Delay
 
 trait ChoiceTermRuntime1Mixin { self: ChoiceTermBase =>
 
@@ -178,7 +181,7 @@ trait ChoiceTermRuntime1Mixin { self: ChoiceTermBase =>
   final lazy val choiceRuntimeData = {
     new ChoiceRuntimeData(
       position,
-      partialNextElementResolver,
+      Delay(partialNextElementResolver),
       schemaSet.variableMap,
       encodingInfo,
       // elementChildren.map { _.elementRuntimeData.dpathElementCompileInfo },

@@ -96,6 +96,10 @@ object PossibleNextElements {
  */
 trait TermRuntime1Mixin { self: Term =>
 
+  // check for namespace-only ambiguities
+  requiredEvaluationsIfActivated(possibleNextLexicalSiblingStreamingUnparserElements)
+  requiredEvaluationsIfActivated(partialNextElementResolver)
+
   def termRuntimeData: TermRuntimeData
 
   import PossibleNextElements._
@@ -197,8 +201,10 @@ trait TermRuntime1Mixin { self: Term =>
    * Within the lexically enclosing model group, if that group is a sequence, then
    * this computation involves subsequent siblings, children of those siblings.
    */
-  lazy val possibleNextLexicalSiblingStreamingUnparserElements: PossibleNextElements = {
-    val res = this match {
+  lazy val (hasNamesDifferingOnlyByNS: Boolean,
+    possibleNextLexicalSiblingStreamingUnparserElements: PossibleNextElements) = {
+    var hasNamesDifferingOnlyByNS = false
+    val possibles = this match {
       // Quasi elements are used for type-value calc, and for prefixed lengths
       // we never consider them for streaming unparsing. They are never present as events.
       // Nor should they ever be used as the source of next-event information.
@@ -221,7 +227,32 @@ trait TermRuntime1Mixin { self: Term =>
       case _ =>
         possibleSelfPlusNextLexicalSiblingStreamingUnparserElements
     }
-    res
+    //
+    // Check for ambiguity except for namespaces
+    // Since some Infoset representations (e.g., JSON) can't support that
+    //
+    val sibs = possibles match {
+      case PossibleNextElements.Closed(sibs) => sibs
+      case PossibleNextElements.Open(sibs) => sibs
+      case PossibleNextElements.DoNotUse => Nil
+    }
+    if (sibs.size > 1) {
+      val groupedByName = possibles.pnes.groupBy(_.e.namedQName.local)
+      groupedByName.foreach {
+        case (_, sameNamesEB) =>
+          if (sameNamesEB.length > 1) {
+            SDW(
+              WarnID.NamespaceDifferencesOnly,
+              "Neighboring QNames differ only by namespaces. " +
+                "Infoset representations that do not support namespaces " +
+                "cannot differentiate between these elements and " +
+                "may fail to unparse. QNames are: %s",
+              sameNamesEB.map(_.e.namedQName.toExtendedSyntax).mkString(", "))
+            hasNamesDifferingOnlyByNS = true
+          }
+      }
+    }
+    (hasNamesDifferingOnlyByNS, possibles)
   }
 
   final protected lazy val possibleSelfPlusNextLexicalSiblingStreamingUnparserElements: PossibleNextElements =
@@ -381,7 +412,6 @@ trait TermRuntime1Mixin { self: Term =>
   final lazy val partialNextElementResolver: PartialNextElementResolver = {
     val context = self
     val possibles = possibleNextLexicalSiblingStreamingUnparserElements
-
     self match {
       case _: QuasiElementDeclBase => {
         Assert.invariant(possibles eq PossibleNextElements.DoNotUse)
@@ -410,21 +440,6 @@ trait TermRuntime1Mixin { self: Term =>
             sibs.head.e.erd,
             isRequiredStreamingUnparserEvent)
           case _ => {
-            val groupedByName = possibles.pnes.groupBy(_.e.namedQName.local)
-            var hasNamesDifferingOnlyByNS = false
-            groupedByName.foreach {
-              case (_, sameNamesEB) =>
-                if (sameNamesEB.length > 1) {
-                  context.SDW(
-                    WarnID.NamespaceDifferencesOnly,
-                    "Neighboring QNames differ only by namespaces. " +
-                      "Infoset representations that do not support namespaces " +
-                      "cannot differentiate between these elements and " +
-                      "may fail to unparse. QNames are: %s",
-                    sameNamesEB.map(_.e.namedQName.toExtendedSyntax).mkString(", "))
-                  hasNamesDifferingOnlyByNS = true
-                }
-            }
             new SeveralPossibilitiesForNextElement(
               trd,
               eltMap,

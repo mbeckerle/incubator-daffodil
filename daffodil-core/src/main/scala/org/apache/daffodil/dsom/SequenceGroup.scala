@@ -19,13 +19,11 @@ package org.apache.daffodil.dsom
 
 import scala.xml.Elem
 import scala.xml.Node
-import scala.xml._
 import org.apache.daffodil.schema.annotation.props.gen.Sequence_AnnotationMixin
 import org.apache.daffodil.schema.annotation.props.SeparatorSuppressionPolicyMixin
 import org.apache.daffodil.xml.XMLUtils
 import org.apache.daffodil.schema.annotation.props.gen.OccursCountKind
 import org.apache.daffodil.schema.annotation.props.gen.SequenceKind
-import org.apache.daffodil.Implicits.ns2String
 import org.apache.daffodil.api.WarnID
 import org.apache.daffodil.dsom.walker.SequenceView
 import org.apache.daffodil.grammar.SequenceGrammarMixin
@@ -92,9 +90,9 @@ abstract class SequenceGroupTermBase(
   with LayeringRuntimeValuedPropertiesMixin {
 
 
-  requiredEvaluationsIfActivated(checkIfValidUnorderedSequence)
+  requiredEvaluationsAlways(checkIfValidUnorderedSequence)
 
-  requiredEvaluationsIfActivated(checkIfNonEmptyAndDiscrimsOrAsserts)
+  requiredEvaluationsAlways(checkIfNonEmptyAndDiscrimsOrAsserts)
 
   protected def apparentXMLChildren: Seq[Node]
 
@@ -301,8 +299,6 @@ final class Sequence(xmlArg: Node, lexicalParent: SchemaComponent, position: Int
   extends SequenceGroupTermBase(xmlArg, lexicalParent, position)
   with SequenceDefMixin
   with SequenceView {
-
-  requiredEvaluationsIfActivated(checkHiddenGroupRefHasNoChildren)
 
   override lazy val optReferredToComponent = None
 

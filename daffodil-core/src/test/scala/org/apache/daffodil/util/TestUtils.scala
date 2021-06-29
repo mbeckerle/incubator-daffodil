@@ -121,8 +121,7 @@ object TestUtils {
     val inputter = new ScalaXMLInfosetInputter(infosetXML)
     val actual = u.unparse(inputter, out)
     if (actual.isProcessingError) {
-      val msgs = actual.getDiagnostics.map(_.getMessage()).mkString("\n")
-      throw new Exception(msgs)
+      throwDiagnostics(actual.getDiagnostics)
     }
     val unparsed = outputStream.toString
     //    System.err.println("parsed: " + infoset)

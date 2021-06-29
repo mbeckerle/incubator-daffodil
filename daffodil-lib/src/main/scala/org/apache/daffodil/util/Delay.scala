@@ -27,18 +27,71 @@ package org.apache.daffodil.util
  * ones we might have wanted to supply later, we instead supply them, but
  * as Delay objects.
  *
- * For more info, this is used in the IncludeImport stuff in DSOM.
+ * For more info, this is used in the IncludeImport stuff in DSOM, and
+ * in numerous other places where we construct, functionally, cyclic graphs.
  */
+final class Delay[T] private (private var box: Delay.Box[T])
+  extends PreSerialization {
+  //
+  // This trick of taking another object on a var, and
+  // then clobbering the var after we demand the value
+  // eliminates holding onto a bunch of objects due
+  // to closures for the pass-by-name arguments.
+  //
+  // The idea is no matter what the Scala implementation is doing in its implementation of
+  // by-name args, that's on the constructor of the box object,
+  // and we're going to explicitly null-out the reference to the box object
+  // which guarantees we're not holding onto things we don't expect
+  // once the Delay object has been evaluated.
+  //
+  lazy val value: T = {
+    val v = box.value
+    box = null // throws away box, which allows GC of all closures, etc.
+    // Delay.evalDelay()
+    v
+  }
 
-class Delay[T] private (v: => T) {
-  lazy val value = v
-  private val hasValue: Boolean = false
+  /**
+   * For creating a delay object purely to satisfy a type requirement
+   * when you know the argument does not actually need to be delayed.
+   */
+  def force : Delay[T] = { value; this }
+
+  /**
+   * Create a string representation. Does not force the value to be computed.
+   */
   override def toString = {
-    val bodyString = if (hasValue) value.toString else "..."
+    val bodyString = if (box eq null) value.toString else "..."
     "Delay(" + bodyString + ")"
   }
+
+  override def preSerialization = {
+    value // force evaluation
+    super.preSerialization
+  }
+
+  @throws(classOf[java.io.IOException])
+  final private def writeObject(out: java.io.ObjectOutputStream): Unit = serializeObject(out)
 }
 
 object Delay {
-  def apply[T](v: => T) = new Delay(v)
+  /**
+   * Create a delayed expression object.
+   *
+   * @param delayedExpression an argument expression which will not be evaluated until required
+   * @tparam T type of the argument. (Usually inferred by Scala.)
+   * @return the Delay object
+   */
+  def apply[T](delayedExpression: => T) = {
+    // allocateDelay()
+    new Delay(new Box(delayedExpression))
+  }
+
+  /**
+   * Specifically, this is NOT serializable.
+   * Serialization must force all Delay objects.
+   */
+  private class Box[T](delayedExpression: => T) {
+    def value = delayedExpression
+  }
 }

@@ -23,6 +23,7 @@ import org.apache.daffodil.schema.annotation.props.gen.EncodingErrorPolicy
 import org.apache.daffodil.processors.KnownEncodingMixin
 import org.apache.daffodil.api.WarnID
 import org.apache.daffodil.schema.annotation.props.gen.YesNo
+import org.apache.daffodil.util.Maybe
 
 /**
  * Captures concepts around dfdl:encoding property and Terms.
@@ -92,8 +93,8 @@ trait TermEncodingMixin extends KnownEncodingMixin { self: Term =>
   }
 
   lazy val encodingInfo =
-    new EncodingRuntimeData(charsetEv, schemaFileLocation, optionUTF16Width, defaultEncodingErrorPolicy,
-      summaryEncoding, isKnownEncoding, isScannable, knownEncodingAlignmentInBits, hasTextAlignment)
+    new EncodingRuntimeData(charsetEv, schemaFileLocation, Maybe.toMaybe(optionUTF16Width), defaultEncodingErrorPolicy,
+      isKnownEncoding, isScannable, knownEncodingAlignmentInBits, hasTextAlignment)
 
 
 

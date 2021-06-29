@@ -19,11 +19,10 @@ package org.apache.daffodil.dsom
 
 import scala.xml.Node
 import scala.xml.NodeSeq.seqToNodeSeq
-import scala.xml._
 import org.apache.daffodil.exceptions.Assert
 import org.apache.daffodil.grammar.ModelGroupGrammarMixin
-import java.lang.{ Integer => JInt }
 
+import java.lang.{ Integer => JInt }
 import org.apache.daffodil.dsom.walker.ModelGroupView
 import org.apache.daffodil.schema.annotation.props.AlignmentType
 import org.apache.daffodil.schema.annotation.props.gen.AlignmentUnits
@@ -140,8 +139,8 @@ abstract class ModelGroup(index: Int)
   with NestingLexicalMixin
   with ModelGroupView {
 
-  requiredEvaluationsIfActivated(groupMembers)
-  requiredEvaluationsIfActivated(initiatedContentCheck)
+  requiredEvaluationsAlways(groupMembers)
+  requiredEvaluationsAlways(initiatedContentCheck)
 
   /**
    * FIXME: DAFFODIL-2132. This tells us if framing is expressed on the schema.
@@ -203,7 +202,7 @@ abstract class ModelGroup(index: Int)
 
   private def prettyIndex = "[" + index + "]" // 1-based indexing in XML/XSD
 
-  override lazy val diagnosticDebugName = prettyBaseName + prettyIndex
+  override protected lazy val diagnosticDebugNameImpl = prettyBaseName + prettyIndex
 
   override lazy val alignmentValueInBits: JInt = {
     this.alignment match {
@@ -331,7 +330,7 @@ abstract class ModelGroup(index: Int)
    * any unparse events. This is used to determine next children/sibling
    * elements used during unparsing.
    */
-  final def mustHaveRequiredElement: Boolean = LV('mustHaveRequiredElement) {
+  final lazy val mustHaveRequiredElement: Boolean = LV('mustHaveRequiredElement) {
     this match {
       case gr: GroupRef if gr.isHidden => false
       case s: SequenceTermBase if s.isOrdered =>

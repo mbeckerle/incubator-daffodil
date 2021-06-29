@@ -17,8 +17,7 @@
 
 package org.apache.daffodil.dsom
 
-import org.junit.Test
-import org.apache.daffodil.compiler._;
+import org.apache.daffodil.compiler._
 import org.apache.daffodil.util.Logging
 import org.apache.daffodil.xml.XMLUtils
 import org.junit.Assert._
@@ -201,10 +200,10 @@ class TestRefMap extends Logging {
         </xs:sequence>
       </xs:complexType>
       <xs:group name="g">
-        <xs:choice>
+        <xs:sequence><!-- a choice here would be UPA ambiguous -->
           <xs:element ref="ex:r1"/>
           <xs:element ref="ex:r1"/>
-        </xs:choice>
+        </xs:sequence>
       </xs:group>
       <xs:element name="r1">
         <xs:complexType>
@@ -247,10 +246,10 @@ class TestRefMap extends Logging {
         </xs:sequence>
       </xs:complexType>
       <xs:group name="g">
-        <xs:choice>
+        <xs:sequence><!-- a choice here would be UPA ambiguous -->
           <xs:element ref="ex:r1"/>
           <xs:element ref="ex:r1"/>
-        </xs:choice>
+        </xs:sequence>
       </xs:group>
       <xs:element name="r1">
         <xs:complexType>

@@ -65,7 +65,7 @@ import scala.collection.immutable.Queue
 final class SchemaSet(
   optPFRootSpec: Option[RootSpec],
   val schemaSource: DaffodilSchemaSource,
-  val validateDFDLSchemas: Boolean,
+  val shouldValidateDFDLSchemas: Boolean,
   val checkAllTopLevel: Boolean,
   val tunables: DaffodilTunables,
   protected val compilerExternalVarSettings: Queue[Binding])
@@ -202,7 +202,7 @@ final class SchemaSet(
 
   private type UC = (NS, String, Symbol, GlobalComponent)
 
-  private def allTopLevels: Seq[UC] = LV('allTopLevels) {
+  private lazy val allTopLevels: Seq[UC] = LV('allTopLevels) {
     val res = schemas.flatMap { schema =>
       {
         val ns = schema.namespace
@@ -248,7 +248,7 @@ final class SchemaSet(
     res.asInstanceOf[Seq[UC]]
   }.value
 
-  private def groupedTopLevels = LV('groupedTopLevels) {
+  private lazy val groupedTopLevels = LV('groupedTopLevels) {
     val grouped = allTopLevels.groupBy {
       case (ns, name, kind, obj) => {
         (kind, ns, name)
@@ -491,18 +491,3 @@ final class SchemaSet(
   }
 }
 
-
-class ValidateSchemasErrorHandler(sset: SchemaSet) extends org.xml.sax.ErrorHandler {
-
-  def warning(exception: org.xml.sax.SAXParseException) = {
-    val sdw = new SchemaDefinitionWarning(sset.schemaFileLocation, "Warning loading schema due to %s", exception)
-    sset.warn(sdw)
-  }
-
-  def error(exception: org.xml.sax.SAXParseException) = {
-    val sde = new SchemaDefinitionError(sset.schemaFileLocation, "Error loading schema due to %s", exception)
-    sset.error(sde)
-  }
-
-  def fatalError(exception: org.xml.sax.SAXParseException) = this.error(exception)
-}

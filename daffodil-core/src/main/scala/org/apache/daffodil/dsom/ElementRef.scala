@@ -62,7 +62,7 @@ abstract class AbstractElementRef(
    * invokes namedQName because it's a named thing, must be overridden
    * and use refQName instead.
    */
-  override def namedQName: NamedQName = LV('namedQName) {
+  override lazy val namedQName: NamedQName = LV('namedQName) {
     referencedElement.namedQName
   }.value
 
@@ -93,7 +93,7 @@ abstract class AbstractElementRef(
 
   override lazy val namespace = refQName.namespace
 
-  override lazy val diagnosticDebugName = "element reference " + refQName
+  override protected lazy val diagnosticDebugNameImpl = "element reference " + refQName
 
   override def typeDef = referencedElement.typeDef
 

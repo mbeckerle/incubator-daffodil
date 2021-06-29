@@ -18,8 +18,7 @@
 package org.apache.daffodil.dsom
 
 import scala.collection.immutable.ListMap
-import org.apache.daffodil.util._
-import IIUtils._
+import org.apache.daffodil.dsom.IIUtils._
 import org.apache.daffodil.xml.XMLUtils
 import org.apache.daffodil.util.Delay
 import org.apache.daffodil.api.WarnID
@@ -53,11 +52,11 @@ trait SchemaSetIncludesAndImportsMixin { self: SchemaSet =>
     fakeSD
   }
 
-  def allSchemaDocuments = LV('allSchemaDocuments) {
+  lazy val allSchemaDocuments = LV('allSchemaDocuments) {
     allSchemaFiles.map { _.iiSchemaDocument }
   }.value
 
-  def allSchemaFiles = LV('allSchemaFiles) {
+  lazy val allSchemaFiles = LV('allSchemaFiles) {
     val fd = fakeXMLSchemaDocument //bootstrap
     val sa = fd.seenAfter
     val sfl = sa.value.flatMap {

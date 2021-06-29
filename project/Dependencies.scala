@@ -38,7 +38,7 @@ object Dependencies {
     "com.fasterxml.jackson.core" % "jackson-core" % "2.12.3"
   )
 
-  lazy val cli = Seq( 
+  lazy val cli = Seq(
     "org.fusesource.jansi" % "jansi" % "2.3.3",
     "org.jline" % "jline" % "3.20.0",
     "org.rogach" %% "scallop" % "4.0.3",

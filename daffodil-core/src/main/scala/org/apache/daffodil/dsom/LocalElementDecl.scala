@@ -28,8 +28,8 @@ sealed abstract class LocalElementDeclBase(
   with ElementDeclMixin
   with NestingLexicalMixin {
 
-  requiredEvaluationsIfActivated(minOccurs)
-  requiredEvaluationsIfActivated(maxOccurs)
+  requiredEvaluationsAlways(minOccurs)
+  requiredEvaluationsAlways(maxOccurs)
 }
 
 class LocalElementDecl(

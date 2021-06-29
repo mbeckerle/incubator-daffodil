@@ -25,6 +25,7 @@ import org.apache.daffodil.dsom.DPathElementCompileInfo
 import org.apache.daffodil.processors.RuntimeData
 import org.apache.daffodil.processors.TermRuntimeData
 import org.apache.daffodil.processors.ElementRuntimeData
+import org.apache.daffodil.util.Delay
 import org.apache.daffodil.util.Maybe
 import org.apache.daffodil.dsom.SimpleTypeDefBase
 import org.apache.daffodil.dsom.ComplexTypeBase
@@ -118,18 +119,20 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
    */
   final def eci = dpathElementCompileInfo
 
+
+
   /**
    * This is the compile info for this element term.
    */
   lazy val dpathElementCompileInfo: DPathElementCompileInfo = {
     val ee = enclosingElements
-    lazy val parents = ee.map {
+    val parents = ee.map {
       _.dpathElementCompileInfo
     }
     val eci = new DPathElementCompileInfo(
       parents,
       variableMap,
-      elementChildrenCompileInfo,
+      Delay(elementChildrenCompileInfo),
       namespaces,
       slashPath,
       name,
@@ -139,7 +142,6 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
       schemaFileLocation,
       tunable.unqualifiedPathStepPolicy,
       schemaSet.typeCalcMap,
-      runtimeData,
       shortSchemaComponentDesignator,
       isOutputValueCalc)
     eci
@@ -163,7 +165,7 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
       position,
       childrenERDs,
       schemaSet.variableMap,
-      partialNextElementResolver,
+      Delay(partialNextElementResolver),
       encodingInfo,
       dpathElementCompileInfo,
       schemaFileLocation,

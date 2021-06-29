@@ -134,9 +134,9 @@ final class GlobalSequenceGroupDef(
   extends GlobalGroupDef(defXMLArg, seqXML, schemaDocument)
   with SequenceDefMixin {
 
-  requiredEvaluationsIfActivated(checkGroupDefIsNotHiddenSequence)
+  requiredEvaluationsAlways(checkGroupDefIsNotHiddenSequence)
 
-  private def checkGroupDefIsNotHiddenSequence: Unit = {
+  private lazy val checkGroupDefIsNotHiddenSequence: Unit = {
     if (hiddenGroupRefOption.isDefined) {
       SDE("the model group of a group definition cannot be a sequence with dfdl:hiddenGroupRef")
     }

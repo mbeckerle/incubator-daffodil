@@ -15,24 +15,27 @@
  * limitations under the License.
  */
 
-package org.apache.daffodil.dsom
+package org.apache.daffodil.util
 
-/**
- * Mixin for all SchemaComponents
- */
+import org.apache.daffodil.Implicits.intercept
+import org.apache.daffodil.exceptions.Abort
+import org.junit.Assert.assertTrue
+import org.junit.Test
 
-trait SchemaComponentIncludesAndImportsMixin
-  extends CommonContextMixin { self: SchemaComponent =>
+class TestNamed {
 
-  protected final val orElseURL: String = "file:??"
+  object namedThing extends NamedMixinBase {
+    override protected lazy val diagnosticDebugNameImpl = {
+      diagnosticDebugName // glaring example of reentry for the same object.
+    }
+  }
 
-  /**
-   * Used in diagnostic messages; hence, valueOrElse to avoid
-   * problems when this can't get a value due to an error.
-   */
-  override def uriString: String = uriString_
-  private lazy val uriString_ = LV('fileName) {
-    xmlSchemaDocument.uriString
-  }.toOption.getOrElse(orElseURL)
+  @Test def testDiagnosticDebugNameCatchesReentry(): Unit = {
+    val e = intercept[Abort] {
+      namedThing.diagnosticDebugName
+    }
+    val msg = e.getMessage()
+    assertTrue(msg.toLowerCase.contains("reentry"))
+  }
 
 }

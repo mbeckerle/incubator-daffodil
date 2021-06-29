@@ -78,7 +78,7 @@ final class DFDLEscapeScheme(node: Node, decl: AnnotatedSchemaComponent, defES: 
   override def verifyPropValue(key: String, value: String): Boolean =
     super.verifyPropValue(key, value)
 
-  final def escapeCharacterEv = LV('escapeCharacterEv) {
+  final lazy val escapeCharacterEv = LV('escapeCharacterEv) {
     val qn = this.qNameForProperty("escapeCharacter")
     val expr = ExpressionCompilers.String.compileProperty(qn, NodeInfo.NonEmptyString, escapeCharacterRaw, this,
       defES.pointOfUse.dpathCompileInfo)
@@ -87,7 +87,7 @@ final class DFDLEscapeScheme(node: Node, decl: AnnotatedSchemaComponent, defES: 
     ev
   }.value
 
-  final def optionEscapeEscapeCharacterEv = LV('optionEscapeEscapeCharacterEv) {
+  final lazy val optionEscapeEscapeCharacterEv = LV('optionEscapeEscapeCharacterEv) {
     val qn = this.qNameForProperty("escapeEscapeCharacter")
     escapeEscapeCharacterRaw match {
       case Found("", loc, _, _) => Nope
@@ -103,7 +103,7 @@ final class DFDLEscapeScheme(node: Node, decl: AnnotatedSchemaComponent, defES: 
     }
   }.value
 
-  final def optionExtraEscapedCharacters = LV('optionExtraEscapedCharacters) {
+  final lazy val optionExtraEscapedCharacters = LV('optionExtraEscapedCharacters) {
     extraEscapedCharactersRaw match {
       case Found("", _, _, _) => Nope
       case Found(v, _, _, _) => One(v)

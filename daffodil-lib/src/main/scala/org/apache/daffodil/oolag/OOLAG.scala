@@ -98,12 +98,7 @@ object OOLAG extends Logging {
    *
    * The way these are generally used now is like this
    * {{{
-   *  def foo = LV('foo) {...calculation...}.value
-   * }}}
-   * or, if you would like a slot to show up in the debugger so you
-   * can more easily see the value of the LV then you can
-   * {{{
-   * lazy val foo = LV('foo){...calculation...}.value
+   *  lazy val foo = LV('foo) {...calculation...}.value
    * }}}
    * Why scala needs 'real' Lisp-style macros: Well wouldn't it be
    * nicer if I could write:
@@ -238,40 +233,25 @@ object OOLAG extends Logging {
 
     final var currentOVList: Seq[OOLAGValueBase] = Nil
 
-    private val lvCache = new scala.collection.mutable.LinkedHashMap[Symbol, OOLAGValueBase]
-
     /**
      * The factory for OOLAGValues is LV.
      */
     protected final def LV[T](sym: Symbol)(body: => T): OOLAGValue[T] = {
-      //
-      // TODO: This is very fragile. A simple cut/paste error where two LVs have the same symbol
-      // causes no scala compilation error, but results in the second definition to be evaluated
-      // getting the value of the first to be evaluated. This can be very hard to debug.
-      //
-      // Really we want the thunk itself's identity to be the key for lookup, not this
-      // hand maintained symbol.
-      //
-      // Once again this is why scala needs real lisp-style macros, not these quasi function things
-      // where a macro can only do what a function could have done.
-      //
-      // Fixing this problem likely requires one to go back to the older oolag design
-      // which didn't have this lvCache at all, just used actual lazy val for each LV.
-      // That would mean changing all def foo = LV('foo) {...} to be lazy val. But that would
-      // be much safer, because then the sym is only used for debugging info, and could even be optional.
-      //
-      lvCache.get(sym).getOrElse {
-        val lv = new OOLAGValue[T](this, sym.name, body)
-        lvCache.put(sym, lv)
-        lv
-      }.asInstanceOf[OOLAGValue[T]]
+      val lv = new OOLAGValue[T](this, sym.name, body)
+      lv
     }
 
     /*
      * requiredEvaluations feature
      *
      * An object either uses requiredEvaluationsAlways, or requiredEvaluationsIfActivated.
-     * Some objects use both.
+     *
+     * This is used for implementation of compileAllTopLevels (or not) behavior.
+     *
+     * requiredEvaluationsIfActivated is for global elements and their bases and mixins.
+     * It is a no-op for anything else.
+     *
+     * requiredEvaluationsAlways is for everything else.
      *
      * They are maintained as two separate lists of eval functions aka thunks to be run.
      *
@@ -297,7 +277,12 @@ object OOLAG extends Logging {
     private var requiredEvalIfActivatedFunctions: List[OOLAGValueBase] = Nil // for evaluation only if activated.
 
     /**
-     * Unconditionally, evaluate the expression arg in order to insure all checks for this
+     * Used to force evaluation for error checking on non-global elements.
+     *
+     * LocalElementDecls, ElementRefs, Groups, Types, Annotations, etc.
+     * all should use only this form.
+     *
+     * Unconditionally, evaluates the expression arg in order to insure all checks for this
      * object are performed.
      */
     protected final def requiredEvaluationsAlways(arg: => Any): Unit = {
@@ -353,8 +338,16 @@ object OOLAG extends Logging {
     private var requiredEvalStatus: ActivityStatus = Inactive
 
     /**
+     * Used to implement compileAllTopLevel (or not) behavior.
+     *
+     * Used only for global element decls, and the root, and classes that can be
+     * part of that (e.g., ElementBase and mixins, but not LocalElementDecl)
+     *
+     * On any other class, this is a no-op.
+     *
      * Saves the arg expression, and insures it is evaluated later only
      * if setRequiredEvaluationActive() is called for this object.
+     * That is called only for global element decls (and the root)
      */
     protected final def requiredEvaluationsIfActivated(arg: => Any): Unit = {
       requiredEvaluationsIfActivated(thunk(arg))

@@ -21,9 +21,7 @@ import scala.xml.Node
 import org.apache.daffodil.exceptions.Assert
 import org.apache.daffodil.xml.NS
 import org.apache.daffodil.xml.XMLUtils
-import org.apache.daffodil.processors.RuntimeData
 import org.apache.daffodil.processors.VariableMap
-import org.apache.daffodil.processors.NonTermRuntimeData
 import org.apache.daffodil.xml.ResolvesQNames
 import org.apache.daffodil.schema.annotation.props.LookupLocation
 import org.apache.daffodil.api.DaffodilTunables
@@ -31,6 +29,7 @@ import org.apache.daffodil.xml.GetAttributesMixin
 import org.apache.daffodil.schema.annotation.props.PropTypes
 import org.apache.daffodil.util.Misc
 import org.apache.daffodil.BasicComponent
+import org.apache.daffodil.runtime1.SchemaComponentRuntime1Mixin
 
 abstract class SchemaComponentImpl(
   final override val xml: Node,
@@ -53,20 +52,18 @@ trait SchemaComponent
   with SchemaComponentIncludesAndImportsMixin
   with ResolvesQNames
   with SchemaFileLocatableImpl
-  with PropTypes {
+  with PropTypes
+  with SchemaComponentRuntime1Mixin {
 
   def xml: Node
 
   override def oolagContextViaArgs = optLexicalParent
 
-  requiredEvaluationsIfActivated(runtimeData)
-  requiredEvaluationsIfActivated(runtimeData.preSerializationOnlyOnce)
-
   override lazy val tunable: DaffodilTunables = optLexicalParent.get.tunable
   final override lazy val unqualifiedPathStepPolicy = tunable.unqualifiedPathStepPolicy
 
   lazy val dpathCompileInfo: DPathCompileInfo = {
-    lazy val parents = enclosingTerms.map { _.dpathCompileInfo }
+    val parents = enclosingTerms.map { _.dpathCompileInfo }
     new DPathCompileInfo(
       parents,
       variableMap,
@@ -74,8 +71,7 @@ trait SchemaComponent
       path,
       schemaFileLocation,
       tunable.unqualifiedPathStepPolicy,
-      schemaSet.typeCalcMap,
-      runtimeData)
+      schemaSet.typeCalcMap)
   }
 
   /**
@@ -83,30 +79,7 @@ trait SchemaComponent
    */
   final def ci = dpathCompileInfo
 
-  /**
-   * All non-terms get runtimeData from this definition. All Terms
-   * which are elements and model-groups) override this.
-   *
-   * The Term class has a generic termRuntimeData => TermRuntimeData
-   * function (useful since all Terms share things like having charset encoding)
-   * The Element classes all inherit an elementRuntimeData => ElementRuntimeData
-   * and the model groups all have modelGroupRuntimeData => ModelGroupRuntimeData.
-   *
-   * There is also VariableRuntimeData and SchemaSetRuntimeData.
-   */
-  lazy val runtimeData: RuntimeData = nonTermRuntimeData // overrides in ModelGroup, ElementBase, SimpleTypes
-
-  final def nonTermRuntimeData = LV('nonTermRuntimeData) {
-    new NonTermRuntimeData(
-      variableMap,
-      schemaFileLocation,
-      diagnosticDebugName,
-      path,
-      namespaces,
-      tunable.unqualifiedPathStepPolicy)
-  }.value
-
-  def variableMap: VariableMap = LV('variableMap) {
+  lazy val variableMap: VariableMap = LV('variableMap) {
     schemaSet.variableMap
   }.value
 

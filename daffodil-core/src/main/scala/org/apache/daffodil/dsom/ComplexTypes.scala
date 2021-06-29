@@ -35,7 +35,7 @@ sealed abstract class ComplexTypeBase(xmlArg: Node, parentArg: SchemaComponent)
   final override def optUnion = None
   final override def typeNode = NodeInfo.Complex
 
-  requiredEvaluationsIfActivated(modelGroup)
+  requiredEvaluationsAlways(modelGroup)
 
   override final def group = modelGroup
 

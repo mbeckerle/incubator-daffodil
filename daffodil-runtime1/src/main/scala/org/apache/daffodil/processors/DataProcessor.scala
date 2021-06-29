@@ -717,8 +717,6 @@ class UnparseResult(dp: DataProcessor, ustate: UState)
 
   private def encodingInfo = if (maybeEncodingInfo.isDefined) maybeEncodingInfo.get else dp.ssrd.elementRuntimeData.encodingInfo
 
-  def summaryEncoding = encodingInfo.summaryEncoding
-
   override def isScannable = encodingInfo.isScannable
   override def encodingName = {
     Assert.invariant(encodingInfo.isKnownEncoding)

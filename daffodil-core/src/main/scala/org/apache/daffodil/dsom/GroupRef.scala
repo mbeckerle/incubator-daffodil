@@ -18,7 +18,6 @@
 package org.apache.daffodil.dsom
 
 import scala.xml.Node
-import scala.xml._
 import org.apache.daffodil.dsom.walker.GroupRefView
 import org.apache.daffodil.xml.HasRefMixin
 import org.apache.daffodil.schema.annotation.props.NotFound
@@ -136,7 +135,7 @@ final class ChoiceGroupRef(
   extends ChoiceTermBase(refXML, Option(refLexicalParent), positionArg)
   with GroupRef {
 
-  requiredEvaluationsIfActivated(groupDef)
+  requiredEvaluationsAlways(groupDef)
 
   private lazy val globalGroupDef = globalGroupDefArg // once only
 
