@@ -45,6 +45,9 @@ final class Root(defXML: Node, parentArg: SchemaDocument,
     }
   })
 
+  // check for namespace-only ambiguities
+  requiredEvaluationsIfActivated(possibleNextLexicalSiblingStreamingUnparserElements)
+
   final override lazy val xml = {
     val elem = XMLUtils.getXSDElement(defXML.scope)
     val res = elem % new UnprefixedAttribute("ref", refQName.toQNameString, scala.xml.Null)

@@ -20,10 +20,18 @@ package org.apache.daffodil.runtime1
 import org.apache.daffodil.xml.QNameBase
 import org.apache.daffodil.api.WarnID
 import org.apache.daffodil.dsom._
-import org.apache.daffodil.processors.{ByteOrderEv, ElementRuntimeData, CheckBitOrderAndCharsetEv, CheckByteAndBitOrderEv, TermRuntimeData}
+import org.apache.daffodil.processors.ByteOrderEv
+import org.apache.daffodil.processors.CheckBitOrderAndCharsetEv
+import org.apache.daffodil.processors.CheckByteAndBitOrderEv
+import org.apache.daffodil.processors.ElementRuntimeData
+import org.apache.daffodil.processors.TermRuntimeData
 import org.apache.daffodil.schema.annotation.props.gen.NilKind
 import org.apache.daffodil.exceptions.Assert
-import org.apache.daffodil.infoset.{PartialNextElementResolver, SeveralPossibilitiesForNextElement, NoNextElement, OnlyOnePossibilityForNextElement, DoNotUseThisResolver}
+import org.apache.daffodil.infoset.DoNotUseThisResolver
+import org.apache.daffodil.infoset.NoNextElement
+import org.apache.daffodil.infoset.OnlyOnePossibilityForNextElement
+import org.apache.daffodil.infoset.PartialNextElementResolver
+import org.apache.daffodil.infoset.SeveralPossibilitiesForNextElement
 import org.apache.daffodil.util.Maybe
 
 /**
@@ -95,10 +103,6 @@ object PossibleNextElements {
  * possible elements that can follow the current term.
  */
 trait TermRuntime1Mixin { self: Term =>
-
-  // check for namespace-only ambiguities
-  requiredEvaluationsIfActivated(possibleNextLexicalSiblingStreamingUnparserElements)
-  requiredEvaluationsIfActivated(partialNextElementResolver)
 
   def termRuntimeData: TermRuntimeData
 
@@ -409,7 +413,7 @@ trait TermRuntime1Mixin { self: Term =>
    * determines the ElementRuntimeData for that infoset event. This can be used to construct the initial
    * infoset from a stream of XML events.
    */
-  final lazy val partialNextElementResolver: PartialNextElementResolver = {
+  lazy val partialNextElementResolver: PartialNextElementResolver = {
     val context = self
     val possibles = possibleNextLexicalSiblingStreamingUnparserElements
     self match {

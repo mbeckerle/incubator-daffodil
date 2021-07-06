@@ -33,6 +33,24 @@ import org.apache.daffodil.dsom.PrimitiveType
 
 trait ElementBaseRuntime1Mixin { self: ElementBase =>
 
+  // initialize cyclic structure
+  requiredEvaluationsIfActivated(dpathElementCompileInfo.initialize)
+
+  // initialize cyclic structure
+  requiredEvaluationsIfActivated(elementRuntimeData.initialize)
+
+  /**
+   * Initialize cyclic structure
+   * This does all type calculators for the simple types of elements.
+   * There are also global simple type defs to initialize, which have
+   * no corresponding element.
+   */
+  requiredEvaluationsIfActivated(optSimpleType.collect{
+    case stb: SimpleTypeDefBase =>
+      if (stb.optTypeCalculator.isDefined)
+        stb.optTypeCalculator.get.initialize()
+  })
+
   /**
    * Tells us if, for this element, we need to capture its content length
    *  at unparse runtime, or we can ignore that.
@@ -119,8 +137,6 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
    */
   final def eci = dpathElementCompileInfo
 
-
-
   /**
    * This is the compile info for this element term.
    */
@@ -132,7 +148,7 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
     val eci = new DPathElementCompileInfo(
       parents,
       variableMap,
-      Delay(elementChildrenCompileInfo),
+      Delay(elementChildrenCompileInfo,'elementChildrenCompileInfo),
       namespaces,
       slashPath,
       name,
@@ -165,7 +181,7 @@ trait ElementBaseRuntime1Mixin { self: ElementBase =>
       position,
       childrenERDs,
       schemaSet.variableMap,
-      Delay(partialNextElementResolver),
+      Delay(partialNextElementResolver, 'ElementPartialNextElementResolver),
       encodingInfo,
       dpathElementCompileInfo,
       schemaFileLocation,

@@ -187,7 +187,7 @@ trait SchemaComponent
         case sgr: SequenceGroupRef => "sgr" + (if (sgr.isHidden) "h" else "") + (if (sgr.position > 1) sgr.position else "") + "=" + sgr.groupDef.namedQName.toQNameString
         case sgd: GlobalSequenceGroupDef => "sgd=" + sgd.namedQName.toQNameString
         case cg: Choice => "c" + (if (cg.position > 1) cg.position else "")
-        case sg: Sequence => "s" + (if (sg.position > 1) sg.position else "")
+        case sg: LocalSequence => "s" + (if (sg.position > 1) sg.position else "")
         case unknown => "unk=" + Misc.getNameFromClass(unknown)
       }
     }

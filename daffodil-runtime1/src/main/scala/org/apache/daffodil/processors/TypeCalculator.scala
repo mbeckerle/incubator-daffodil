@@ -39,6 +39,10 @@ abstract class TypeCalculator(val srcType: NodeInfo.Kind, val dstType: NodeInfo.
   extends Serializable {
   type Error = String
 
+  def initialize(): Unit = {
+    // base method does nothing
+  }
+
   /*
    * We can be used from both a parser directly, and as part of a DPath expression.
    * There are 2 main differences that require handling these cases seperatly
@@ -195,6 +199,16 @@ class ExpressionTypeCalculator(
   dstType: NodeInfo.Kind)
   extends TypeCalculator(srcType, dstType) {
 
+  /*
+   * objects with Delay arguments for functional programming construction of
+   * cyclic graphs, need a way to force the delays, resulting in an ordinary
+   * (though cyclic) data structure.
+   */
+  final override def initialize(): Unit = {
+    maybeInputTypeCalc
+    maybeOutputTypeCalc
+  }
+
   override def supportsParse = maybeInputTypeCalc.isDefined
   override def supportsUnparse = maybeOutputTypeCalc.isDefined
 
@@ -204,7 +218,6 @@ class ExpressionTypeCalculator(
    *
    * Since these fields must be lazy, we cannot use them to determine supportsParse or supportUnparse
    */
-
   lazy val maybeInputTypeCalc = maybeInputTypeCalcDelay.value
   lazy val maybeOutputTypeCalc = maybeOutputTypeCalcDelay.value
 
@@ -399,7 +412,11 @@ object TypeCalculatorCompiler {
     srcType: NodeInfo.Kind, dstType: NodeInfo.Kind): ExpressionTypeCalculator = {
     lazy val maybeInputType: Maybe[CompiledExpression[AnyRef]] = optInputTypeCalc.map(Maybe(_)).getOrElse(Maybe.Nope)
     lazy val maybeOutputType: Maybe[CompiledExpression[AnyRef]] = optOutputTypeCalc.map(Maybe(_)).getOrElse(Maybe.Nope)
-    new ExpressionTypeCalculator(Delay(maybeInputType), Delay(maybeOutputType), srcType, dstType)
+    new ExpressionTypeCalculator(
+      Delay(maybeInputType, 'maybeInputType),
+      Delay(maybeOutputType, 'maybeOutputType),
+      srcType,
+      dstType)
   }
   def compileIdentity(srcType: NodeInfo.Kind): TypeCalculator = new IdentifyTypeCalculator(srcType)
 

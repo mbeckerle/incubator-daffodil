@@ -126,7 +126,7 @@ sealed abstract class GlobalGroupDef(
   final override lazy val name = defXML.attribute("name").map { _.text }.getOrElse(
     Assert.invariantFailed("Global group def without name attribute."))
 
-  final override protected def optReferredToComponent = None
+  override protected def optReferredToComponent = None
 }
 
 final class GlobalSequenceGroupDef(

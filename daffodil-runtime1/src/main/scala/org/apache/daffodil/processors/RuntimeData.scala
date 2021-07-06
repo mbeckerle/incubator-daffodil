@@ -101,7 +101,7 @@ object TermRuntimeData {
 /**
  * Base runtime data structure for all terms
  *
- * These transient Delay-type args are part of how we
+ * These Delay-type args are part of how we
  * create a structure here which contains some objects that
  * somewhere within themselves, refer back to this structure.
  *
@@ -137,6 +137,14 @@ sealed abstract class TermRuntimeData(
   val maybeCheckByteAndBitOrderEv: Maybe[CheckByteAndBitOrderEv],
   val maybeCheckBitOrderAndCharsetEv: Maybe[CheckBitOrderAndCharsetEv])
   extends RuntimeData {
+
+  /**
+   * Cyclic structures require initialization
+   */
+  lazy val initialize: Unit = {
+    partialNextElementResolver
+    dpathCompileInfo.initialize
+  }
 
   final def namespaces = dpathCompileInfo.namespaces
 
@@ -518,7 +526,7 @@ final class SimpleTypeRuntimeData(
  * These objects are for things that are generally heavily used everywhere like information for
  * providing diagnostics.
  *
- * These transient Delay-type args are part of how we
+ * These Delay-type args are part of how we
  * create a structure here which contains some objects that
  * somewhere within themselves, refer back to this structure.
  *
@@ -643,7 +651,7 @@ sealed abstract class ErrorERD(local: String, namespaceURI: String)
     new DPathElementCompileInfo(
       Nil, // parentsArg: => Seq[DPathElementCompileInfo],
       null, // variableMap: => VariableMap,
-      Delay(Seq[DPathElementCompileInfo]()).force, // elementChildrenCompileInfoDelay: Delay[Seq[DPathElementCompileInfo]],
+      Delay(Seq[DPathElementCompileInfo](), 'ErrorERD).force, // elementChildrenCompileInfoDelay: Delay[Seq[DPathElementCompileInfo]],
       null, // namespaces: scala.xml.NamespaceBinding,
       local, // path: String,
       local, // val name: String,
@@ -743,7 +751,7 @@ final class NamespaceAmbiguousElementErrorERD(
 /**
  * Base class for model group runtime data
  *
- * These transient Delay-type args are part of how we
+ * These Delay-type args are part of how we
  * create a structure here which contains some objects that
  * somewhere within themselves, refer back to this structure.
  */
@@ -778,7 +786,7 @@ sealed abstract class ModelGroupRuntimeData(
 }
 
 /**
- * These transient Delay-type args are part of how we
+ * These Delay-type args are part of how we
  * create a structure here which contains some objects that
  * somewhere within themselves, refer back to this structure.
  */
@@ -809,7 +817,7 @@ final class SequenceRuntimeData(
     maybeCheckBitOrderAndCharsetEvArg)
 
 /*
- * These transient Delay-type args are part of how we
+ * These Delay-type args are part of how we
  * create a structure here which contains some objects that
  * somewhere within themselves, refer back to this structure.
  */
@@ -857,6 +865,13 @@ final class VariableRuntimeData(
     pathArg,
     namespacesArg,
     unqualifiedPathStepPolicyArg) {
+
+  /**
+   * Cyclic structures require initialization
+   */
+  lazy val initialize: Unit = {
+    maybeDefaultValueExpr // demand this
+  }
 
   lazy val maybeDefaultValueExpr: Maybe[CompiledExpression[AnyRef]] = maybeDefaultValueExprDelay.value
 

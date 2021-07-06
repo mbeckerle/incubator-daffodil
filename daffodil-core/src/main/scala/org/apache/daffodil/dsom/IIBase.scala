@@ -120,6 +120,8 @@ import org.apache.daffodil.api.WarnID
  */
 object IIUtils {
   type IIMap = Delay[ListMap[(NS, DaffodilSchemaSource), IIBase]]
+  private val empty = new ListMap[(NS, DaffodilSchemaSource), IIBase]()
+  val emptyIIMap = Delay(empty, 'IIMapEmpty).force
 }
 
 /**
@@ -167,11 +169,11 @@ abstract class IIBase( final override val xml: Node, xsdArg: XMLSchemaDocument, 
    * we will detect it.
    */
   protected final lazy val seenBeforeThisFile: IIMap = LV('seenBeforeThisFile) {
-    val res = Delay {
+    val res = Delay( {
       val v = if (notSeenThisBefore) seenBefore.value + mapTuple
       else seenBefore.value
       v
-    }
+    }, 'seenBeforeThisFile)
     res
   }.value
 

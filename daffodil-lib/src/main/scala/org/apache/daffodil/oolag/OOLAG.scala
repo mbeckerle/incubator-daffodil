@@ -270,6 +270,12 @@ object OOLAG extends Logging {
      * requiredEvaluationsIfActivated will not be evaluated.
      */
 
+    /**
+     * Override to create OOLAG Host objects speculatively, i.e., without
+     * the side-effects of causing requiredEvaluations to be scheduled.
+     */
+    protected def areRequiredEvaluationsEnabled = true
+
     private var requiredEvalCount = 0 // used to generate unique names.
     private val requiredEvalName = Misc.getNameFromClass(this) + "_requiredEvaluation_"
 
@@ -286,7 +292,8 @@ object OOLAG extends Logging {
      * object are performed.
      */
     protected final def requiredEvaluationsAlways(arg: => Any): Unit = {
-      requiredEvaluationsAlways(thunk(arg))
+      if (areRequiredEvaluationsEnabled)
+        requiredEvaluationsAlways(thunk(arg))
     }
 
     /**
@@ -350,7 +357,8 @@ object OOLAG extends Logging {
      * That is called only for global element decls (and the root)
      */
     protected final def requiredEvaluationsIfActivated(arg: => Any): Unit = {
-      requiredEvaluationsIfActivated(thunk(arg))
+      if (areRequiredEvaluationsEnabled)
+        requiredEvaluationsIfActivated(thunk(arg))
     }
 
     /**

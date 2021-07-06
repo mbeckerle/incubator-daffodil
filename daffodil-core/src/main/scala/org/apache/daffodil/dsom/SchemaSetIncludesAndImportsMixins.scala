@@ -17,10 +17,8 @@
 
 package org.apache.daffodil.dsom
 
-import scala.collection.immutable.ListMap
 import org.apache.daffodil.dsom.IIUtils._
 import org.apache.daffodil.xml.XMLUtils
-import org.apache.daffodil.util.Delay
 import org.apache.daffodil.api.WarnID
 
 /**
@@ -46,7 +44,7 @@ trait SchemaSetIncludesAndImportsMixin { self: SchemaSet =>
     val fakeSchemaDocXML =
       <xs:schema xmlns:xs={ xsd }>{ fakeImportStatementsXML }</xs:schema>
 
-    val initialEmptyIIMap: IIMap = Delay(ListMap.empty)
+    val initialEmptyIIMap: IIMap = IIUtils.emptyIIMap
 
     val fakeSD = new XMLSchemaDocument(fakeSchemaDocXML, self, None, None, initialEmptyIIMap, isBootStrapSD = true)
     fakeSD

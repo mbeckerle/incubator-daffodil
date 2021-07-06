@@ -17,6 +17,8 @@
 
 package org.apache.daffodil.dsom
 
+import org.apache.daffodil.runtime1.LocalElementDeclBaseRuntime1Mixin
+
 import scala.xml.Node
 
 sealed abstract class LocalElementDeclBase(
@@ -26,10 +28,12 @@ sealed abstract class LocalElementDeclBase(
   extends ElementBase
   with LocalElementComponentMixin
   with ElementDeclMixin
-  with NestingLexicalMixin {
+  with NestingLexicalMixin
+  with LocalElementDeclBaseRuntime1Mixin {
 
   requiredEvaluationsAlways(minOccurs)
   requiredEvaluationsAlways(maxOccurs)
+
 }
 
 class LocalElementDecl(

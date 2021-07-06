@@ -61,7 +61,15 @@ object ModelGroupFactory {
     nodesAlreadyTrying: Set[Node]): ModelGroup = {
     val childModelGroup: ModelGroup = child match {
       case <sequence>{ _* }</sequence> => {
-        val seq = new Sequence(child, lexicalParent, position) // throwaway just so we can grab local properties to check for hidden
+        //
+        // Create special dummy sequence which unlike a regular sequence component
+        // does not have side-effects like scheduling/saving requiredEvaluations for later
+        // execution.
+        //
+        // Normally, one cannot create DSOM components speculatively, but DummySequence
+        // specifically is for this purpose.
+        //
+        val seq = new DummySequence(child, lexicalParent, position) // throwaway just so we can grab local properties to check for hidden
         if (seq.hiddenGroupRefOption.isDefined) {
           // explicit check here, because we're about to discard this, and construct
           // a SequenceGroupRef or ChoiceGroupRef, with isHidden = true. So this
@@ -72,9 +80,9 @@ object ModelGroupFactory {
           // but set flag so it will be hidden.
           //
           val hgrXML = seq.hiddenGroupRefXML
-          ModelGroupFactory(hgrXML, lexicalParent, position, true, nodesAlreadyTrying)
+          ModelGroupFactory(hgrXML, lexicalParent, position, isHidden = true, nodesAlreadyTrying)
         } else {
-          seq
+          new LocalSequence(child, lexicalParent, position)
         }
       }
       case <choice>{ _* }</choice> => new Choice(child, lexicalParent, position)

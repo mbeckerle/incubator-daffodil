@@ -199,8 +199,8 @@ class TestDsomCompiler extends Logging {
     val Seq(ct) = schemaDoc.globalComplexTypeDefs
     assertEquals("example1", ct.name)
 
-    val mg = ct.modelGroup.asInstanceOf[Sequence]
-    assertTrue(mg.isInstanceOf[Sequence])
+    val mg = ct.modelGroup.asInstanceOf[LocalSequence]
+    assertTrue(mg.isInstanceOf[LocalSequence])
 
     val Seq(elem) = mg.groupMembers
     assertTrue(elem.isInstanceOf[LocalElementDecl])
@@ -229,7 +229,7 @@ class TestDsomCompiler extends Logging {
     assertTrue(a2.isInstanceOf[DFDLAssert]) // second annotation is newVariableInstance
     assertEquals(OccursCountKind.Implicit.toString, e3.getProperty("occursCountKind"))
     // Explore local complex type def
-    val seq = e1.complexType.modelGroup.asInstanceOf[Sequence] //... which is a sequence
+    val seq = e1.complexType.modelGroup.asInstanceOf[LocalSequence] //... which is a sequence
     seq.formatAnnotation.asInstanceOf[DFDLSequence] //...annotated with...
     assertEquals(YesNo.No, seq.initiatedContent) // initiatedContent="no"
 
@@ -647,7 +647,7 @@ class TestDsomCompiler extends Logging {
     val seq = ge1.sequence
 
     val Seq(_, _, s3) = seq.groupMembers
-    val s3s = s3.asInstanceOf[Sequence]
+    val s3s = s3.asInstanceOf[LocalSequence]
     val Seq(es) = s3s.groupMembers
     val ese = es.asInstanceOf[LocalElementDecl]
     assertTrue(ese.path.contains("sequence[3]"))

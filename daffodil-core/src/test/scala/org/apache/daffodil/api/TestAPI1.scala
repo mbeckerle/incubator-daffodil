@@ -239,6 +239,7 @@ class TestDFDLParser {
       // As of 18:31 UTC (EST+5) Jun 8, 2012
       TestUtils.testString(sch, "7,018,631,476")
     }
+    println(e)
     assertTrue(e.getMessage().contains("unsignedInt"))
   }
 

@@ -17,6 +17,8 @@
 
 package org.apache.daffodil.util
 
+import org.apache.daffodil.exceptions.Assert
+
 /**
  * Delay[T]
  *
@@ -30,7 +32,7 @@ package org.apache.daffodil.util
  * For more info, this is used in the IncludeImport stuff in DSOM, and
  * in numerous other places where we construct, functionally, cyclic graphs.
  */
-final class Delay[T] private (private var box: Delay.Box[T])
+final class Delay[T] private (private var box: Delay.Box[T], sym: Symbol)
   extends PreSerialization {
   //
   // This trick of taking another object on a var, and
@@ -45,11 +47,13 @@ final class Delay[T] private (private var box: Delay.Box[T])
   // once the Delay object has been evaluated.
   //
   lazy val value: T = {
+    Assert.invariant(box ne null)
     val v = box.value
     box = null // throws away box, which allows GC of all closures, etc.
-    // Delay.evalDelay()
     v
   }
+
+  def hasValue = box eq null
 
   /**
    * For creating a delay object purely to satisfy a type requirement
@@ -61,12 +65,12 @@ final class Delay[T] private (private var box: Delay.Box[T])
    * Create a string representation. Does not force the value to be computed.
    */
   override def toString = {
-    val bodyString = if (box eq null) value.toString else "..."
+    val bodyString = if (hasValue) value.toString else "..."
     "Delay(" + bodyString + ")"
   }
 
   override def preSerialization = {
-    value // force evaluation
+    if (!hasValue) Assert.invariantFailed("No value for delay. Containing object not initialized? ID Symbol: " + sym)
     super.preSerialization
   }
 
@@ -82,9 +86,8 @@ object Delay {
    * @tparam T type of the argument. (Usually inferred by Scala.)
    * @return the Delay object
    */
-  def apply[T](delayedExpression: => T) = {
-    // allocateDelay()
-    new Delay(new Box(delayedExpression))
+  def apply[T](delayedExpression: => T, sym: Symbol) = {
+    new Delay(new Box(delayedExpression), sym)
   }
 
   /**

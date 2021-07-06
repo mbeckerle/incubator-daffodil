@@ -178,10 +178,13 @@ trait ChoiceTermRuntime1Mixin { self: ChoiceTermBase =>
 
   final lazy val modelGroupRuntimeData = choiceRuntimeData
 
+
+
+
   final lazy val choiceRuntimeData = {
     new ChoiceRuntimeData(
       position,
-      Delay(partialNextElementResolver),
+      Delay(partialNextElementResolver, 'ChoicePartialNextElementResolver),
       schemaSet.variableMap,
       encodingInfo,
       // elementChildren.map { _.elementRuntimeData.dpathElementCompileInfo },

@@ -356,11 +356,14 @@ abstract class SimpleTypeDefBase(xml: Node, lexicalParent: SchemaComponent)
         })
         val supportsParse = optInputTypeCalc.isDefined
         val supportsUnparse = optOutputTypeCalc.isDefined
-        if (supportsParse || supportsUnparse) {
-          Some(TypeCalculatorCompiler.compileTypeCalculatorFromExpression(optInputCompiled, optOutputCompiled, srcType, dstType))
-        } else {
-          None
+        val res = {
+          if (supportsParse || supportsUnparse) {
+            Some(TypeCalculatorCompiler.compileTypeCalculatorFromExpression(optInputCompiled, optOutputCompiled, srcType, dstType))
+          } else {
+            None
+          }
         }
+        res
       }
 
       val ans = (fromRestriction, fromUnion, fromExpression) match {

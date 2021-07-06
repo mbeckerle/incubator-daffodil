@@ -222,6 +222,10 @@ class DPathCompileInfo(
     with PreSerialization
     with HasSchemaFileLocation {
 
+  def initialize: Unit = {
+    // nothing by default
+  }
+
   /**
    * This "parents" val is a backpointer to all DPathCompileInfo's that
    * reference this DPathCompileInfo. The problem with this is that when
@@ -362,6 +366,13 @@ class DPathElementCompileInfo
   extends DPathCompileInfo(parentsArg, variableMap, namespaces, path, sfl,
     unqualifiedPathStepPolicy,
     typeCalcMap) {
+
+  /**
+   * Cyclic objects require initialization
+   */
+  override lazy val initialize: Unit = {
+    elementChildrenCompileInfo
+  }
 
   override def serializeParents(oos: java.io.ObjectOutputStream): Unit = {
     super.serializeParents(oos)

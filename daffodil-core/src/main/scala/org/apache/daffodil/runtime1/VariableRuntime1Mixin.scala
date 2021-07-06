@@ -31,7 +31,7 @@ import org.apache.daffodil.xml.XMLUtils
 
 trait DFDLDefineVariableRuntime1Mixin { self: DFDLDefineVariable =>
 
-  requiredEvaluationsAlways(maybeDefaultValueExpr)
+  requiredEvaluationsAlways(variableRuntimeData.initialize)
 
   final lazy val variableRuntimeData = {
     val vrd = new VariableRuntimeData(
@@ -41,7 +41,7 @@ trait DFDLDefineVariableRuntime1Mixin { self: DFDLDefineVariable =>
       this.namespaces,
       this.external,
       this.direction,
-      Delay(maybeDefaultValueExpr),
+      Delay(maybeDefaultValueExpr, 'maybeDefaultValueExpr),
       this.typeQName,
       this.namedQName.asInstanceOf[GlobalQName],
       this.primType,
@@ -70,7 +70,7 @@ trait VariableReferenceRuntime1Mixin { self: VariableReference =>
 
 trait DFDLNewVariableInstanceRuntime1Mixin { self: DFDLNewVariableInstance =>
 
-  requiredEvaluationsAlways(maybeDefaultValueExpr)
+  requiredEvaluationsAlways(variableRuntimeData.initialize)
 
   /* Need to override variableRuntimeData so that defaultValues
   * are read from newVariableInstance instead of the original
@@ -85,7 +85,7 @@ trait DFDLNewVariableInstanceRuntime1Mixin { self: DFDLNewVariableInstance =>
       this.namespaces,
       defv.external,
       defv.direction,
-      Delay(maybeDefaultValueExpr),
+      maybeDefaultValueExprDelay,
       defv.typeQName,
       defv.namedQName.asInstanceOf[GlobalQName],
       defv.primType,
@@ -102,6 +102,8 @@ trait DFDLNewVariableInstanceRuntime1Mixin { self: DFDLNewVariableInstance =>
 
     Maybe.toMaybe(defaultValExpr)
   }
+
+  val maybeDefaultValueExprDelay = Delay(maybeDefaultValueExpr, 'maybeDefaultValueExpr2)
 }
 
 trait DFDLSetVariableRuntime1Mixin { self: DFDLSetVariable =>

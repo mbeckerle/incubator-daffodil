@@ -290,15 +290,6 @@ trait SequenceDefMixin
     findPropertyOption("hiddenGroupRef")
   }.value
 
-}
-
-/**
- * Represents a local sequence definition.
- */
-final class Sequence(xmlArg: Node, lexicalParent: SchemaComponent, position: Int)
-  extends SequenceGroupTermBase(xmlArg, lexicalParent, position)
-  with SequenceDefMixin
-  with SequenceView {
 
   override lazy val optReferredToComponent = None
 
@@ -319,6 +310,35 @@ final class Sequence(xmlArg: Node, lexicalParent: SchemaComponent, position: Int
     }
     hgr
   }.value
+
+}
+
+/**
+ * Base class for LocalSequence and DummySequence
+ */
+sealed abstract class Sequence(xmlArg: Node, lexicalParent: SchemaComponent, position: Int)
+  extends SequenceGroupTermBase(xmlArg, lexicalParent, position)
+  with SequenceDefMixin
+
+/**
+ * Represents a local sequence definition.
+ */
+final class LocalSequence(xmlArg: Node, lexicalParent: SchemaComponent, position: Int)
+  extends Sequence(xmlArg, lexicalParent, position)
+  with SequenceView
+
+/**
+ * A sequence component that lets us retrieve properties, but without
+ * committing us to the component, e.g., no side effects like scheduling required
+ * evaluations.
+ *
+ * This is needed to allow retrieving properties speculatively from
+ * sequences in order to implement the dfdl:hiddenGroupRef property.
+ */
+final class DummySequence(xmlArg: Node, lexicalParent: SchemaComponent, position: Int)
+  extends Sequence(xmlArg, lexicalParent, position) {
+
+  override def areRequiredEvaluationsEnabled = false
 }
 
 /**
@@ -367,9 +387,6 @@ final class ChoiceBranchImpliedSequence(rawGM: Term)
    * Implied sequence doesn't exist textually, so can't have properties on it.
    */
   override lazy val nonDefaultPropertySources: Seq[ChainPropProvider] = Seq()
-
-  // Members declared in AnnotatedSchemaComponent
-  protected def optReferredToComponent: Option[AnnotatedSchemaComponent] = None
 
   final override def xmlChildren: Seq[scala.xml.Node] = Seq(xml)
 
